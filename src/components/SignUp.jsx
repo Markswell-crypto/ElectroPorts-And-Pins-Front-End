@@ -1,8 +1,149 @@
+import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-function SignUp() {
+const SignUp = () => {
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    role: '',
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Send formData to backend for user registration
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
+  const getPasswordStrength = (password) => {
+    if (password.length <= 4) return 'Weak';
+    if (password.length <= 8) return 'Medium';
+    return 'Strong';
+  };
+
+  const getPasswordStrengthColor = (password) => {
+    if (password.length <= 4) return 'bg-danger';
+    if (password.length <= 8) return 'bg-warning';
+    return 'bg-success';
+  };
+
   return (
-    <div>SignUp</div>
-  )
-}
+    <div className="d-flex justify-content-center align-items-center vh-100">
+      <div>
+        <h2>Sign Up</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="username" className="form-label">Username</label>
+            <input
+              type="text"
+              className="form-control"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">Email address</label>
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">
+              Password
+              <div className="input-group">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  className="form-control"
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+                <button
+                  className="btn btn-outline-secondary"
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                >
+                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                </button>
+              </div>
+              <small className={`text-muted ${getPasswordStrengthColor(formData.password)}`}>
+                {getPasswordStrength(formData.password)}
+              </small>
+            </label>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="confirmPassword" className="form-label">
+              Confirm Password
+              <div className="input-group">
+                <input
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  className="form-control"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  required
+                />
+                <button
+                  className="btn btn-outline-secondary"
+                  type="button"
+                  onClick={toggleConfirmPasswordVisibility}
+                >
+                  <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} />
+                </button>
+              </div>
+              <small className={`text-muted ${getPasswordStrengthColor(formData.confirmPassword)}`}>
+                {getPasswordStrength(formData.confirmPassword)}
+              </small>
+            </label>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="role" className="form-label">Role</label>
+            <select
+              className="form-select"
+              id="role"
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select role</option>
+              <option value="buyer">Buyer</option>
+              <option value="seller">Seller</option>
+            </select>
+          </div>
+          <button type="submit" className="btn btn-primary">Sign Up</button>
+        </form>
+      </div>
+    </div>
+  );
+};
 
-export default SignUp
+export default SignUp;
