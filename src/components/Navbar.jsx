@@ -17,7 +17,33 @@ function Navbar() {
 
   return (
     <nav>
-      
+      <h3><Link to="/home">ElectroPorts&<span>Pins</span></Link></h3>
+      <ul>
+        <li><Link to="/home">Home</Link></li>
+        <li onMouseEnter={toggleCategories} onMouseLeave={toggleCategories}>
+          <Link to="/categories">Categories</Link>
+          {showCategories && (
+            <ul className="dropdown">
+              <li><Link to="/phones">Phones</Link></li>
+              <li><Link to="/laptops">Laptops</Link></li>
+              <li><Link to="/audio">SoundDevices</Link></li>
+              <li><Link to="/accessories">Accessories</Link></li>
+            </ul>
+          )}
+        </li>
+        <li><Link to="/aboutus">About Us</Link></li>
+        <li><Link to="/contactus">Contact Us</Link></li>
+        <li onMouseEnter={toggleAccount} onMouseLeave={toggleAccount}>
+          <Link to="/account">Account</Link>
+          {showAccount && (
+            <ul className="dropdown">
+              <li><Link to="/signup">Sign Up</Link></li>
+              <li><Link to="/login">Login</Link></li>
+            </ul>
+          )}
+        </li>
+        <li><Link to="/cart"><FontAwesomeIcon icon={faShoppingCart} /></Link></li>
+      </ul>
     </nav>
   );
 }
