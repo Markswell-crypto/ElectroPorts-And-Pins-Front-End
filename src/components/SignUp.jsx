@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import backgroundImage from '../assets/laptop-desktop.jpg';
+import backgroundImage from '../assets/skyblue-background.jpg';
 import { Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Fetch POST request
+    //fetch POST request
     try {
       const response = await fetch('https://electroports-db.onrender.com/register', {
         method: 'POST',
@@ -33,10 +34,9 @@ const SignUp = () => {
         body: JSON.stringify(formData),
       });
 
-      // Handle response accordingly
       if (response.ok) {
         setRegistered(true);
-        // Clear form data after successful registration
+        //clear form data after successful registration
         setFormData({
           username: '',
           email: '',
@@ -160,6 +160,7 @@ const SignUp = () => {
             </label>
           </div>
           <button type="submit" className="btn btn-primary">Sign Up</button>
+          <p className="mt-3">Already have an account? <Link to="/login">Login</Link>.</p> 
         </form>
       </div>
     </div>

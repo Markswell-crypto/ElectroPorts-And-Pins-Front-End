@@ -1,0 +1,10 @@
+.custom-card {
+    background-color: lightblue; 
+    margin-bottom: 20px; 
+  }
+  
+  .custom-img {
+    max-height: 150px; 
+    object-fit: cover; 
+  }
+  

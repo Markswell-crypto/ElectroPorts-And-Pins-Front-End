@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Col, Row, Button } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
 
 function Phones() {
   const [phones, setPhones] = useState([]);
@@ -27,6 +28,7 @@ function Phones() {
               <div className="mb-2">Name: {phone.name}</div>
               <div className="mb-2">Price: {phone.price}</div>
               <Button onClick={() => handleOrder(phone)}>Order</Button>
+              <div>Status: {phone.status}</div>
             </div>
           </Col>
         ))}

@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import backgroundImage from '../assets/laptop-desktop.jpg';
+import backgroundImage from '../assets/skyblue-background.jpg';
 import axios from 'axios';
 import { Modal } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +14,9 @@ const Login = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  const [loginSuccess, setLoginSuccess] = useState(false);
+  const [loginError, setLoginError] = useState('');
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -26,17 +29,22 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       const response = await axios.post('https://electroports-db.onrender.com/login', formData);
-      // Handle response accordingly
-      console.log('Login response:', response);
-
-      setLoginSuccess(true);
-      setTimeout(() => {
-        setLoginSuccess(false);
-      }, 3000);
+  
+      if (response.status === 200) {
+        //redirect to HomePage after successful login
+        navigate('/HomePage');
+      } else {
+        setLoginError('Invalid credentials. Please try again.');
+      }
     } catch (error) {
       console.error('Error logging in:', error);
+      setLoginError('An error occurred while logging in. Please try again later.');
+  
+      console.log('Full error:', error);
     }
   };
+  
+  
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -66,12 +74,7 @@ const Login = () => {
     >
       <div>
         <h2>Login</h2>
-        <Modal show={loginSuccess} onHide={() => setLoginSuccess(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Login Successful</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Login successful!</Modal.Body>
-        </Modal>
+        {loginError && <p className="text-danger">{loginError}</p>}
         <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
           <div className="mb-3">
             <label htmlFor="usernameOrEmail" className="form-label">Username or Email</label>
@@ -123,6 +126,7 @@ const Login = () => {
             <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
           </div>
           <button type="submit" className="btn btn-primary">Login</button>
+          <p className="mt-3">Don't have an account? <Link to="/signup">Signup</Link>.</p>
         </form>
       </div>
     </div>

@@ -1,0 +1,57 @@
+.about-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('../assets/skyblue-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    backdrop-filter: blur(5px);
+    color: white; 
+  }
+  
+  .about-container h1 {
+    text-align: center;
+    color: rgb(212, 37, 14); 
+  }
+  
+  .about-container p {
+    color: black;
+  }
+  
+  .about-container img {
+    filter: brightness(0.7);
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin-bottom: 50px;
+  }
+  
+  .text {
+    text-align: center;
+    padding: 0 20px;
+  }
+  
+  .image {
+    max-width: 300px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
