@@ -1,0 +1,49 @@
+nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #E3E6F3;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+    position: sticky;
+    padding: 20px 40px;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
+
+nav h3{
+  font-size: 20px;
+}
+nav h3 a{
+    text-decoration: none;
+}
+
+nav h3 span{
+  color: red;
+}
+
+nav ul{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2rem;
+}
+
+nav ul li{
+  list-style: none;
+  font-weight: 600;
+  font-size: 20px;
+}
+nav ul li a{
+    text-decoration: none;
+}
+.dropdown{
+    display: none;
+}
+nav ul li:hover .dropdown{
+    display: block;
+    position: absolute;
+    background: #E3E6F3;
+}
+
+  

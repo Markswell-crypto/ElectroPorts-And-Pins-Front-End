@@ -1,4 +1,3 @@
-import React from 'react';
 import backgroundImage from '../assets/laptop-desktop.jpg';
 
 const About = () => {
