@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import "./Navbar.css"
 
 function Navbar() {
   const [showCategories, setShowCategories] = useState(false);
@@ -21,7 +22,7 @@ function Navbar() {
       <ul>
         <li><Link to="/home">Home</Link></li>
         <li onMouseEnter={toggleCategories} onMouseLeave={toggleCategories}>
-          <Link to="/categories">Categories</Link>
+          <Link to="">Categories</Link>
           {showCategories && (
             <ul className="dropdown">
               <li><Link to="/phones">Phones</Link></li>
@@ -34,7 +35,7 @@ function Navbar() {
         <li><Link to="/aboutus">About Us</Link></li>
         <li><Link to="/contactus">Contact Us</Link></li>
         <li onMouseEnter={toggleAccount} onMouseLeave={toggleAccount}>
-          <Link to="/account">Account</Link>
+          <Link to="">Account</Link>
           {showAccount && (
             <ul className="dropdown">
               <li><Link to="/signup">Sign Up</Link></li>
