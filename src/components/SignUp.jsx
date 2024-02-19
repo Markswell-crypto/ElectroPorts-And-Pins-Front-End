@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import backgroundImage from '../assets/laptop-desktop.jpg';
+import { Modal } from 'react-bootstrap';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -9,7 +10,6 @@ const SignUp = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    role: '',
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -75,11 +75,12 @@ const SignUp = () => {
     <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <div>
         <h2>Sign Up</h2>
-        {registered && (
-          <div className="alert alert-success" role="alert">
-            User registered successfully
-          </div>
-        )}
+        <Modal show={registered} onHide={() => setRegistered(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Registration Successful</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>User registered successfully</Modal.Body>
+        </Modal>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="username" className="form-label">Username</label>
@@ -106,7 +107,6 @@ const SignUp = () => {
             />
           </div>
           {/* Password fields */}
-
           <div className="mb-3">
             <label htmlFor="password" className="form-label">
               Password
@@ -158,21 +158,6 @@ const SignUp = () => {
                 {getPasswordStrength(formData.confirmPassword)}
               </small>
             </label>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="role" className="form-label">Role</label>
-            <select
-              className="form-select"
-              id="role"
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select role</option>
-              <option value="buyer">Buyer</option>
-              <option value="seller">Seller</option>
-            </select>
           </div>
           <button type="submit" className="btn btn-primary">Sign Up</button>
         </form>
