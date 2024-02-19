@@ -49,9 +49,6 @@ const SignUp = () => {
     } catch (error) {
       console.error('Error registering:', error);
     }
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Send formData to backend for user registration
   };
 
   const togglePasswordVisibility = () => {
@@ -83,9 +80,6 @@ const SignUp = () => {
             User registered successfully
           </div>
         )}
-    <div className="d-flex justify-content-center align-items-center vh-100">
-      <div>
-        <h2>Sign Up</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="username" className="form-label">Username</label>

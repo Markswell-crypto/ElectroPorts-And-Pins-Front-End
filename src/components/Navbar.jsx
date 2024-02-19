@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
@@ -38,7 +38,7 @@ function Navbar() {
           <Link to="">Account</Link>
           {showAccount && (
             <ul className="dropdown">
-              <li><Link to="/signup">Sign Up</Link></li>
+              <li><Link to="/signup">SignUp</Link></li>
               <li><Link to="/login">Login</Link></li>
             </ul>
           )}
