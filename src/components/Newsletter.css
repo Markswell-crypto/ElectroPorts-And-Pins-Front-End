@@ -1,0 +1,23 @@
+.newsletter-align{
+    display: flex;
+    flex-direction: column;
+}
+.newsletter-align h3{
+    font-size: 15px;
+}
+.newsletter-align p{
+    font-size: 15px;
+}
+.newsletter-align form{
+    font-size: 20px;
+}
+.newsletter-align form input{
+    padding: 5px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    outline: none;
+    width: 70%;
+}
+.newsletter-align button{
+    padding: 5px;
+}
