@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import backgroundImage from '../assets/laptop-desktop.jpg';
+import backgroundImage from '../assets/skyblue-background.jpg';
 import { Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -160,6 +161,7 @@ const SignUp = () => {
             </label>
           </div>
           <button type="submit" className="btn btn-primary">Sign Up</button>
+          <p className="mt-3">Already have an account? <Link to="/login">Login</Link>.</p> 
         </form>
       </div>
     </div>
