@@ -14,6 +14,7 @@ import Login from "./components/Login"
 import SoundDevices from "./components/SoundDevices"
 import About from "./components/About"
 import Account from "./components/Account"
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/audio" element={<SoundDevices />} />
           <Route path="/account" element={<Account />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </>
   ) 
