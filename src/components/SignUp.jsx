@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import backgroundImage from '../assets/laptop-desktop.jpg';
@@ -9,6 +9,7 @@ const SignUp = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    role: '',
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -48,6 +49,9 @@ const SignUp = () => {
     } catch (error) {
       console.error('Error registering:', error);
     }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Send formData to backend for user registration
   };
 
   const togglePasswordVisibility = () => {
@@ -79,6 +83,9 @@ const SignUp = () => {
             User registered successfully
           </div>
         )}
+    <div className="d-flex justify-content-center align-items-center vh-100">
+      <div>
+        <h2>Sign Up</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="username" className="form-label">Username</label>
@@ -105,6 +112,7 @@ const SignUp = () => {
             />
           </div>
           {/* Password fields */}
+
           <div className="mb-3">
             <label htmlFor="password" className="form-label">
               Password
@@ -156,6 +164,21 @@ const SignUp = () => {
                 {getPasswordStrength(formData.confirmPassword)}
               </small>
             </label>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="role" className="form-label">Role</label>
+            <select
+              className="form-select"
+              id="role"
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select role</option>
+              <option value="buyer">Buyer</option>
+              <option value="seller">Seller</option>
+            </select>
           </div>
           <button type="submit" className="btn btn-primary">Sign Up</button>
         </form>

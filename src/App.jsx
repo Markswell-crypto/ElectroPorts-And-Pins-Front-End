@@ -1,8 +1,11 @@
+import Contact from "./components/Contact"
+import Review from "./components/Review"
 
 function App() {
   return (
     <div className='container'>
-      APP
+      <Contact />
+      <Review />
     </div>
   )
 }
