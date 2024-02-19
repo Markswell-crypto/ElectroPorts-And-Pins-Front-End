@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // If you're using Axios for HTTP requests
+import axios from 'axios'; 
 
 function Cart() {
     const [cartItems, setCartItems] = useState([]);
 
     useEffect(() => {
-        // Fetch cart items from the backend
+        
         fetchCartItems();
     }, []);
 
     const fetchCartItems = async () => {
         try {
-            // Make a GET request to fetch cart items from the backend
-            const response = await axios.get('/api/cart'); // Adjust the endpoint as per your backend API
-            setCartItems(response.data.cartItems); // Assuming the response contains cart items
+            // Make a GET request to fetch cart 
+            const response = await axios.get('/api/cart'); 
+            setCartItems(response.data.cartItems); 
         } catch (error) {
             console.error('Error fetching cart items:', error);
         }
@@ -22,7 +22,7 @@ function Cart() {
     const removeFromCart = async (itemId) => {
         try {
             // Make a DELETE request to remove an item from the cart
-            await axios.delete(`/api/cart/${itemId}`); // Adjust the endpoint as per your backend API
+            await axios.delete(`/api/cart/${itemId}`); 
             // Update the cart items state after successful removal
             setCartItems(cartItems.filter(item => item.id !== itemId));
         } catch (error) {
