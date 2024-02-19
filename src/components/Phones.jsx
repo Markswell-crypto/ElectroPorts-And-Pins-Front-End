@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Col, Row, Button } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
 
 function Phones() {
   const [phones, setPhones] = useState([]);
