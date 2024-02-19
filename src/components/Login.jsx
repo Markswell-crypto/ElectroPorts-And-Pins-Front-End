@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import backgroundImage from '../assets/laptop-desktop.jpg';
 import axios from 'axios';
+import { Modal } from 'react-bootstrap';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -65,11 +66,12 @@ const Login = () => {
     >
       <div>
         <h2>Login</h2>
-        {loginSuccess && (
-          <div className="alert alert-success" role="alert">
-            Login successful!
-          </div>
-        )}
+        <Modal show={loginSuccess} onHide={() => setLoginSuccess(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Login Successful</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Login successful!</Modal.Body>
+        </Modal>
         <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
           <div className="mb-3">
             <label htmlFor="usernameOrEmail" className="form-label">Username or Email</label>
