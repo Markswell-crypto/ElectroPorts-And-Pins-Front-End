@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import backgroundImage from '../assets/laptop-desktop.jpg';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -13,11 +14,41 @@ const SignUp = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [registered, setRegistered] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Fetch POST request
+    try {
+      const response = await fetch('https://electroports-db.onrender.com/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      // Handle response accordingly
+      if (response.ok) {
+        setRegistered(true);
+        // Clear form data after successful registration
+        setFormData({
+          username: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+        });
+      } else {
+        console.error('Error registering:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error registering:', error);
+    }
   const handleSubmit = (e) => {
     e.preventDefault();
     // Send formData to backend for user registration
@@ -44,6 +75,14 @@ const SignUp = () => {
   };
 
   return (
+    <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <div>
+        <h2>Sign Up</h2>
+        {registered && (
+          <div className="alert alert-success" role="alert">
+            User registered successfully
+          </div>
+        )}
     <div className="d-flex justify-content-center align-items-center vh-100">
       <div>
         <h2>Sign Up</h2>
@@ -72,6 +111,8 @@ const SignUp = () => {
               required
             />
           </div>
+          {/* Password fields */}
+
           <div className="mb-3">
             <label htmlFor="password" className="form-label">
               Password
