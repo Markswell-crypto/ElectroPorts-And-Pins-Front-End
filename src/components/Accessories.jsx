@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Col, Row, Button } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Card, Col, Row, Button } from 'react-bootstrap';
+import './Accessories.css'; // Import CSS file for custom styling
 
 function Accessories() {
   const [accessories, setAccessories] = useState([]);
@@ -22,12 +23,14 @@ function Accessories() {
       <Row xs={1} md={2} lg={4} className="g-4">
         {accessories.map(accessory => (
           <Col key={accessory.id}>
-            <div className="text-center p-3 border">
-              <img src={accessory.image_url} alt={accessory.name} className="img-fluid mb-3" style={{ maxHeight: '200px', objectFit: 'cover' }} />
-              <div className="mb-2">Name: {accessory.name}</div>
-              <div className="mb-2">Price: {accessory.price}</div>
-              <Button onClick={() => handleOrder(accessory)}>Order</Button>
-            </div>
+            <Card className="h-100 custom-card"> {/* Apply custom card class */}
+              <Card.Img variant="top" src={accessory.image_url} alt={accessory.name} className="custom-img" /> {/* Apply custom image class */}
+              <Card.Body>
+                <Card.Title>{accessory.name}</Card.Title>
+                <Card.Text>Price: {accessory.price}</Card.Text>
+                <Button onClick={() => handleOrder(accessory)}>Order</Button>
+              </Card.Body>
+            </Card>
           </Col>
         ))}
       </Row>

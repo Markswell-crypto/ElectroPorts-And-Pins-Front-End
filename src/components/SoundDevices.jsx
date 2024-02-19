@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Col, Row, Button } from 'react-bootstrap';
+import './SoundDevices.css'; // Import CSS file for custom styling
 
 function SoundDevices() {
   const [soundDevices, setSoundDevices] = useState([]);
@@ -22,8 +23,8 @@ function SoundDevices() {
       <Row xs={1} md={2} lg={4} className="g-4">
         {soundDevices.map(device => (
           <Col key={device.id}>
-            <Card className="h-100">
-              <Card.Img variant="top" src={device.image_url} alt={device.name} style={{ objectFit: 'cover', height: 'auto', width: '100%' }} />
+            <Card className="h-100 custom-card"> {/* Apply custom card class */}
+              <Card.Img variant="top" src={device.image_url} alt={device.name} className="custom-img" /> {/* Apply custom image class */}
               <Card.Body>
                 <Card.Title>{device.name}</Card.Title>
                 <Card.Text>Price: {device.price}</Card.Text>
