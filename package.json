@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
     "@fortawesome/fontawesome-free": "^6.5.1",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
@@ -18,11 +21,15 @@
     "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
     "emailjs-com": "^3.2.0",
+    "framer-motion": "^11.0.5",
     "phosphor-react": "^1.4.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.1"
+    "react-router-dom": "^6.22.1",
+    "react-slick": "^0.30.2",
+    "react-slideshow-image": "^4.3.0",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.23.3",

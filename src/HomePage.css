@@ -1,0 +1,28 @@
+.welcome-header {
+    font-size: 35px;
+    color: blue;
+    text-align: center;
+    animation: blink 5s infinite;
+    font-style: italic;
+     
+}
+
+@keyframes blink {
+  0% {
+    color: #FF5733; /* Start color */
+  }
+  30% {
+    color: #33FF57; /* Middle color */
+  }
+  50% {
+    color: red; /* Middle color */
+  }
+  100% {
+    color: #5733FF; /* End color */
+  }
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: blue;
+}
+
