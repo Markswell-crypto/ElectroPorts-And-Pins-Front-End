@@ -15,7 +15,7 @@ import SoundDevices from "./components/SoundDevices"
 import About from "./components/About"
 import Account from "./components/Account"
 import LandingPage from "./components/LandingPage";
-
+import Footer from "./components/Footer";
 
 
 function App() {
@@ -43,6 +43,7 @@ function App() {
         
           
         </Routes>
+        <Footer />
       </BrowserRouter>
     </>
   ) 
