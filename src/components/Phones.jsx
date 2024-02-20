@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Row, Button } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
 
 function Phones() {
   const [phones, setPhones] = useState([]);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     fetch('https://electroports-db.onrender.com/phones')
@@ -13,8 +13,9 @@ function Phones() {
   }, []);
 
   const handleOrder = (phone) => {
-    // Implement order handling logic here
-    console.log(`Ordering ${phone.name}`);
+    // Adding the selected phone to the cart
+    setCart([...cart, phone]);
+    console.log(`Added ${phone.name} to cart`);
   };
 
   return (
@@ -27,7 +28,7 @@ function Phones() {
               <img src={phone.image_url} alt={phone.name} className="img-fluid mb-3" style={{ maxHeight: '200px', objectFit: 'cover' }} />
               <div className="mb-2">Name: {phone.name}</div>
               <div className="mb-2">Price: {phone.price}</div>
-              <Button onClick={() => handleOrder(phone)}>Order</Button>
+              <Button onClick={() => handleOrder(phone)}>Add to Cart</Button>
               <div>Status: {phone.status}</div>
             </div>
           </Col>
