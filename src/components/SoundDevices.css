@@ -1,8 +1,12 @@
 .custom-card {
-    background-color: lightblue; /* Blue black background */
+    background-color: lightblue; 
   }
   
   .custom-img {
-    max-height: 150px; /* Decrease image size */
+    max-height: 150px;
   }
   
+.details-image {
+  max-width: 100%;
+  height: auto;
+}

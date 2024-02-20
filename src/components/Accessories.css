@@ -8,3 +8,9 @@
     object-fit: cover; 
   }
   
+.details-image {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  
