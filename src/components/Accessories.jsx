@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Col, Row, Button } from 'react-bootstrap';
-import './Accessories.css'; // Import CSS file for custom styling
+import { Card, Col, Row, Button, Modal } from 'react-bootstrap';
+import './Accessories.css'; 
 
 function Accessories() {
   const [accessories, setAccessories] = useState([]);
+  const [cart, setCart] = useState([]);
+  const [selectedAccessory, setSelectedAccessory] = useState(null);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
 
   useEffect(() => {
     fetch('https://electroports-db.onrender.com/accessories')
@@ -12,9 +15,17 @@ function Accessories() {
       .catch(error => console.error('Error fetching accessories:', error));
   }, []);
 
-  const handleOrder = (accessory) => {
-    // Implement order handling logic here
-    console.log(`Ordering ${accessory.name}`);
+  const handleAddToCart = (accessory) => {
+    setCart(prevCart => [...prevCart, accessory]);
+  };
+
+  const handleShowDetails = (accessory) => {
+    setSelectedAccessory(accessory);
+    setShowDetailsModal(true);
+  };
+
+  const handleCloseDetailsModal = () => {
+    setShowDetailsModal(false);
   };
 
   return (
@@ -23,17 +34,36 @@ function Accessories() {
       <Row xs={1} md={2} lg={4} className="g-4">
         {accessories.map(accessory => (
           <Col key={accessory.id}>
-            <Card className="h-100 custom-card"> {/* Apply custom card class */}
-              <Card.Img variant="top" src={accessory.image_url} alt={accessory.name} className="custom-img" /> {/* Apply custom image class */}
+            <Card className="h-100 custom-card">
+              <Card.Img variant="top" src={accessory.image_url} alt={accessory.name} className="custom-img" />
               <Card.Body>
                 <Card.Title>{accessory.name}</Card.Title>
                 <Card.Text>Price: {accessory.price}</Card.Text>
-                <Button onClick={() => handleOrder(accessory)}>Order</Button>
+                <Button onClick={() => handleAddToCart(accessory)}>Add to Cart</Button>
+                <Button onClick={() => handleShowDetails(accessory)} className="ms-2">Details</Button>
               </Card.Body>
             </Card>
           </Col>
         ))}
       </Row>
+      <Modal show={showDetailsModal} onHide={handleCloseDetailsModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Accessory Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedAccessory && (
+            <div className='details-container'>
+              <img src={selectedAccessory.image_url} alt={selectedAccessory.name} className="details-image" />
+              <p><strong>Name:</strong> {selectedAccessory.name}</p>
+              <p><strong>Price:</strong> {selectedAccessory.price}</p>
+              <p><strong>Description:</strong> {selectedAccessory.description}</p>
+            </div>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDetailsModal}>Close</Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Col, Row, Button } from 'react-bootstrap';
 
 function Laptops() {

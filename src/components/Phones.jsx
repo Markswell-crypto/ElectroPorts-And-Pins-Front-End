@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+// Phones.jsx
+import React, { useEffect, useState } from 'react';
 import { Col, Row, Button } from 'react-bootstrap';
 
-function Phones() {
+function Phones({ addToCart }) {
   const [phones, setPhones] = useState([]);
 
   useEffect(() => {
@@ -10,11 +11,6 @@ function Phones() {
       .then(data => setPhones(data.phones))
       .catch(error => console.error('Error fetching phones:', error));
   }, []);
-
-  const handleOrder = (phone) => {
-    // Implement order handling logic here
-    console.log(`Ordering ${phone.name}`);
-  };
 
   return (
     <div className="container">
@@ -26,7 +22,7 @@ function Phones() {
               <img src={phone.image_url} alt={phone.name} className="img-fluid mb-3" style={{ maxHeight: '200px', objectFit: 'cover' }} />
               <div className="mb-2">Name: {phone.name}</div>
               <div className="mb-2">Price: {phone.price}</div>
-              <Button onClick={() => handleOrder(phone)}>Order</Button>
+              <Button onClick={() => addToCart(phone)}>Add to Cart</Button>
               <div>Status: {phone.status}</div>
             </div>
           </Col>
