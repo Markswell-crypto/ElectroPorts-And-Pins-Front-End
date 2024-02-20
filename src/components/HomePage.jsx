@@ -3,6 +3,7 @@ import { Carousel } from 'react-bootstrap';
 import Accessories from './Accessories';
 import Phones from './Phones';
 import SoundDevices from './SoundDevices';
+import Laptop from './Laptops'
 import "../HomePage.css"
 
 function HomePage() {
@@ -85,6 +86,7 @@ function HomePage() {
       
       <Phones />
       <SoundDevices />
+      < Laptop />
     </div>
   );
 }
