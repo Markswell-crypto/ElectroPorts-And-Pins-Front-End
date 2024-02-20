@@ -1,4 +1,3 @@
-import React from 'react';
 import './About.css';
 import image1 from '../assets/laptops.jpg';
 import image2 from '../assets/Electronics.jpg';
@@ -7,8 +6,9 @@ import image4 from '../assets/Sony-soundsystem.jpg';
 
 const About = () => {
   return (
-    <div className="about-container">
-      <div className="content">
+    <div className='container mt-5'>
+    <div className="about-container mt-2">
+      <div className="container">
         <div className="text">
           <h1>About ElectroPorts & Pins</h1>
           <p>
@@ -28,7 +28,7 @@ const About = () => {
       <div className="content">
         <div className="text">
           <p>
-            Whether you're a beginner looking to start your journey in electronics or an
+            Whether youre a beginner looking to start your journey in electronics or an
             experienced maker seeking advanced components, ElectroPorts & Pins has you covered.
             Explore our extensive catalog, discover new tools and technologies, and embark
             on exciting projects with confidence.
@@ -41,6 +41,7 @@ const About = () => {
         </div>
         <img src={image4} alt="Electronics" className="image" />
       </div>
+    </div>
     </div>
   );
 };

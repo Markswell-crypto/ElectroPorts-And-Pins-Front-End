@@ -38,7 +38,7 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/phones" element={<Phones addToCart={addToCart} />} />
           <Route path="/laptops" element={<Laptops />} />
@@ -52,8 +52,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/audio" element={<SoundDevices />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/landingpage" element={<LandingPage />} />
+          <Route path="/account" element={<Account />} />          
         </Routes>
         <Footer />
       </BrowserRouter>

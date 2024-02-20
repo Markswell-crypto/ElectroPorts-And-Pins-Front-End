@@ -1,7 +1,6 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXTwitter, faFacebook, faInstagram, faAppStore, faApple } from '@fortawesome/free-brands-svg-icons';
+import { faXTwitter, faFacebook, faInstagram, faApple } from '@fortawesome/free-brands-svg-icons';
 import "./Footer.css"
 import NewsletterForm from './Newsletter';
 import logo1 from '../assets/logo11-1.png';

@@ -1,4 +1,3 @@
-import React from 'react';
 import Accessories from './Accessories';
 import Phones from './Phones';
 import SoundDevices from './SoundDevices';
