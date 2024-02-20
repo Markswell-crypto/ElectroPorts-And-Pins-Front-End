@@ -1,8 +1,16 @@
+import React from 'react';
+import Accessories from './Accessories';
+import Phones from './Phones';
+import SoundDevices from './SoundDevices';
 
 function LandingPage() {
   return (
-    <div>LandingPage</div>
+    <div>
+      <Accessories />
+      <Phones />
+      <SoundDevices />
+    </div>
   )
 }
 
-export default LandingPage
+export default LandingPage;
