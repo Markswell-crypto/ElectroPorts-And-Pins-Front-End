@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LandingPage from "./components/LandingPage";
 import Contact from "./components/Contact"
 import Navbar from "./components/Navbar"
 import HomePage from "./components/HomePage"
@@ -14,7 +15,7 @@ import Login from "./components/Login"
 import SoundDevices from "./components/SoundDevices"
 import About from "./components/About"
 import Account from "./components/Account"
-import LandingPage from "./components/LandingPage";
+
 import Footer from "./components/Footer";
 
 
@@ -24,6 +25,7 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
+        <Route path ="/" element={<LandingPage/>} />
           <Route path="/" element={<HomePage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/phones" element={<Phones />} />
@@ -39,7 +41,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/audio" element={<SoundDevices />} />
           <Route path="/account" element={<Account />} />
-          <Route path ="/landingpage" element={<LandingPage/>} />
+          
         
           
         </Routes>
