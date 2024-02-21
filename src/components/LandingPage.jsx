@@ -1,7 +1,7 @@
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import '../landingpage.css';
-
+import '../LandingPage.css';
+import { Link } from 'react-router-dom';
 
 
  const product = [
@@ -189,56 +189,69 @@ import '../landingpage.css';
 ];
 function LandingPage() {
   return (
-    
     <div className="product-grid">
       <div className="product-info">
-            <h2>Cashback Offer</h2>
-            <p>Up to  80% off</p>
-          </div>
-      
+        <h2>Cashback Offer</h2>
+        <p>Up to   80% off</p>
+      </div>
+
       {product.map((item) => (
         <div key={item.id} className="product-card">
-          <Carousel
-            showThumbs={false}
-            showStatus={false}
-            showIndicators={false}
-            infiniteLoop
-            renderArrowPrev={(onClickHandler, hasPrev, label) =>
-              hasPrev && (
-                <button
-                  type="button"
-                  onClick={onClickHandler}
-                  title={label}
-                  style={{ ...arrowStyles, left:  15 }}
-                >
-                  {/* Replace with your custom arrow icon */}
-                  <span aria-hidden="true">&#10094;</span>
-                </button>
-              )
-            }
-            renderArrowNext={(onClickHandler, hasNext, label) =>
-              hasNext && (
-                <button
-                  type="button"
-                  onClick={onClickHandler}
-                  title={label}
-                  style={{ ...arrowStyles, right:  15 }}
-                >
-                  {/* Replace with your custom arrow icon */}
-                  <span aria-hidden="true">&#10095;</span>
-                </button>
-              )
-            }
-          >
-            {item.images.map((image, index) => (
+            <Carousel
+              showThumbs={false}
+              showStatus={false}
+              showIndicators={false}
+              infiniteLoop
+              renderArrowPrev={(onClickHandler, hasPrev, label) =>
+                hasPrev && (
+                  <button
+                    type="button"
+                    onClick={onClickHandler}
+                    title={label}
+                    style={{ ...arrowStyles, left:  15 }}
+                  >
+                    <span aria-hidden="true">&#10094;</span>
+                  </button>
+                )
+              }
+              renderArrowNext={(onClickHandler, hasNext, label) =>
+                hasNext && (
+                  <button
+                    type="button"
+                    onClick={onClickHandler}
+                    title={label}
+                    style={{ ...arrowStyles, right:  15 }}
+                  >
+                    <span aria-hidden="true">&#10095;</span>
+                  </button>
+                )
+              }
+            >
+                {item.images.map((image, index) => (
               <div key={index}>
-                <img src={image} alt={`${item.title} slide ${index +  1}`} />
+                <img src={image} alt={`${item.title} slide ${index +   1}`} />
               </div>
             ))}
           </Carousel>
           <h2>{item.title}</h2>
           <p>Price: ${item.price}</p>
           <p>Rating: {item.rating}</p>
+          <Link to="/signup"> 
+            <button style={{
+              backgroundColor: '#008CBA', 
+              border: 'none', 
+              color: 'white', 
+              padding: '15px  32px', 
+              textAlign: 'center', 
+              textDecoration: 'none',
+              display: 'inline-block',
+              fontSize: '16px',
+              margin: '4px  2px',
+              cursor: 'pointer'
+            }}>
+              Add to Cart
+            </button>
+          </Link>
         </div>
       ))}
     </div>
@@ -254,7 +267,6 @@ const arrowStyles = {
   color: 'red',
   cursor: 'pointer',
   zIndex:  2,
-  
 };
 
 export default LandingPage;
