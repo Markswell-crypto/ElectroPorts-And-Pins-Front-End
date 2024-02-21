@@ -1,10 +1,7 @@
-import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import '../landingpage.css';
-import Accessories from './Accessories';
-import Phones from './Phones';
-import SoundDevices from './SoundDevices';
+
 
 
  const product = [

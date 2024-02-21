@@ -1,4 +1,3 @@
-import React from 'react';
 import { Carousel } from 'react-bootstrap';
 import Accessories from './Accessories';
 import Phones from './Phones';
