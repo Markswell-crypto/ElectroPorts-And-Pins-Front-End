@@ -22,7 +22,7 @@ function Navbar() {
       <ul>
         <li><Link to="/home">Home</Link></li>
         <li onMouseEnter={toggleCategories} onMouseLeave={toggleCategories}>
-          <Link to="">Categories</Link>
+          <Link to="#">Categories</Link>
           {showCategories && (
             <ul className="dropdown">
               <li><Link to="/phones">Phones</Link></li>
