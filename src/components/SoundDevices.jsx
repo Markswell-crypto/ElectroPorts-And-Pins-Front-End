@@ -66,7 +66,7 @@ function SoundDevices({ addToCart }) {
         {soundDevices.map(device => (
           <Col key={device.id}>
             <Card className="h-100 custom-card">
-              <Card.Img variant="top" src={device.image_url} alt={device.name} className="custom-img" />
+              <Card.Img variant="top" src={device.image} alt={device.name} className="custom-img" />
               <Card.Body>
                 <Card.Title>{device.name}</Card.Title>
                 <Card.Text>Price: {device.price}</Card.Text>
@@ -85,6 +85,7 @@ function SoundDevices({ addToCart }) {
         <Modal.Body>
           {selectedDevice && (
             <div>
+              <Card.Img variant="top" src={selectedDevice.image} alt={selectedDevice.name} className="details-image" />
               <p><strong>Name:</strong> {selectedDevice.name}</p>
               <p><strong>Price:</strong> {selectedDevice.price}</p>
               <p><strong>Description:</strong> {selectedDevice.description}</p>
