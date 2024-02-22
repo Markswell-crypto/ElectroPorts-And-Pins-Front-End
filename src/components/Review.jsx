@@ -51,12 +51,13 @@ const Review = () => {
     const handleReviewDelete = async (reviewId) => {
         // Implement logic to delete review if user owns it
         try {
-            await axios.delete(https://electroports-db.onrender.com/reviews/${reviewId});
+            await axios.delete(`https://electroports-db.onrender.com/reviews/${reviewId}`);
             fetchReviews();
         } catch (error) {
             console.error('Error deleting review:', error);
         }
     };
+    
 
     return (
         <Container>
