@@ -66,7 +66,7 @@ function Accessories({ addToCart }) {
         {accessories.map(accessory => (
           <Col key={accessory.id}>
             <Card className="h-100 custom-card">
-              <Card.Img variant="top" src={accessory.image_url} alt={accessory.name} className="custom-img" />
+              <Card.Img variant="top" src={accessory.image} alt={accessory.name} className="custom-img" />
               <Card.Body>
                 <Card.Title>{accessory.name}</Card.Title>
                 <Card.Text>Price: {accessory.price}</Card.Text>
@@ -85,6 +85,7 @@ function Accessories({ addToCart }) {
         <Modal.Body>
           {selectedAccessory && (
             <div>
+              <Card.Img variant="top" src={selectedAccessory.image} alt={selectedAccessory.name} className="details-image" />
               <p><strong>Name:</strong> {selectedAccessory.name}</p>
               <p><strong>Price:</strong> {selectedAccessory.price}</p>
               <p><strong>Description:</strong> {selectedAccessory.description}</p>
