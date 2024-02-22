@@ -1,6 +1,6 @@
 /* Phones.css */
 .phones-container {
-    background-color: blue;
+    background-color: lightblue;
     min-height: 100vh;
     padding: 20px;
     color: blue;
@@ -8,6 +8,11 @@
   
   .border {
     border: 2px solid blue;
+    transition: box-shadow 0.3s ease-in-out; /* Add transition effect for smooth hover */
+  }
+  
+  .border:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Apply box-shadow on hover */
   }
   
   .img-fluid {
