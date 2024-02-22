@@ -52,17 +52,18 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/phones" element={<Phones addToCart={addToCart} />} />
-          <Route path="/laptops" element={<Laptops />} />
+          <Route path="/laptops" element={<Laptops addToCart={addToCart} />} />
           <Route path="/contactus" element={<Contact />} />
           <Route path="/aboutus" element={<About />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/cart" element={<Cart cartItems={cartItems} removeFromCart={removeFromCart} />} />
           <Route path="/reviews" element={<Review />} />
-          <Route path="/accessories" element={<Accessories />} />
+          <Route path="/accessories" element={<Accessories addToCart={addToCart} />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/audio" element={<SoundDevices />} />
+          <Route path="/audio" element={<SoundDevices addToCart={addToCart} />} />
+
           <Route path="/account" element={<Account />} />
           <Route path="/item/:id" element={<ItemCard />} /> {/* Route for ItemCard */}
         </Routes>

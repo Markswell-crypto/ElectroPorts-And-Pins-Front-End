@@ -1,16 +1,15 @@
 .custom-card {
-    background-color: lightblue; 
-    margin-bottom: 20px; 
-  }
-  
-  .custom-img {
-    max-height: 150px; 
-    object-fit: cover; 
-  }
-  
+  background-color: lightblue; 
+  margin-bottom: 20px; 
+}
+
+.custom-img {
+  max-height: 150px; 
+  object-fit: contain; /* Change to 'contain' */
+}
+
 .details-image {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  
+  max-width: 100%;
+  max-height: 400px; /* Set a maximum height */
+  object-fit: contain; /* Adjust object-fit property */
+}
