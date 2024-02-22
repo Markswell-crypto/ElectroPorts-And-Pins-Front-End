@@ -13,9 +13,6 @@ function Search() {
     // Function to handle form submission
     const handleSearchSubmit = (event) => {
         event.preventDefault();
-        // Logic to filter items based on search term
-        // This can be implemented using JavaScript array methods like filter()
-        // Here I'm just setting the searchResults state to an empty array for demonstration purposes
         setSearchResults([]);
     };
 
