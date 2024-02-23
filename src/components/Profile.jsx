@@ -2,60 +2,106 @@ import { useState, useEffect } from 'react';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
-  const [purchases, setPurchases] = useState([]);
-  const [comments, setComments] = useState([]);
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [image, setImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    
     fetchUserInfo();
-    fetchOrderHistory();
-    fetchReviews();
   }, []);
 
   const fetchUserInfo = () => {
-    fetch('https://electroports-db.onrender.com/user/profile')
-      .then(response => response.json())
-      .then(data => setUser(data))
-      .catch(error => console.error('Error fetching user information:', error));
+    fetch('https://electroports-db.onrender.com/profile', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch user information');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setUser(data);
+        setUsername(data.username);
+        setEmail(data.email);
+        setPreviewImage(data.image_url ? `https://electroports-db.onrender.com/images/${data.image_url}` : null);
+      })
+      .catch(error => {
+        setError(error.message);
+      });
   };
 
-  const fetchOrderHistory = () => {
-    fetch('https://electroports-db.onrender.com/user/orders')
-      .then(response => response.json())
-      .then(data => setPurchases(data))
-      .catch(error => console.error('Error fetching purchase history:', error));
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
   };
 
-  const fetchReviews = () => {
-    fetch('https://electroports-db.onrender.com/user/reviews')
-      .then(response => response.json())
-      .then(data => setComments(data))
-      .catch(error => console.error('Error fetching reviews:', error));
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handleImageChange = (event) => {
+    const selectedImage = event.target.files[0];
+    if (selectedImage) {
+      setImage(selectedImage);
+      setPreviewImage(URL.createObjectURL(selectedImage));
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('email', email);
+    if (image) {
+      formData.append('image', image);
+    }
+
+    fetch('https://electroports-db.onrender.com/profile', {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      },
+      body: formData
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to update profile information');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setUser(data);
+        setPreviewImage(data.image_url ? `https://electroports-db.onrender.com/images/${data.image_url}` : null);
+        setError(null);
+      })
+      .catch(error => {
+        setError(error.message);
+      });
   };
 
   return (
-    <div>
-      <h1>User Profile</h1>
+    <div className="container mt-5">
+      <h1 className="text-center mb-4">User Profile</h1>
       {user && (
-        <div>
-          <img src={user.picture} alt="User" />
-          <p>Name: {user.name}</p>
-          <p>Email: {user.email}</p>
-          <p>Role: {user.role}</p>
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="card mb-4">
+            <div className="card-body text-center">
+              <img src={previewImage} alt="User" className="img-thumbnail rounded-circle mb-3" style={{ width: '150px' }} />
+              <input type="file" accept="image/*" onChange={handleImageChange} className="form-control mb-3" />
+              <input type="text" value={username} onChange={handleUsernameChange} className="form-control mb-3" />
+              <input type="email" value={email} onChange={handleEmailChange} className="form-control mb-3" />
+              <button type="submit" className="btn btn-primary">Save Changes</button>
+              {error && <p className="text-danger mt-3">{error}</p>}
+            </div>
+          </div>
+        </form>
       )}
-      <h2>Order History</h2>
-      <ul>
-        {orders.map((order, index) => (
-          <li key={index}>{order}</li>
-        ))}
-      </ul>
-      <h2>Comments/Reviews</h2>
-      <ul>
-        {comments.map((comment, index) => (
-          <li key={index}>{comment}</li>
-        ))}
-      </ul>
     </div>
   );
 };
