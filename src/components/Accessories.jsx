@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, Col, Row, Button, Modal, Form } from 'react-bootstrap';
 import './Accessories.css';
+import Review from './Review';
+import Stars from './Stars';
 
 function Accessories({ addToCart }) {
   const [accessories, setAccessories] = useState([]);
@@ -15,6 +17,7 @@ function Accessories({ addToCart }) {
     description: '',
     image: ''
   });
+  const [showReviewModal, setShowReviewModal] = useState(false);
 
   useEffect(() => {
     fetchAccessories();
@@ -94,6 +97,21 @@ function Accessories({ addToCart }) {
       .catch(error => console.error('Error adding accessory:', error));
   };
 
+  const handleSetStar = (rating) => {
+    setSelectedAccessory(prevAccessory => ({
+      ...prevAccessory,
+      rating: rating
+    }));
+  };
+
+  const handleShowReviewModal = () => {
+    setShowReviewModal(true);
+  };
+
+  const handleCloseReviewModal = () => {
+    setShowReviewModal(false);
+  };
+
   return (
     <div className="container">
       <h1 className="text-center my-4">Accessories</h1>
@@ -106,9 +124,12 @@ function Accessories({ addToCart }) {
               <Card.Body>
                 <Card.Title>{accessory.name}</Card.Title>
                 <Card.Text>Price: {accessory.price}</Card.Text>
+                <Stars setStar={handleSetStar} deviceId={accessory.id} />
                 <Button onClick={() => addToCart(accessory)}>Add to Cart</Button>
                 <Button onClick={() => handleShowDetails(accessory)} className="ms-2">Details</Button>
                 <Button onClick={() => handleDeleteConfirmation(accessory)} className="ms-2">Delete</Button>
+                <br />
+                <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
               </Card.Body>
             </Card>
           </Col>
@@ -127,6 +148,7 @@ function Accessories({ addToCart }) {
               <p><strong>Description:</strong> {selectedAccessory.description}</p>
             </div>
           )}
+          <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseDetailsModal}>Close</Button>
@@ -171,6 +193,17 @@ function Accessories({ addToCart }) {
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseAddModal}>Cancel</Button>
           <Button variant="primary" onClick={handleAddAccessory}>Add</Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showReviewModal} onHide={handleCloseReviewModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Reviews</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Review />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseReviewModal}>Close</Button>
         </Modal.Footer>
       </Modal>
     </div>

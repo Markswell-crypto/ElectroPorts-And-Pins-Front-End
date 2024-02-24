@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, Col, Row, Button, Modal, Form } from 'react-bootstrap';
 import './SoundDevices.css';
+import Review from './Review';
+import Stars from './Stars';
+
 
 function SoundDevices({ addToCart }) {
   const [soundDevices, setSoundDevices] = useState([]);
@@ -15,6 +18,8 @@ function SoundDevices({ addToCart }) {
     description: '',
     image: ''
   });
+  const [showReviewModal, setShowReviewModal] = useState(false);
+
 
   useEffect(() => {
     fetchSoundDevices();
@@ -97,6 +102,22 @@ function SoundDevices({ addToCart }) {
       .catch(error => console.error('Error adding sound device:', error));
   };
 
+  const handleSetStar = (rating) => {
+    setSelectedDevice(prevDevice => ({
+      ...prevDevice,
+      rating: rating
+    }));
+  };
+
+  const handleShowReviewModal = () => {
+    setShowReviewModal(true);
+  };
+
+  const handleCloseReviewModal = () => {
+    setShowReviewModal(false);
+  };
+
+
   return (
     <div className="container">
       <h1 className="text-center my-4">Sound Devices</h1>
@@ -108,10 +129,13 @@ function SoundDevices({ addToCart }) {
               <Card.Img variant="top" src={device.image} alt={device.name} className="custom-img" />
               <Card.Body>
                 <Card.Title>{device.name}</Card.Title>
-                <Card.Text>Price: {device.price}</Card.Text>
+                <Card.Text>Price: {device.price} Kshs</Card.Text>
+                <Stars setStar={handleSetStar} deviceId={device.id} />
                 <Button onClick={() => addToCart(device)}>Add to Cart</Button>
                 <Button onClick={() => handleShowDetails(device)} className="ms-2">Details</Button>
                 <Button onClick={() => handleDeleteConfirmation(device)} className="ms-2">Delete</Button>
+                <br />
+                <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
               </Card.Body>
             </Card>
           </Col>
@@ -124,12 +148,13 @@ function SoundDevices({ addToCart }) {
         <Modal.Body>
           {selectedDevice && (
             <div>
-                            <Card.Img variant="top" src={selectedDevice.image} alt={selectedDevice.name} className="details-image" />
+            <Card.Img variant="top" src={selectedDevice.image} alt={selectedDevice.name} className="details-image" />
               <p><strong>Name:</strong> {selectedDevice.name}</p>
-              <p><strong>Price:</strong> {selectedDevice.price}</p>
+              <p><strong>Price:</strong> {selectedDevice.price} Kshs</p>
               <p><strong>Description:</strong> {selectedDevice.description}</p>
             </div>
           )}
+          <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseDetailsModal}>Close</Button>
@@ -174,6 +199,17 @@ function SoundDevices({ addToCart }) {
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseAddModal}>Cancel</Button>
           <Button variant="primary" onClick={handleAddDevice}>Add</Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showReviewModal} onHide={handleCloseReviewModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Reviews</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Review />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseReviewModal}>Close</Button>
         </Modal.Footer>
       </Modal>
     </div>

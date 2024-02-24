@@ -66,9 +66,8 @@ function HomePage() {
           </Carousel.Item>
         ))}
       </Carousel>
-      
-      <Accessories />
-      
+      <Phones />
+      < Laptop />
       <Carousel>
         {slideImages1.map((slide, index) => (
           <Carousel.Item key={slide.id}>
@@ -80,12 +79,8 @@ function HomePage() {
           </Carousel.Item>
         ))}
       </Carousel>
-      
-      
-      
-      <Phones />
       <SoundDevices />
-      < Laptop />
+      <Accessories />
     </div>
   );
 }
