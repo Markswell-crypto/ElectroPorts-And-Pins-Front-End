@@ -1,137 +1,131 @@
 import { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, Card, Modal } from 'react-bootstrap';
+import { Button, Form, ListGroup, Spinner, Alert } from 'react-bootstrap';
 import axios from 'axios';
 
-const Review = () => {
-    const [reviews, setReviews] = useState([]);
-    const [user, setUser] = useState(null);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [reviewFormData, setReviewFormData] = useState({
-        user_id: null,
-        component_type: '', 
-        component_id: null, 
-        rating: 0,
-        comment: ''
-    });
-    const [showLoginModal, setShowLoginModal] = useState(false);
+function Review({ itemId }) { // Pass the ID of the item as a prop
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState('');
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchReviews = async () => {
-            try {
-                const response = await axios.get("https://electroports-db.onrender.com/reviews");
-                setReviews(response.data.reviews);
-            } catch (error) {
-                console.error("Error fetching reviews:", error);
-            }
-        };
-        fetchReviews();
-    }, []);
-
-    const fetchReviews = async () => {
-        try {
-            const response = await axios.get('https://electroports-db.onrender.com/reviews');
-            setReviews(response.data.reviews);
-        } catch (error) {
-            console.error('Error fetching reviews:', error);
-        }
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        // Fetch comments for the specific item based on its ID
+        const response = await axios.get(`https://electroports-db.onrender.com/reviews?itemId=${itemId}`);
+        setComments(response.data.reviews);
+        setLoading(false);
+      } catch (error) {
+        setError('Error fetching comments. Please try again later.');
+        setLoading(false);
+      }
     };
 
-    const handleLogin = (userData) => {
-        // Implement logic to handle user login
-        setUser(userData);
-        setIsLoggedIn(true);
-        setShowLoginModal(false);
-    };
+    fetchComments();
+  }, [itemId]); // Fetch comments whenever the itemId changes
 
-    const handleLogout = () => {
-        // Implement logic to handle user logout
-        setUser(null);
-        setIsLoggedIn(false);
-    };
+  const handleAddComment = async () => {
+    try {
+      // Assuming the user ID, component type, and component ID are provided
+      const response = await axios.post('https://electroports-db.onrender.com/reviews', {
+        user_id: 1,
+        component_type: 'phone',
+        component_id: itemId, // Use the provided itemId
+        rating: 0, // Assuming a default value for rating
+        comment: newComment,
+      });
 
-    const handleReviewSubmit = async () => {
-        if (!isLoggedIn) {
-            setShowLoginModal(true);
-            return;
-        }
+      setComments([...comments, response.data.review]);
+      setNewComment('');
+    } catch (error) {
+      setError('Error adding comment. Please try again.');
+    }
+  };
 
-        try {
-            await axios.post('https://electroports-db.onrender.com/reviews', reviewFormData);
-            fetchReviews();
-            setReviewFormData({
-                user_id: null,
-                component_type: '',
-                component_id: null,
-                rating: 0,
-                comment: ''
-            });
-        } catch (error) {
-            console.error('Error submitting review:', error);
-        }
-    };
+  const handleEditComment = (commentId) => {
+    setEditingCommentId(commentId);
+  };
 
-    const handleReviewEdit = async (reviewId, updatedReviewData) => {
-        // Implement logic to edit a review
-    };
+  const handleSaveComment = async (commentId, updatedText) => {
+    try {
+      await axios.patch(`https://electroports-db.onrender.com/reviews/${commentId}`, {
+        comment: updatedText,
+      });
 
-    const handleReviewDelete = async (reviewId) => {
-        // Implement logic to delete a review
-    };
+      const updatedComments = comments.map((comment) =>
+        comment.id === commentId ? { ...comment, comment: updatedText } : comment
+      );
+      setComments(updatedComments);
+      setEditingCommentId(null);
+    } catch (error) {
+      setError('Error saving comment. Please try again.');
+    }
+  };
 
-    return (
-        <Container>
-            <Row>
-                <Col>
-                    <h1 className="text-navy">Reviews</h1>
-                    <Card>
-                        <Card.Body>
-                            {reviews.map(review => (
-                                <div key={review.id}>
-                                    <p>User ID: {review.user_id}</p>
-                                    <p>Rating: {review.rating}</p>
-                                    <p>Comment: {review.comment}</p>
-                                    {user && user.id === review.user_id && (
-                                        <div>
-                                            <Button variant="primary" onClick={() => handleReviewEdit(review.id, updatedReviewData)}>Edit</Button>
-                                            <Button variant="danger" onClick={() => handleReviewDelete(review.id)}>Delete</Button>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col>
-                    {isLoggedIn ? (
-                        <div>
-                            <h2 className="text-navy">Add Review</h2>
-                            <Form>
-                                <Form.Group controlId="formRating">
-                                    <Form.Label>Rating</Form.Label>
-                                    <Form.Control type="number" value={reviewFormData.rating} onChange={(e) => setReviewFormData({ ...reviewFormData, rating: e.target.value })} />
-                                </Form.Group>
-                                <Form.Group controlId="formComment">
-                                    <Form.Label>Comment</Form.Label>
-                                    <Form.Control as="textarea" rows={3} value={reviewFormData.comment} onChange={(e) => setReviewFormData({ ...reviewFormData, comment: e.target.value })} />
-                                </Form.Group>
-                                <Button variant="primary" onClick={handleReviewSubmit}>Submit Review</Button>
-                            </Form>
-                        </div>
-                    ) : (
-                        <p>Please <Button variant="link" onClick={() => setShowLoginModal(true)}>log in</Button> to leave a review.</p>
-                    )}
-                </Col>
-            </Row>
-            <Modal show={showLoginModal} onHide={() => setShowLoginModal(false)}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Login</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    {/* Login form component */}
-                </Modal.Body>
-            </Modal>
-        </Container>
-    );
-};
+  const handleDeleteComment = async (commentId) => {
+    try {
+      await axios.delete(`https://electroports-db.onrender.com/reviews/${commentId}`);
+      const updatedComments = comments.filter((comment) => comment.id !== commentId);
+      setComments(updatedComments);
+    } catch (error) {
+      setError('Error deleting comment. Please try again.');
+    }
+  };
+
+  return (
+    <div className="container mt-4">
+      <h1 className="text-center text-secondary">Reviews Section</h1>
+      <div className="container" style={{ width: '100%' }}>
+        <Form className="mb-3">
+          <Form.Group controlId="newComment">
+            <Form.Control
+              type="text"
+              placeholder="Add a new Review"
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+            />
+            <br />
+          </Form.Group>
+          <Button variant="primary" onClick={handleAddComment}>
+            Add Review
+          </Button>
+        </Form>
+
+        {loading ? (
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        ) : error ? (
+          <Alert variant="danger">{error}</Alert>
+        ) : (
+          <ListGroup>
+            {comments.map((comment) => (
+              <ListGroup.Item key={comment.id} className="d-flex justify-content-between">
+                <div>
+                  {comment.comment}
+                  <Button
+                    variant="info"
+                    className="ms-2"
+                    onClick={() => handleEditComment(comment.id)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="danger"
+                    className="ms-2"
+                    onClick={() => handleDeleteComment(comment.id)}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default Review;

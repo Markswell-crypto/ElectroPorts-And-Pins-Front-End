@@ -13,7 +13,7 @@ function Footer() {
         <div className='newsletter'>
           <div className='newsletter-logo'>
             <div className='logo'>
-              <img src={logo1} alt="Logo" />
+              <img src={logo1} alt="Logo"  />
               <h3>ElectroPorts&<span>Pins</span></h3>
             </div>
             <ul className='socio-icons'>

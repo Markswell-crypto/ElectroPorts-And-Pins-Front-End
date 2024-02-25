@@ -1,31 +1,32 @@
 footer{
+    display: flexbox;
     background: #232531;
-    color: #6e7789;
-    height: 87vh;
-    margin-top: 50px;
+    color: hsl(220, 11%, 48%);
+    height: 60vh;
+    margin-top: 20px;
 }
 .footer{
     display: flex;
-    margin: 0 30px;
-    gap: 150px;
+    margin:20px 20px;
+    gap: 270px;
 }
 
 .our-products, 
 .about-us,
 .need-help,
 .payment-option{
-    margin-top: 100px;
+    margin-top: 30px;
 }
 .our-products h3,
 .about-us h3,
 .need-help h3,
 .payment-option h3{
-    font-size: 20px;
+    font-size: 30px;
 }
 .our-products ul li,
 .about-us ul li,
 .need-help ul li{
-    margin-top: 10px;
+    margin-top: 5px;
     list-style: none;
 }
 .our-products ul li a,
@@ -45,7 +46,7 @@ footer{
     padding-top: 50px;
     color: #fff;
     background: black;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     padding-left: 30px;
 }
 .newsletter-logo{
@@ -56,11 +57,11 @@ footer{
     display: flex;
 }
 .newsletter-logo img{
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 20px;
 }
 .newsletter-logo h3{
-    font-size: 20px;
+    font-size: 30px;
     padding-top: 4px;
     color: blue;
     font-weight: 900;
