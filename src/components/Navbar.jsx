@@ -1,12 +1,14 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import "./Navbar.css"
+import { faShoppingCart, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import "./Navbar.css";
 
 function Navbar() {
   const [showCategories, setShowCategories] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   const toggleCategories = () => {
     setShowCategories(!showCategories);
@@ -16,13 +18,22 @@ function Navbar() {
     setShowAccount(!showAccount);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    navigate('/login'); 
+    setIsLoggedIn(false); 
+  };
+
   return (
     <nav>
       <h3><Link to="/home">ElectroPorts&<span>Pins</span></Link></h3>
       <ul>
         <li><Link to="/home">Home</Link></li>
         <li onMouseEnter={toggleCategories} onMouseLeave={toggleCategories}>
-          <Link to="#">Categories</Link>
+
+          <Link>Categories</Link>
+
           {showCategories && (
             <ul className="dropdown">
               <li><Link to="/phones">Phones</Link></li>
@@ -35,11 +46,17 @@ function Navbar() {
         <li><Link to="/aboutus">About Us</Link></li>
         <li><Link to="/contactus">Contact Us</Link></li>
         <li onMouseEnter={toggleAccount} onMouseLeave={toggleAccount}>
-          <Link to="#">Account</Link>
+
+          <Link><FontAwesomeIcon icon={faUserCircle} /></Link>
+
           {showAccount && (
             <ul className="dropdown">
-              <li><Link to="/signup">SignUp</Link></li>
-              <li><Link to="/login">Login</Link></li>
+              <li><Link to="/profile">My Profile</Link></li>
+              {isLoggedIn ? (
+                <button onClick={handleLogout}>Logout</button>
+              ) : (
+                <li><Link to="/login">Login</Link></li>
+              )}
             </ul>
           )}
         </li>
