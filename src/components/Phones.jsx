@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Col, Row, Button, Modal, Card } from 'react-bootstrap';
-import './SoundDevices.css';
+import { Col, Row, Button, Modal, Card, Form } from 'react-bootstrap';
+
+import './SoundDevices.css'; 
 import Review from './Review';
 import Stars from './Stars';
 
@@ -9,6 +10,8 @@ function Phones({ addToCart }) {
   const [selectedPhone, setSelectedPhone] = useState(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [updatingPhone, setUpdatingPhone] = useState(null); 
 
   useEffect(() => {
     fetchPhones();
@@ -47,7 +50,25 @@ function Phones({ addToCart }) {
 
   const handleOrder = (phone) => {
     console.log(`Ordering ${phone.name}`);
-    // Implement order handling logic here
+    
+  };
+
+  const handleShowUpdateModal = (phone) => {
+    setSelectedPhone(phone);
+    setUpdatingPhone(phone); 
+    setShowUpdateModal(true);
+  };
+
+  const handleCloseUpdateModal = () => {
+    setShowUpdateModal(false);
+    setUpdatingPhone(null); 
+  };
+
+  const handleUpdatePhone = () => {
+    
+    console.log('Updated phone:', updatingPhone);
+    setShowUpdateModal(false);
+    setUpdatingPhone(null); 
   };
 
   return (
@@ -65,6 +86,8 @@ function Phones({ addToCart }) {
                 <Button onClick={() => addToCart(phone)}>Add to Cart</Button>
                 <Button onClick={() => handleShowDetails(phone)} className="ms-2">Details</Button>
                 <Button onClick={handleOrder} className="ms-2">Order</Button>
+                <Button className='update-button' onClick={() => handleShowUpdateModal(phone)}>Update</Button> 
+                <br />
                 <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
               </Card.Body>
             </Card>
@@ -99,6 +122,40 @@ function Phones({ addToCart }) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseReviewModal}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showUpdateModal} onHide={handleCloseUpdateModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Update Phone</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          
+          {updatingPhone && (
+            <div>
+              <Form>
+                <Form.Group className="mb-3" controlId="phoneName">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control type="text" placeholder="Enter phone name" name="name" value={updatingPhone.name} onChange={(e) => setUpdatingPhone({ ...updatingPhone, name: e.target.value })} />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="phonePrice">
+                  <Form.Label>Price</Form.Label>
+                  <Form.Control type="number" placeholder="Enter phone price" name="price" value={updatingPhone.price} onChange={(e) => setUpdatingPhone({ ...updatingPhone, price: e.target.value })} />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="phoneDescription">
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control as="textarea" rows={3} placeholder="Enter phone description" name="description" value={updatingPhone.description} onChange={(e) => setUpdatingPhone({ ...updatingPhone, description: e.target.value })} />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="phoneImageUrl">
+                  <Form.Label>Image URL</Form.Label>
+                  <Form.Control type="text" placeholder="Enter image URL" name="image_url" value={updatingPhone.image_url} onChange={(e) => setUpdatingPhone({ ...updatingPhone, image_url: e.target.value })} />
+                </Form.Group>
+              </Form>
+            </div>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseUpdateModal}>Cancel</Button>
+          <Button variant="primary" onClick={handleUpdatePhone}>Update</Button>
         </Modal.Footer>
       </Modal>
     </div>
