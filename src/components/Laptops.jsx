@@ -9,6 +9,8 @@ function Laptops({ addToCart }) {
   const [selectedLaptop, setSelectedLaptop] = useState(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedLaptopToUpdate, setSelectedLaptopToUpdate] = useState(null);
 
   useEffect(() => {
     fetchLaptops();
@@ -47,7 +49,21 @@ function Laptops({ addToCart }) {
 
   const handleOrder = (laptop) => {
     console.log(`Ordering ${laptop.name}`);
-    // Implement order handling logic here
+    
+  };
+
+  const handleShowUpdateModal = (laptop) => {
+    setSelectedLaptopToUpdate(laptop);
+    setShowUpdateModal(true);
+  };
+
+  const handleCloseUpdateModal = () => {
+    setShowUpdateModal(false);
+  };
+
+  const handleUpdateLaptop = () => {
+    console.log('Update laptop:', selectedLaptopToUpdate);
+    setShowUpdateModal(false);
   };
 
   return (
@@ -65,6 +81,9 @@ function Laptops({ addToCart }) {
                 <Button onClick={() => addToCart(laptop)}>Add to Cart</Button>
                 <Button onClick={() => handleShowDetails(laptop)} className="ms-2">Details</Button>
                 <Button onClick={handleOrder} className="ms-2">Order</Button>
+                
+                <Button className='update-button' onClick={() => handleShowUpdateModal(laptop)}>Update</Button>
+                <br/>
                 <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
               </Card.Body>
             </Card>
@@ -99,6 +118,35 @@ function Laptops({ addToCart }) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseReviewModal}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showUpdateModal} onHide={handleCloseUpdateModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Update Laptop</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="laptopName">
+              <Form.Label>Name</Form.Label>
+              <Form.Control type="text" placeholder="Enter laptop name" name="name" value={selectedLaptopToUpdate ? selectedLaptopToUpdate.name : ''} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="laptopPrice">
+              <Form.Label>Price</Form.Label>
+              <Form.Control type="number" placeholder="Enter laptop price" name="price" value={selectedLaptopToUpdate ? selectedLaptopToUpdate.price : ''} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="laptopDescription">
+              <Form.Label>Description</Form.Label>
+              <Form.Control as="textarea" rows={3} placeholder="Enter laptop description" name="description" value={selectedLaptopToUpdate ? selectedLaptopToUpdate.description : ''} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="laptopImage">
+              <Form.Label>Image URL</Form.Label>
+              <Form.Control type="text" placeholder="Enter image URL" name="image" value={selectedLaptopToUpdate ? selectedLaptopToUpdate.image : ''} />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseUpdateModal}>Cancel</Button>
+          <Button variant="primary" onClick={handleUpdateLaptop}>Update</Button>
         </Modal.Footer>
       </Modal>
     </div>

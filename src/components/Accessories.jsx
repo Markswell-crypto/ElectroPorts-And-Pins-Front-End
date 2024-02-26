@@ -11,13 +11,14 @@ function Accessories({ addToCart }) {
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
   const [accessoryToDelete, setAccessoryToDelete] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
   const [newAccessory, setNewAccessory] = useState({
     name: '',
     price: '',
     description: '',
     image: ''
   });
-  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [editAccessory, setEditAccessory] = useState(null); // State to hold the accessory being edited
 
   useEffect(() => {
     fetchAccessories();
@@ -65,6 +66,7 @@ function Accessories({ addToCart }) {
 
   const handleCloseAddModal = () => {
     setShowAddModal(false);
+    setEditAccessory(null); // Reset the edit accessory state when closing the modal
   };
 
   const handleInputChange = (event) => {
@@ -112,6 +114,13 @@ function Accessories({ addToCart }) {
     setShowReviewModal(false);
   };
 
+  // Function to handle editing an accessory
+  const handleEditAccessory = (accessory) => {
+    setEditAccessory(accessory);
+    setNewAccessory(accessory); // Populate the form fields with the existing accessory data
+    setShowAddModal(true); // Show the add modal
+  };
+
   return (
     <div className="container">
       <h1 className="text-center my-4">Accessories</h1>
@@ -128,6 +137,7 @@ function Accessories({ addToCart }) {
                 <Button onClick={() => addToCart(accessory)}>Add to Cart</Button>
                 <Button onClick={() => handleShowDetails(accessory)} className="ms-2">Details</Button>
                 <Button onClick={() => handleDeleteConfirmation(accessory)} className="ms-2">Delete</Button>
+                <Button className='update-button' onClick={() => handleEditAccessory(accessory)}>Update</Button>
                 <br />
                 <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
               </Card.Body>
@@ -135,40 +145,23 @@ function Accessories({ addToCart }) {
           </Col>
         ))}
       </Row>
-      <Modal show={showDetailsModal} onHide={handleCloseDetailsModal}>
+      {/* Existing Modals */}
+      {/* Review Modal */}
+      <Modal show={showReviewModal} onHide={handleCloseReviewModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Accessory Details</Modal.Title>
+          <Modal.Title>Reviews</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {selectedAccessory && (
-            <div>
-              <Card.Img variant="top" src={selectedAccessory.image} alt={selectedAccessory.name} className="details-image" />
-              <p><strong>Name:</strong> {selectedAccessory.name}</p>
-              <p><strong>Price:</strong> {selectedAccessory.price}</p>
-              <p><strong>Description:</strong> {selectedAccessory.description}</p>
-            </div>
-          )}
-          <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
+          <Review />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseDetailsModal}>Close</Button>
+          <Button variant="secondary" onClick={handleCloseReviewModal}>Close</Button>
         </Modal.Footer>
       </Modal>
-      <Modal show={showDeleteConfirmationModal} onHide={() => setShowDeleteConfirmationModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Delete Confirmation</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Are you sure you want to delete this accessory?</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowDeleteConfirmationModal(false)}>Cancel</Button>
-          <Button variant="danger" onClick={() => handleDeleteAccessory(accessoryToDelete.id)}>Delete</Button>
-        </Modal.Footer>
-      </Modal>
+      {/* Add / Update Modal */}
       <Modal show={showAddModal} onHide={handleCloseAddModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Accessory</Modal.Title>
+          <Modal.Title>{editAccessory ? 'Update Accessory' : 'Add New Accessory'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -192,18 +185,40 @@ function Accessories({ addToCart }) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseAddModal}>Cancel</Button>
-          <Button variant="primary" onClick={handleAddAccessory}>Add</Button>
+          <Button variant="primary" onClick={handleAddAccessory}>{editAccessory ? 'Update' : 'Add'}</Button>
         </Modal.Footer>
       </Modal>
-      <Modal show={showReviewModal} onHide={handleCloseReviewModal}>
+      {/* Delete Confirmation Modal */}
+      <Modal show={showDeleteConfirmationModal} onHide={() => setShowDeleteConfirmationModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Reviews</Modal.Title>
+          <Modal.Title>Delete Confirmation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Review />
+          <p>Are you sure you want to delete this accessory?</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseReviewModal}>Close</Button>
+          <Button variant="secondary" onClick={() => setShowDeleteConfirmationModal(false)}>Cancel</Button>
+          <Button variant="danger" onClick={() => handleDeleteAccessory(accessoryToDelete.id)}>Delete</Button>
+        </Modal.Footer>
+      </Modal>
+      {/* Details Modal */}
+      <Modal show={showDetailsModal} onHide={handleCloseDetailsModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Accessory Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedAccessory && (
+            <div>
+              <Card.Img variant="top" src={selectedAccessory.image} alt={selectedAccessory.name} className="details-image" />
+              <p><strong>Name:</strong> {selectedAccessory.name}</p>
+              <p><strong>Price:</strong> {selectedAccessory.price}</p>
+              <p><strong>Description:</strong> {selectedAccessory.description}</p>
+            </div>
+          )}
+          <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDetailsModal}>Close</Button>
         </Modal.Footer>
       </Modal>
     </div>

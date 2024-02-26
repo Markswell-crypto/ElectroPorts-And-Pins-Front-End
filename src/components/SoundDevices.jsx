@@ -4,7 +4,6 @@ import './SoundDevices.css';
 import Review from './Review';
 import Stars from './Stars';
 
-
 function SoundDevices({ addToCart }) {
   const [soundDevices, setSoundDevices] = useState([]);
   const [selectedDevice, setSelectedDevice] = useState(null);
@@ -19,7 +18,9 @@ function SoundDevices({ addToCart }) {
     image: ''
   });
   const [showReviewModal, setShowReviewModal] = useState(false);
-
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedDeviceToUpdate, setSelectedDeviceToUpdate] = useState(null);
+  const [updatingDevice, setUpdatingDevice] = useState(null); // New state to track the device being updated
 
   useEffect(() => {
     fetchSoundDevices();
@@ -46,19 +47,10 @@ function SoundDevices({ addToCart }) {
     setShowDeleteConfirmationModal(true);
   };
 
-  const handleDeleteDevice = (id) => {
-    fetch(`https://electroports-db.onrender.com/sounddevices/${id}`, {
-      method: 'DELETE',
-    })
-      .then(response => {
-        if (response.ok) {
-          fetchSoundDevices();
-          setShowDeleteConfirmationModal(false);
-        } else {
-          console.error('Failed to delete sound device:', response.status);
-        }
-      })
-      .catch(error => console.error('Error deleting sound device:', error));
+  const handleDeleteDevice = () => {
+    const updatedDevices = soundDevices.filter(device => device !== deviceToDelete);
+    setSoundDevices(updatedDevices);
+    setShowDeleteConfirmationModal(false);
   };
 
   const handleShowAddModal = () => {
@@ -71,35 +63,28 @@ function SoundDevices({ addToCart }) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewDevice(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    if (selectedDeviceToUpdate) {
+      setUpdatingDevice({
+        ...updatingDevice,
+        [name]: value
+      });
+    } else {
+      setNewDevice({
+        ...newDevice,
+        [name]: value
+      });
+    }
   };
 
   const handleAddDevice = () => {
-    fetch('https://electroports-db.onrender.com/sounddevices', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newDevice)
-    })
-      .then(response => {
-        if (response.ok) {
-          fetchSoundDevices();
-          setShowAddModal(false);
-          setNewDevice({
-            name: '',
-            price: '',
-            description: '',
-            image: ''
-          });
-        } else {
-          console.error('Failed to add sound device:', response.status);
-        }
-      })
-      .catch(error => console.error('Error adding sound device:', error));
+    setSoundDevices([...soundDevices, newDevice]);
+    setShowAddModal(false);
+    setNewDevice({
+      name: '',
+      price: '',
+      description: '',
+      image: ''
+    });
   };
 
   const handleSetStar = (rating) => {
@@ -117,6 +102,25 @@ function SoundDevices({ addToCart }) {
     setShowReviewModal(false);
   };
 
+  const handleShowUpdateModal = (device) => {
+    setSelectedDeviceToUpdate(device);
+    setUpdatingDevice(device); 
+    setShowUpdateModal(true);
+  };
+
+  const handleCloseUpdateModal = () => {
+    setShowUpdateModal(false);
+    setUpdatingDevice(null); 
+  };
+
+  const handleUpdateDevice = () => {
+    const updatedDevices = soundDevices.map(device =>
+      device === selectedDeviceToUpdate ? updatingDevice : device
+    );
+    setSoundDevices(updatedDevices);
+    setShowUpdateModal(false);
+    setUpdatingDevice(null); 
+  };
 
   return (
     <div className="container">
@@ -134,6 +138,7 @@ function SoundDevices({ addToCart }) {
                 <Button onClick={() => addToCart(device)}>Add to Cart</Button>
                 <Button onClick={() => handleShowDetails(device)} className="ms-2">Details</Button>
                 <Button onClick={() => handleDeleteConfirmation(device)} className="ms-2">Delete</Button>
+                <Button className='update-button' onClick={() => handleShowUpdateModal(device)}>Update</Button>
                 <br />
                 <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
               </Card.Body>
@@ -148,7 +153,7 @@ function SoundDevices({ addToCart }) {
         <Modal.Body>
           {selectedDevice && (
             <div>
-            <Card.Img variant="top" src={selectedDevice.image} alt={selectedDevice.name} className="details-image" />
+              <Card.Img variant="top" src={selectedDevice.image} alt={selectedDevice.name} className="details-image" />
               <p><strong>Name:</strong> {selectedDevice.name}</p>
               <p><strong>Price:</strong> {selectedDevice.price} Kshs</p>
               <p><strong>Description:</strong> {selectedDevice.description}</p>
@@ -169,7 +174,7 @@ function SoundDevices({ addToCart }) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowDeleteConfirmationModal(false)}>Cancel</Button>
-          <Button variant="danger" onClick={() => handleDeleteDevice(deviceToDelete.id)}>Delete</Button>
+          <Button variant="danger" onClick={handleDeleteDevice}>Delete</Button>
         </Modal.Footer>
       </Modal>
       <Modal show={showAddModal} onHide={handleCloseAddModal}>
@@ -210,6 +215,35 @@ function SoundDevices({ addToCart }) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseReviewModal}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showUpdateModal} onHide={handleCloseUpdateModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Update Device</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="deviceName">
+              <Form.Label>Name</Form.Label>
+              <Form.Control type="text" placeholder="Enter device name" name="name" value={updatingDevice ? updatingDevice.name : ''} onChange={handleInputChange} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="devicePrice">
+              <Form.Label>Price</Form.Label>
+              <Form.Control type="number" placeholder="Enter device price" name="price" value={updatingDevice ? updatingDevice.price : ''} onChange={handleInputChange} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="deviceDescription">
+              <Form.Label>Description</Form.Label>
+              <Form.Control as="textarea" rows={3} placeholder="Enter device description" name="description" value={updatingDevice ? updatingDevice.description : ''} onChange={handleInputChange} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="deviceImage">
+              <Form.Label>Image URL</Form.Label>
+              <Form.Control type="text" placeholder="Enter image URL" name="image" value={updatingDevice ? updatingDevice.image : ''} onChange={handleInputChange} />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseUpdateModal}>Cancel</Button>
+          <Button variant="primary" onClick={handleUpdateDevice}>Update</Button>
         </Modal.Footer>
       </Modal>
     </div>
