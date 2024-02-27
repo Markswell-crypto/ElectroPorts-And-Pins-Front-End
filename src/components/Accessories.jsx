@@ -18,7 +18,7 @@ function Accessories({ addToCart }) {
     description: '',
     image: ''
   });
-  const [editAccessory, setEditAccessory] = useState(null); // State to hold the accessory being edited
+  const [editAccessory, setEditAccessory] = useState(null);
 
   useEffect(() => {
     fetchAccessories();
@@ -66,7 +66,7 @@ function Accessories({ addToCart }) {
 
   const handleCloseAddModal = () => {
     setShowAddModal(false);
-    setEditAccessory(null); // Reset the edit accessory state when closing the modal
+    setEditAccessory(null); 
   };
 
   const handleInputChange = (event) => {
@@ -114,11 +114,11 @@ function Accessories({ addToCart }) {
     setShowReviewModal(false);
   };
 
-  // Function to handle editing an accessory
+  
   const handleEditAccessory = (accessory) => {
     setEditAccessory(accessory);
-    setNewAccessory(accessory); // Populate the form fields with the existing accessory data
-    setShowAddModal(true); // Show the add modal
+    setNewAccessory(accessory); 
+    setShowAddModal(true); 
   };
 
   return (
@@ -145,8 +145,7 @@ function Accessories({ addToCart }) {
           </Col>
         ))}
       </Row>
-      {/* Existing Modals */}
-      {/* Review Modal */}
+      
       <Modal show={showReviewModal} onHide={handleCloseReviewModal}>
         <Modal.Header closeButton>
           <Modal.Title>Reviews</Modal.Title>
@@ -158,7 +157,7 @@ function Accessories({ addToCart }) {
           <Button variant="secondary" onClick={handleCloseReviewModal}>Close</Button>
         </Modal.Footer>
       </Modal>
-      {/* Add / Update Modal */}
+      
       <Modal show={showAddModal} onHide={handleCloseAddModal}>
         <Modal.Header closeButton>
           <Modal.Title>{editAccessory ? 'Update Accessory' : 'Add New Accessory'}</Modal.Title>
@@ -188,7 +187,7 @@ function Accessories({ addToCart }) {
           <Button variant="primary" onClick={handleAddAccessory}>{editAccessory ? 'Update' : 'Add'}</Button>
         </Modal.Footer>
       </Modal>
-      {/* Delete Confirmation Modal */}
+      
       <Modal show={showDeleteConfirmationModal} onHide={() => setShowDeleteConfirmationModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Delete Confirmation</Modal.Title>
@@ -201,7 +200,7 @@ function Accessories({ addToCart }) {
           <Button variant="danger" onClick={() => handleDeleteAccessory(accessoryToDelete.id)}>Delete</Button>
         </Modal.Footer>
       </Modal>
-      {/* Details Modal */}
+      
       <Modal show={showDetailsModal} onHide={handleCloseDetailsModal}>
         <Modal.Header closeButton>
           <Modal.Title>Accessory Details</Modal.Title>
