@@ -1,65 +1,47 @@
-import { useState } from 'react';
-import NavBar from './NavBar';
+import React from 'react';
+import { Link } from 'react-router-dom'; // Import Link
+import "./Cart.css"
 
 function Cart({ cartItems, removeFromCart }) {
-  const [cart, setCart] = useState(cartItems);
-
-  const handleIncreaseQuantity = (index) => {
-    const updatedCart = [...cart];
-    updatedCart[index].quantity += 1;
-    setCart(updatedCart);
-    calculateTotalPrice(updatedCart);
-  };
-
-  const handleDecreaseQuantity = (index) => {
-    const updatedCart = [...cart];
-    if (updatedCart[index].quantity > 1) {
-      updatedCart[index].quantity -= 1;
-      setCart(updatedCart);
-      calculateTotalPrice(updatedCart);
-    }
-  };
-
   const handleRemove = (index) => {
     removeFromCart(index);
   };
 
-  const calculateTotalPrice = (items) => {
-    let total = 0;
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-      total += item.quantity * item.price;
-    }
-    return total;
+  // Function to calculate total price
+  const calculateTotalPrice = () => {
+    let totalPrice = 0;
+    cartItems.forEach(item => {
+      totalPrice += parseFloat(item.price); // Assuming each item has a 'price' property
+    });
+    return totalPrice;
   };
 
   return (
-    <div>
-      <NavBar />
     <div className="container">
       <h1 className="text-center my-4">Cart</h1>
-      {cart.length === 0 ? (
+      {cartItems.length === 0 ? (
         <p>Your cart is empty</p>
       ) : (
         <div>
-          {cart.map((item, index) => (
+          {cartItems.map((item, index) => (
             <div key={index} className="border p-3 my-3">
-              {item.image_url && <img src={item.image_url} alt={item.name} style={{ maxWidth: '100px' }} />}
-              {item.image && <img src={item.image} alt={item.name} style={{ maxWidth: '100px' }} />}
+              <img src={item.image_url} alt={item.name} style={{ maxWidth: '100px' }} />
               <div>{item.name}</div>
-              <div>${item.price}</div>
-              <div>Quantity:
-                <button onClick={() => handleDecreaseQuantity(index)}>-</button>
-                <span>{item.quantity}</span>
-                <button onClick={() => handleIncreaseQuantity(index)}>+</button>
-              </div>
-              <div>Total Price: ${calculateTotalPrice(cart)}</div>
+              <div>Ksh{item.price}</div>
+              {item.quantity > 1 ? (
+                <div>Quantity: {item.quantity}</div>
+              ) : (
+                <div>Quantity: 1</div>
+              )}
               <button onClick={() => handleRemove(index)}>Remove</button>
             </div>
           ))}
+          <div className="total-price">Total Price: Ksh{calculateTotalPrice()}</div>
+          <Link to="/account">
+            <button className="order-button">Order</button>
+          </Link>
         </div>
       )}
-    </div>
     </div>
   );
 }

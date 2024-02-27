@@ -25,6 +25,7 @@ function App() {
 
   const addToCart = (item) => {
     setCartItems([...cartItems, item]);
+    alert("🛒 Success! Your item has been added to the cart. Happy shopping!");
   };
 
   const removeFromCart = (index) => {

@@ -127,6 +127,12 @@ function Phones({ addToCart }) {
     setShowDetailsModal(true);
   };
 
+  const handleAddToCart = (phone) => {
+    addToCart(phone);
+    setShowDetailsModal(false);
+    setCartMessage(`Item '${phone.name}' added to cart successfully!`);
+  };
+
   return (
     <div>
       <NavBar />
@@ -143,7 +149,6 @@ function Phones({ addToCart }) {
                   <Card.Title>{phone.name}</Card.Title>
                   <Card.Text>Price: {phone.price}</Card.Text>
                   <Stars setStar={handleSetStar} deviceId={phone.id} />
-                  <Button onClick={() => addToCart(phone)}>Add to Cart</Button>
                   <Button onClick={() => handleShowDetails(phone)} className="ms-2">Details</Button>
                   <Button onClick={() => handleDeleteConfirmation(phone)} className="ms-2">Delete</Button>
                   <Button className='update-button' onClick={() => handleEditPhone(phone)}>Update</Button>
@@ -215,12 +220,14 @@ function Phones({ addToCart }) {
             <Modal.Title>Phone Details</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+          {/* {cartMessage && <p className="text-success">{cartMessage}</p>} */}
             {selectedPhone && (
               <div>
                 <Card.Img variant="top" src={selectedPhone.image_url} alt={selectedPhone.name} className="details-image" />
                 <p><strong>Name:</strong> {selectedPhone.name}</p>
                 <p><strong>Price:</strong> {selectedPhone.price}</p>
                 <p><strong>Description:</strong> {selectedPhone.description}</p>
+                <Button onClick={() => handleAddToCart(selectedPhone)}>Add to Cart</Button>
               </div>
             )}
             <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
