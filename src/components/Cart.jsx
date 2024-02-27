@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import NavBar from './NavBar';
 
 function Cart({ cartItems, removeFromCart }) {
   const [cart, setCart] = useState(cartItems);
@@ -33,6 +34,8 @@ function Cart({ cartItems, removeFromCart }) {
   };
 
   return (
+    <div>
+      <NavBar />
     <div className="container">
       <h1 className="text-center my-4">Cart</h1>
       {cart.length === 0 ? (
@@ -56,6 +59,7 @@ function Cart({ cartItems, removeFromCart }) {
           ))}
         </div>
       )}
+    </div>
     </div>
   );
 }

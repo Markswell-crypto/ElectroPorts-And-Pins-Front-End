@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FaUser, FaEnvelope, FaInfo } from 'react-icons/fa';
+import NavBar from './NavBar';
+import Search from './Search';
 
 const AccountDetails = () => {
   const [user, setUser] = useState(null);
@@ -30,6 +32,9 @@ const AccountDetails = () => {
   }
 
   return (
+    <div>
+      <NavBar />
+      <Search />
     <div className='bg-white overflow-hidden shadow-sm rounded-md border w-72 mx-auto mt-8'>
       <div className='px-4 py-5 sm:px-6 flex items-center justify-between bg-cyan-100 rounded-t-md'>
         <h3 className='text-lg leading-6 font-medium text-gray-900'>
@@ -66,6 +71,7 @@ const AccountDetails = () => {
       </div>
       <div className='border-t border-gray-200 px-4 py-4 sm:px-6 bg-cyan-100 rounded-b-md'>
       </div>
+    </div>
     </div>
   );
 };

@@ -1,8 +1,10 @@
+import NavBar from './NavBar';
 import { useEffect, useState } from 'react';
-import { Card, Col, Row, Button, Modal, Form } from 'react-bootstrap';
+import { Card, Col, Row, Button, Modal, Form, Navbar } from 'react-bootstrap';
 import './Laptops.css';
 import Review from './Review';
 import Stars from './Stars';
+import Search from './Search';
 
 function Laptops({ addToCart }) {
   const [laptops, setLaptops] = useState([]);
@@ -121,6 +123,9 @@ function Laptops({ addToCart }) {
   };
 
   return (
+    <div>
+      <NavBar />
+      <Search />
     <div className="container">
       <h1 className="text-center my-4">Laptops</h1>
       <Button onClick={handleShowAddModal} className="mb-3">Add New Laptop</Button>
@@ -219,6 +224,7 @@ function Laptops({ addToCart }) {
           <Button variant="secondary" onClick={handleCloseDetailsModal}>Close</Button>
         </Modal.Footer>
       </Modal>
+    </div>
     </div>
   );
 }

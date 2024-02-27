@@ -3,6 +3,8 @@ import { Card, Col, Row, Button, Modal, Form } from 'react-bootstrap';
 import './Phones.css'; 
 import Review from './Review';
 import Stars from './Stars'; 
+import NavBar from './NavBar';
+import Search from './Search';
 
 function Phones({ addToCart }) {
   const [phones, setPhones] = useState([]);
@@ -121,6 +123,9 @@ function Phones({ addToCart }) {
   };
 
   return (
+    <div>
+      <NavBar />
+      <Search />
     <div className="container">
       <h1 className="text-center my-4">Phones</h1>
       <Button onClick={handleShowAddModal} className="mb-3">Add New Phone</Button>
@@ -219,6 +224,7 @@ function Phones({ addToCart }) {
           <Button variant="secondary" onClick={handleCloseDetailsModal}>Close</Button>
         </Modal.Footer>
       </Modal>
+    </div>
     </div>
   );
 }
