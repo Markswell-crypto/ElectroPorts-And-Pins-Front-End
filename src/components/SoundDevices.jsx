@@ -3,6 +3,8 @@ import { Card, Col, Row, Button, Modal, Form } from 'react-bootstrap';
 import './SoundDevices.css';
 import Review from './Review';
 import Stars from './Stars';
+import NavBar from './NavBar';
+import Search from './Search';
 
 function SoundDevices({ addToCart }) {
   const [soundDevices, setSoundDevices] = useState([]);
@@ -123,6 +125,9 @@ function SoundDevices({ addToCart }) {
   };
 
   return (
+    <div>
+      <NavBar />
+      <Search />
     <div className="container">
       <h1 className="text-center my-4">Sound Devices</h1>
       <Button onClick={handleShowAddModal} className="mb-3">Add New Device</Button>
@@ -246,6 +251,7 @@ function SoundDevices({ addToCart }) {
           <Button variant="primary" onClick={handleUpdateDevice}>Update</Button>
         </Modal.Footer>
       </Modal>
+    </div>
     </div>
   );
 }

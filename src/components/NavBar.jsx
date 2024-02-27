@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import "./Navbar.css";
 
-function Navbar() {
+function NavBar() {
   const [showCategories, setShowCategories] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -52,14 +52,6 @@ function Navbar() {
           {showAccount && (
             <ul className="dropdown">
               <li><Link to="/profile">My Profile</Link></li>
-              {isLoggedIn ? (
-                <button onClick={handleLogout}>Logout</button>
-              ) : (
-                <>
-                  <li><Link to="/login">LogIn</Link></li>
-                  <li><Link to="/signup">SignUp</Link></li>
-                </>
-              )}
             </ul>
           )}
         </li>
@@ -70,4 +62,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default NavBar;

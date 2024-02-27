@@ -3,6 +3,8 @@ import { Card, Col, Row, Button, Modal, Form } from 'react-bootstrap';
 import './Accessories.css';
 import Review from './Review';
 import Stars from './Stars';
+import NavBar from './NavBar';
+import Search from './Search';
 
 function Accessories({ addToCart }) {
   const [accessories, setAccessories] = useState([]);
@@ -122,6 +124,9 @@ function Accessories({ addToCart }) {
   };
 
   return (
+    <div>
+      <NavBar />
+      <Search />
     <div className="container">
       <h1 className="text-center my-4">Accessories</h1>
       <Button onClick={handleShowAddModal} className="mb-3">Add New Accessory</Button>
@@ -220,6 +225,7 @@ function Accessories({ addToCart }) {
           <Button variant="secondary" onClick={handleCloseDetailsModal}>Close</Button>
         </Modal.Footer>
       </Modal>
+    </div>
     </div>
   );
 }

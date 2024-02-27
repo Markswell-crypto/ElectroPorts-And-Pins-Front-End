@@ -1,3 +1,4 @@
+import Menu from './Menu';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -72,6 +73,8 @@ const SignUp = () => {
   };
 
   return (
+    <div>
+      <Menu />
     <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <div>
         <h2>Sign Up</h2>
@@ -163,6 +166,7 @@ const SignUp = () => {
           <p className="mt-3">Already have an account? <Link to="/login">Login</Link>.</p> 
         </form>
       </div>
+    </div>
     </div>
   );
 };
