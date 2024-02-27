@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import "./Navbar.css";
+import Logout from './Logout';
 
 function Navbar() {
   const [showCategories, setShowCategories] = useState(false);
@@ -25,15 +26,18 @@ function Navbar() {
     setIsLoggedIn(false); 
   };
 
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+    navigate('/profile');
+  };
+
   return (
     <nav>
       <h3><Link to="/home">ElectroPorts&<span>Pins</span></Link></h3>
       <ul>
         <li><Link to="/home">Home</Link></li>
         <li onMouseEnter={toggleCategories} onMouseLeave={toggleCategories}>
-
           <Link>Categories</Link>
-
           {showCategories && (
             <ul className="dropdown">
               <li><Link to="/phones">Phones</Link></li>
@@ -46,14 +50,12 @@ function Navbar() {
         <li><Link to="/aboutus">About Us</Link></li>
         <li><Link to="/contactus">Contact Us</Link></li>
         <li onMouseEnter={toggleAccount} onMouseLeave={toggleAccount}>
-
           <Link><FontAwesomeIcon icon={faUserCircle} /></Link>
-
           {showAccount && (
             <ul className="dropdown">
               <li><Link to="/profile">My Profile</Link></li>
               {isLoggedIn ? (
-                <button onClick={handleLogout}>Logout</button>
+                <li><Logout /></li>
               ) : (
                 <>
                   <li><Link to="/login">LogIn</Link></li>
@@ -64,7 +66,6 @@ function Navbar() {
           )}
         </li>
         <li><Link to="/cart"><FontAwesomeIcon icon={faShoppingCart} /></Link></li>
-        
       </ul>
     </nav>
   );

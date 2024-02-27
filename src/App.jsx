@@ -18,7 +18,7 @@ import About from "./components/About"
 import Account from "./components/Account"
 import Footer from "./components/Footer";
 import Search from "./components/Search";
-
+import Logout from './components/Logout';
 
 
 function App() {
@@ -65,6 +65,7 @@ function App() {
           <Route path="/search/accessories" element={<Search name="accessories" />} />
           <Route path="/search/sounddevices" element={<Search name="sounddevices" />} />
           <Route path="/search/brands" element={<Search name="brands" />} />
+          <Route path="/logout" element={<Logout />} />
         </Routes>
         <Footer />
       </BrowserRouter>
