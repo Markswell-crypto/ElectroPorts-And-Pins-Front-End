@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Col, Row, Button, Modal, Form } from 'react-bootstrap';
-import './Phones.css'; 
+import './Phones.css';
 import Review from './Review';
-import Stars from './Stars'; 
+import Stars from './Stars';
+import NavBar from './NavBar';
 import Search from './Search';
 
 function Phones({ addToCart }) {
@@ -19,7 +20,7 @@ function Phones({ addToCart }) {
     description: '',
     image: ''
   });
-  const [editPhone, setEditPhone] = useState(null); 
+  const [editPhone, setEditPhone] = useState(null);
 
   useEffect(() => {
     fetchPhones();
@@ -67,7 +68,7 @@ function Phones({ addToCart }) {
 
   const handleCloseAddModal = () => {
     setShowAddModal(false);
-    setEditPhone(null); 
+    setEditPhone(null);
   };
 
   const handleInputChange = (event) => {
@@ -121,108 +122,120 @@ function Phones({ addToCart }) {
     setShowAddModal(true);
   };
 
+  const handleItemClick = (phone) => {
+    setSelectedPhone(phone);
+    setShowDetailsModal(true);
+  };
+
+  const handleAddToCart = (phone) => {
+    addToCart(phone);
+    setShowDetailsModal(false);
+  };
+
   return (
     <div>
+      <NavBar />
       <Search />
-    <div className="container">
-      <h1 className="text-center my-4">Phones</h1>
-      <Button onClick={handleShowAddModal} className="mb-3">Add New Phone</Button>
-      <Row xs={1} md={2} lg={4} className="g-4">
-        {phones.map(phone => (
-          <Col key={phone.id}>
-            <Card className="h-100 custom-card">
-              <Card.Img variant="top" src={phone.image_url} alt={phone.name} className="custom-img" />
-              <Card.Body>
-                <Card.Title>{phone.name}</Card.Title>
-                <Card.Text>Price: {phone.price}</Card.Text>
-                <Stars setStar={handleSetStar} deviceId={phone.id} />
-                <Button onClick={() => addToCart(phone)}>Add to Cart</Button>
-                <Button onClick={() => handleShowDetails(phone)} className="ms-2">Details</Button>
-                <Button onClick={() => handleDeleteConfirmation(phone)} className="ms-2">Delete</Button>
-                <Button className='update-button' onClick={() => handleEditPhone(phone)}>Update</Button>
-                <br />
-                <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-      {/* Review Modal */}
-      <Modal show={showReviewModal} onHide={handleCloseReviewModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Reviews</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Review />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseReviewModal}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-      
-      <Modal show={showAddModal} onHide={handleCloseAddModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>{editPhone ? 'Update Phone' : 'Add New Phone'}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="phoneName">
-              <Form.Label>Name</Form.Label>
-              <Form.Control type="text" placeholder="Enter phone name" name="name" value={newPhone.name} onChange={handleInputChange} />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="phonePrice">
-              <Form.Label>Price</Form.Label>
-              <Form.Control type="number" placeholder="Enter phone price" name="price" value={newPhone.price} onChange={handleInputChange} />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="phoneDescription">
-              <Form.Label>Description</Form.Label>
-              <Form.Control as="textarea" rows={3} placeholder="Enter phone description" name="description" value={newPhone.description} onChange={handleInputChange} />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="phoneImage">
-              <Form.Label>Image URL</Form.Label>
-              <Form.Control type="text" placeholder="Enter image URL" name="image" value={newPhone.image_url} onChange={handleInputChange} />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseAddModal}>Cancel</Button>
-          <Button variant="primary" onClick={handleAddPhone}>{editPhone ? 'Update' : 'Add'}</Button>
-        </Modal.Footer>
-      </Modal>
-      
-      <Modal show={showDeleteConfirmationModal} onHide={() => setShowDeleteConfirmationModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Delete Confirmation</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Are you sure you want to delete this phone?</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowDeleteConfirmationModal(false)}>Cancel</Button>
-          <Button variant="danger" onClick={() => handleDeletePhone(phoneToDelete.id)}>Delete</Button>
-        </Modal.Footer>
-      </Modal>
-      
-      <Modal show={showDetailsModal} onHide={handleCloseDetailsModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Phone Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {selectedPhone && (
-            <div>
-              <Card.Img variant="top" src={selectedPhone.image} alt={selectedPhone.name} className="details-image" />
-              <p><strong>Name:</strong> {selectedPhone.name}</p>
-              <p><strong>Price:</strong> {selectedPhone.price}</p>
-              <p><strong>Description:</strong> {selectedPhone.description}</p>
-            </div>
-          )}
-          <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseDetailsModal}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-    </div>
+      <div className="container">
+        <h1 className="text-center my-4">Phones</h1>
+        <Button onClick={handleShowAddModal} className="mb-3">Add New Phone</Button>
+        <Row xs={1} md={2} lg={4} className="g-4">
+          {phones.map(phone => (
+            <Col key={phone.id}>
+              <Card className="h-100 custom-card">
+                <Card.Img variant="top" src={phone.image_url} alt={phone.name} className="custom-img" />
+                <Card.Body>
+                  <Card.Title>{phone.name}</Card.Title>
+                  <Card.Text>Price: {phone.price}</Card.Text>
+                  <Stars setStar={handleSetStar} deviceId={phone.id} />
+                  <Button onClick={() => handleShowDetails(phone)} className="ms-2">Details</Button>
+                  <Button onClick={() => handleDeleteConfirmation(phone)} className="ms-2">Delete</Button>
+                  <Button className='update-button' onClick={() => handleEditPhone(phone)}>Update</Button>
+                  <br />
+                  <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
+                  <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={() => handleAddToCart(phone)}>Add to Cart</Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+        {/* Review Modal */}
+        <Modal show={showReviewModal} onHide={handleCloseReviewModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Reviews</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Review />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseReviewModal}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={showAddModal} onHide={handleCloseAddModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>{editPhone ? 'Update Phone' : 'Add New Phone'}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group className="mb-3" controlId="phoneName">
+                <Form.Label>Name</Form.Label>
+                <Form.Control type="text" placeholder="Enter phone name" name="name" value={newPhone.name} onChange={handleInputChange} />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="phonePrice">
+                <Form.Label>Price</Form.Label>
+                <Form.Control type="number" placeholder="Enter phone price" name="price" value={newPhone.price} onChange={handleInputChange} />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="phoneDescription">
+                <Form.Label>Description</Form.Label>
+                <Form.Control as="textarea" rows={3} placeholder="Enter phone description" name="description" value={newPhone.description} onChange={handleInputChange} />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="phoneImage">
+                <Form.Label>Image URL</Form.Label>
+                <Form.Control type="text" placeholder="Enter image URL" name="image_url" value={newPhone.image_url} onChange={handleInputChange} />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseAddModal}>Cancel</Button>
+            <Button variant="primary" onClick={handleAddPhone}>{editPhone ? 'Update' : 'Add'}</Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={showDeleteConfirmationModal} onHide={() => setShowDeleteConfirmationModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Delete Confirmation</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Are you sure you want to delete this phone?</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowDeleteConfirmationModal(false)}>Cancel</Button>
+            <Button variant="danger" onClick={() => handleDeletePhone(phoneToDelete.id)}>Delete</Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={showDetailsModal} onHide={handleCloseDetailsModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Phone Details</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {selectedPhone && (
+              <div>
+                <Card.Img variant="top" src={selectedPhone.image_url} alt={selectedPhone.name} className="details-image" />
+                <p><strong>Name:</strong> {selectedPhone.name}</p>
+                <p><strong>Price:</strong> {selectedPhone.price}</p>
+                <p><strong>Description:</strong> {selectedPhone.description}</p>
+                <Button onClick={() => handleAddToCart(selectedPhone)}>Add to Cart</Button>
+              </div>
+            )}
+            <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseDetailsModal}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
     </div>
   );
 }
