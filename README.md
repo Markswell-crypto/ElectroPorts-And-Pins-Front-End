@@ -20,19 +20,19 @@ To get started with the Electroports & Pins front end locally on your machine, f
 
 1. Clone this repository to your local machine using git clone.
 
-   git clone git@github.com:Markswell-crypto/ElectroPorts-And-Pins-Front-End.git
+        git clone git@github.com:Markswell-crypto/ElectroPorts-And-Pins-Front-End.git
 
 2. Navigate to the project directory.
 
-   cd ElectroPorts-And-Pins-Front-End
+        cd ElectroPorts-And-Pins-Front-End
 
 3. Install dependencies using npm or yarn.
 
-   npm install
+        npm install
 
 4. Start the development server.
 
-   npm run dev
+        npm run dev
 
 5. Open your browser and visit http://localhost:5173/ to view the Electroports & Pins application.
 
@@ -47,22 +47,22 @@ We welcome contributions from the community! If you'd like to contribute to Elec
 The frontend development of this project was led by a diverse team of developers, each contributing their unique skills and expertise to bring the user interface to life. Meet the dedicated members of our frontend development team and their respective roles:
 
 Markswell Ogutu - Frontend Lead Engineer
-GitHub: <a href="https://github.com/Markswell-crypto">Markswell-crypto</a>
+  * GitHub: <a href="https://github.com/Markswell-crypto">Markswell-crypto</a>
 
 Leon Gitonga - Assistant Frontend Lead Engineerr
-GitHub: <a href="https://github.com/Leonkaigit">Leonkaigit</a>
+  * GitHub: <a href="https://github.com/Leonkaigit">Leonkaigit</a>
 
 Joyce Mwangi - UI/UX Designer
-GitHub: <a href="https://github.com/JOYCEmwangi8880">JOYCEmwangi8880</a>
+  * GitHub: <a href="https://github.com/JOYCEmwangi8880">JOYCEmwangi8880</a>
 
 Gerald Gicharu - Frontend Engineer
-GitHub: <a href="https://github.com/Gerald-GG">Gerald-GG/a>
+  * GitHub: <a href="https://github.com/Gerald-GG">Gerald-GG</a>
 
 Mercy Mwongeli - Frontend Developer
-GitHub: <a href="https://github.com/MMer-cy123">MMer-cy123</a>
+  * GitHub: <a href="https://github.com/MMer-cy123">MMer-cy123</a>
 
 Brian Mulindi - Frontend Developer
-GitHub: <a href="https://github.com/mulindijr">mulindijr</a>
+  * GitHub: <a href="https://github.com/mulindijr">mulindijr</a>
 
 Together, we collaborated closely, leveraging our individual strengths and skills to create an engaging and intuitive frontend experience for our users. Our combined efforts have been instrumental in the success of our frontend development efforts.
 
