@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Col, Row, Button, Modal, Form } from 'react-bootstrap';
+import NavBar from './NavBar';
+import { useEffect, useState } from 'react';
+import { Card, Col, Row, Button, Modal, Form, Navbar } from 'react-bootstrap';
 import './Laptops.css';
 import Review from './Review';
 import Stars from './Stars';
-import NavBar from './NavBar';
 import Search from './Search';
 
 function Laptops({ addToCart }) {
@@ -122,18 +122,9 @@ function Laptops({ addToCart }) {
     setShowAddModal(true);
   };
 
-  const handleItemClick = (laptop) => {
-    setSelectedLaptop(laptop);
-    setShowDetailsModal(true);
-  };
-
-  const handleAddToCart = (laptop) => {
-    addToCart(laptop);
-    setShowDetailsModal(false);
-  };
-
   return (
     <div>
+      <NavBar />
       <Search />
       <div className="container">
         <h1 className="text-center my-4">Laptops</h1>
@@ -142,11 +133,12 @@ function Laptops({ addToCart }) {
           {laptops.map(laptop => (
             <Col key={laptop.id}>
               <Card className="h-100 custom-card">
-                <Card.Img variant="top" src={laptop.image_url} alt={laptop.name} className="custom-img" />
+                <Card.Img variant="top" src={laptop.image} alt={laptop.name} className="custom-img" />
                 <Card.Body>
                   <Card.Title>{laptop.name}</Card.Title>
                   <Card.Text>Price: {laptop.price}</Card.Text>
                   <Stars setStar={handleSetStar} deviceId={laptop.id} />
+                  <Button onClick={() => addToCart(laptop)}>Add to Cart</Button>
                   <Button onClick={() => handleShowDetails(laptop)} className="ms-2">Details</Button>
                   <Button onClick={() => handleDeleteConfirmation(laptop)} className="ms-2">Delete</Button>
                   <Button className='update-button' onClick={() => handleEditLaptop(laptop)}>Update</Button>
@@ -169,7 +161,7 @@ function Laptops({ addToCart }) {
             <Button variant="secondary" onClick={handleCloseReviewModal}>Close</Button>
           </Modal.Footer>
         </Modal>
-
+        
         <Modal show={showAddModal} onHide={handleCloseAddModal}>
           <Modal.Header closeButton>
             <Modal.Title>{editLaptop ? 'Update Laptop' : 'Add New Laptop'}</Modal.Title>
@@ -190,7 +182,7 @@ function Laptops({ addToCart }) {
               </Form.Group>
               <Form.Group className="mb-3" controlId="laptopImage">
                 <Form.Label>Image URL</Form.Label>
-                <Form.Control type="text" placeholder="Enter image URL" name="image_url" value={newLaptop.image_url} onChange={handleInputChange} />
+                <Form.Control type="text" placeholder="Enter image URL" name="image" value={newLaptop.image} onChange={handleInputChange} />
               </Form.Group>
             </Form>
           </Modal.Body>
@@ -199,7 +191,7 @@ function Laptops({ addToCart }) {
             <Button variant="primary" onClick={handleAddLaptop}>{editLaptop ? 'Update' : 'Add'}</Button>
           </Modal.Footer>
         </Modal>
-
+        
         <Modal show={showDeleteConfirmationModal} onHide={() => setShowDeleteConfirmationModal(false)}>
           <Modal.Header closeButton>
             <Modal.Title>Delete Confirmation</Modal.Title>
@@ -212,7 +204,7 @@ function Laptops({ addToCart }) {
             <Button variant="danger" onClick={() => handleDeleteLaptop(laptopToDelete.id)}>Delete</Button>
           </Modal.Footer>
         </Modal>
-
+        
         <Modal show={showDetailsModal} onHide={handleCloseDetailsModal}>
           <Modal.Header closeButton>
             <Modal.Title>Laptop Details</Modal.Title>
@@ -220,11 +212,10 @@ function Laptops({ addToCart }) {
           <Modal.Body>
             {selectedLaptop && (
               <div>
-                <Card.Img variant="top" src={selectedLaptop.image_url} alt={selectedLaptop.name} className="details-image" />
+                <Card.Img variant="top" src={selectedLaptop.image} alt={selectedLaptop.name} className="details-image" />
                 <p><strong>Name:</strong> {selectedLaptop.name}</p>
                 <p><strong>Price:</strong> {selectedLaptop.price}</p>
                 <p><strong>Description:</strong> {selectedLaptop.description}</p>
-                <Button onClick={() => handleAddToCart(selectedLaptop)}>Add to Cart</Button>
               </div>
             )}
             <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
