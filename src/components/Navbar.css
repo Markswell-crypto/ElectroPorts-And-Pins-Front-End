@@ -26,7 +26,7 @@ nav ul{
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 nav ul li{
@@ -38,7 +38,10 @@ nav ul li a{
     text-decoration: none;
 }
 .dropdown{
-    display: none;
+  display: none;
+  width: 13%;
+  margin-left: -60px;
+  
 }
 nav ul li:hover .dropdown{
     display: block;

@@ -1,4 +1,6 @@
-import { Carousel } from 'react-bootstrap';
+import Navbar from './NavBar';
+import Search from './Search';
+import { Carousel} from 'react-bootstrap';
 import Accessories from './Accessories';
 import Phones from './Phones';
 import SoundDevices from './SoundDevices';
@@ -9,19 +11,19 @@ function HomePage() {
   const carouselItems = [
     {
       img: "https://www.reliancedigital.in/medias/Smartwatch-Carnival-Carousel-Banner-D.jpg?context=bWFzdGVyfGltYWdlc3w5MTMyMnxpbWFnZS9qcGVnfGltYWdlcy9oYmYvaGFmLzk5Mjk4MzI1NjI3MTguanBnfDBkOTJjZDk5YTI1MTU3NWU5MDc1NGQ0ZDg2YjFlOWRhOGRhN2FiMzgxMDY3YWI5Y2M1NDk0MjNjZjU1MzNjYjY",
-      caption: "Slide   1",
+      
     },
     {
       img: "https://www.reliancedigital.in/medias/Accessories-Fiesta-Carousel-Banner-D.jpg?context=bWFzdGVyfGltYWdlc3w5MTAwN3xpbWFnZS9qcGVnfGltYWdlcy9oY2MvaDI5Lzk5Mjk4MTAyMTQ5NDIuanBnfGUxYTc3MTMzNThhNzlkZGQyNTNlYTYxMzM3OWM4NzQzYjY2YWYwYzFkNjhhMjA5M2YwNDhiYTMwMzA2ZGY5MTY",
-      caption: "Slide   2",
+      
     },
     {
       img: "https://www.reliancedigital.in/medias/Entertainment-Fest-Carousel-Banner-08-D.jpg?context=bWFzdGVyfGltYWdlc3wyMDEwMzl8aW1hZ2UvanBlZ3xpbWFnZXMvaGQxL2g2MS85OTI5MTgxNjI2Mzk4LmpwZ3w2MjQzNGNlODRiMmRkZmE1ZDA1Njg3MTNmM2ExMWE5ZDQ4MDJhN2VkYTBmOWVjMjg1MTdhNTM3YmNhM2E3YjM0",
-      caption: "Slide   3",
+      
     },
     {
       img: "https://www.reliancedigital.in/medias/Laptop-Carnival-Carousel-Banner-D.jpg?context=bWFzdGVyfGltYWdlc3w5MTcwNXxpbWFnZS9qcGVnfGltYWdlcy9oM2UvaDJiLzk5MzA5MTgwNjgyNTQuanBnfDM0NDIxMjI1ZmE2NjQ1MDk4MWY2MjJlMjU2Mjg0YzAxNDViYTRiM2YzMTEyYjU5OGUwNTZlNDY4NzcxYzk3M2Y",
-      caption: "Slide   4",
+      
     },
   
   ];
@@ -52,6 +54,8 @@ function HomePage() {
   
   return (
     <div>
+      <Navbar />
+      <Search />
       <Carousel>
         {carouselItems.map((item, index) => (
           <Carousel.Item key={index}>
@@ -66,9 +70,8 @@ function HomePage() {
           </Carousel.Item>
         ))}
       </Carousel>
-      
-      <Accessories />
-      
+      <Phones />
+      < Laptop />
       <Carousel>
         {slideImages1.map((slide, index) => (
           <Carousel.Item key={slide.id}>
@@ -80,12 +83,8 @@ function HomePage() {
           </Carousel.Item>
         ))}
       </Carousel>
-      
-      
-      
-      <Phones />
       <SoundDevices />
-      < Laptop />
+      <Accessories />
     </div>
   );
 }

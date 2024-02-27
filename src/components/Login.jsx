@@ -1,3 +1,4 @@
+import Menu from './Menu';
 import { useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -49,6 +50,8 @@ const Login = () => {
   };
 
   return (
+    <div>
+      <Menu />
     <div
       className="d-flex justify-content-center align-items-center vh-100"
       style={{
@@ -117,6 +120,7 @@ const Login = () => {
           <p className="mt-3">Dont have an account? <Link to="/signup">Signup</Link>.</p>
         </form>
       </div>
+    </div>
     </div>
   );
 };

@@ -1,0 +1,19 @@
+.blogImageDiv {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.blogPost {
+  width: 24%; /* Adjust width to fit four images in a row */
+  margin-bottom: 20px; /* Add some space between each blog post */
+}
+
+.blogImage {
+  width: 100%; /* Make the images fill the container */
+}
+
+.blogText {
+  text-align: center; /* Center the text below each image */
+}
+

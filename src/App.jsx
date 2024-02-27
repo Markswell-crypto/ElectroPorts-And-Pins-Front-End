@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import Contact from "./components/Contact"
-import Navbar from "./components/Navbar"
 import HomePage from "./components/HomePage"
 import Phones from "./components/Phones";
 import Laptops from "./components/Laptops";
@@ -17,6 +16,9 @@ import SoundDevices from "./components/SoundDevices"
 import About from "./components/About"
 import Account from "./components/Account"
 import Footer from "./components/Footer";
+// import Search from "./components/Search";
+
+
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -30,32 +32,36 @@ function App() {
     setCartItems(updatedCartItems);
   };
 
+  // const handleSearch = (searchTerm) => {
+  //   // Implement your search logic here
+  //   console.log("Search term:", searchTerm);
+  // };
+
   return (
     <>
       <BrowserRouter>
-        <Navbar />
+        {/* <Search onSearch={handleSearch}/> */}
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/phones" element={<Phones addToCart={addToCart} />} />
-          <Route path="/laptops" element={<Laptops />} />
+          <Route path="/laptops" element={<Laptops addToCart={addToCart} />} />
           <Route path="/contactus" element={<Contact />} />
           <Route path="/aboutus" element={<About />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/cart" element={<Cart cartItems={cartItems} removeFromCart={removeFromCart} />} />
           <Route path="/reviews" element={<Review />} />
-          <Route path="/accessories" element={<Accessories />} />
+          <Route path="/accessories" element={<Accessories addToCart={addToCart} />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/audio" element={<SoundDevices />} />
+          <Route path="/audio" element={<SoundDevices addToCart={addToCart} />} />
           <Route path="/account" element={<Account />} />
-          
-        
-          
-
-          <Route path="/account" element={<Account />} />          
-
+          {/* <Route path="/search/phones" element={<Search name="phones" />} />
+          <Route path="/search/laptops" element={<Search name="laptops" />} />
+          <Route path="/search/accessories" element={<Search name="accessories" />} />
+          <Route path="/search/sounddevices" element={<Search name="sounddevices" />} />
+          <Route path="/search/brands" element={<Search name="brands" />} /> */}
         </Routes>
         <Footer />
       </BrowserRouter>
