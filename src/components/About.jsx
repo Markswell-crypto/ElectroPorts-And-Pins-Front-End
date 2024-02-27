@@ -3,14 +3,10 @@ import image1 from '../assets/laptops.jpg';
 import image2 from '../assets/Electronics.jpg';
 import image3 from '../assets/phones.jpg';
 import image4 from '../assets/Sony-soundsystem.jpg';
-import NavBar from './NavBar';
-import Search from './Search';
 
 const About = () => {
   return (
     <div>
-      <NavBar />
-      <Search />
     <div className='container mt-5'>
     <div className="about-container mt-2">
       <div className="container">

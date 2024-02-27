@@ -1,11 +1,8 @@
-import SignUp from "./SignUp"
-import Login from './Login'
 
 function Account() {
   return (
     <>
-      <SignUp />
-      <Login />
+      <p>Welcome to Mpesa Payment</p>
     </>
   )
 }
