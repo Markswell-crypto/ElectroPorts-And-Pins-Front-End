@@ -26,7 +26,8 @@ function Cart({ cartItems, removeFromCart }) {
         <div>
           {cartItems.map((item, index) => (
             <div key={index} className="border p-3 my-3">
-              <img src={item.image_url} alt={item.name} style={{ maxWidth: '100px' }} />
+              {item.image_url && <img src={item.image_url} alt={item.name} style={{ maxWidth: '100px' }} />}
+              {item.image && <img src={item.image} alt={item.name} style={{ maxWidth: '100px' }} />}git 
               <div>{item.name}</div>
               <div>Ksh{item.price}</div>
               {item.quantity > 1 ? (

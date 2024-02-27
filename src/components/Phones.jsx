@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, Col, Row, Button, Modal, Form } from 'react-bootstrap';
-import './Phones.css';
+import './Phones.css'; 
 import Review from './Review';
-import Stars from './Stars';
+import Stars from './Stars'; 
 import NavBar from './NavBar';
 import Search from './Search';
 
@@ -20,7 +20,7 @@ function Phones({ addToCart }) {
     description: '',
     image: ''
   });
-  const [editPhone, setEditPhone] = useState(null);
+  const [editPhone, setEditPhone] = useState(null); 
 
   useEffect(() => {
     fetchPhones();
@@ -68,7 +68,7 @@ function Phones({ addToCart }) {
 
   const handleCloseAddModal = () => {
     setShowAddModal(false);
-    setEditPhone(null);
+    setEditPhone(null); 
   };
 
   const handleInputChange = (event) => {
@@ -122,16 +122,6 @@ function Phones({ addToCart }) {
     setShowAddModal(true);
   };
 
-  const handleItemClick = (phone) => {
-    setSelectedPhone(phone);
-    setShowDetailsModal(true);
-  };
-
-  const handleAddToCart = (phone) => {
-    addToCart(phone);
-    setShowDetailsModal(false);
-  };
-
   return (
     <div>
       <NavBar />
@@ -148,12 +138,12 @@ function Phones({ addToCart }) {
                   <Card.Title>{phone.name}</Card.Title>
                   <Card.Text>Price: {phone.price}</Card.Text>
                   <Stars setStar={handleSetStar} deviceId={phone.id} />
+                  <Button onClick={() => addToCart(phone)}>Add to Cart</Button>
                   <Button onClick={() => handleShowDetails(phone)} className="ms-2">Details</Button>
                   <Button onClick={() => handleDeleteConfirmation(phone)} className="ms-2">Delete</Button>
                   <Button className='update-button' onClick={() => handleEditPhone(phone)}>Update</Button>
                   <br />
                   <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
-                  <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={() => handleAddToCart(phone)}>Add to Cart</Button>
                 </Card.Body>
               </Card>
             </Col>
@@ -171,7 +161,7 @@ function Phones({ addToCart }) {
             <Button variant="secondary" onClick={handleCloseReviewModal}>Close</Button>
           </Modal.Footer>
         </Modal>
-
+        
         <Modal show={showAddModal} onHide={handleCloseAddModal}>
           <Modal.Header closeButton>
             <Modal.Title>{editPhone ? 'Update Phone' : 'Add New Phone'}</Modal.Title>
@@ -192,7 +182,7 @@ function Phones({ addToCart }) {
               </Form.Group>
               <Form.Group className="mb-3" controlId="phoneImage">
                 <Form.Label>Image URL</Form.Label>
-                <Form.Control type="text" placeholder="Enter image URL" name="image_url" value={newPhone.image_url} onChange={handleInputChange} />
+                <Form.Control type="text" placeholder="Enter image URL" name="image" value={newPhone.image_url} onChange={handleInputChange} />
               </Form.Group>
             </Form>
           </Modal.Body>
@@ -201,7 +191,7 @@ function Phones({ addToCart }) {
             <Button variant="primary" onClick={handleAddPhone}>{editPhone ? 'Update' : 'Add'}</Button>
           </Modal.Footer>
         </Modal>
-
+        
         <Modal show={showDeleteConfirmationModal} onHide={() => setShowDeleteConfirmationModal(false)}>
           <Modal.Header closeButton>
             <Modal.Title>Delete Confirmation</Modal.Title>
@@ -214,7 +204,7 @@ function Phones({ addToCart }) {
             <Button variant="danger" onClick={() => handleDeletePhone(phoneToDelete.id)}>Delete</Button>
           </Modal.Footer>
         </Modal>
-
+        
         <Modal show={showDetailsModal} onHide={handleCloseDetailsModal}>
           <Modal.Header closeButton>
             <Modal.Title>Phone Details</Modal.Title>
@@ -226,7 +216,6 @@ function Phones({ addToCart }) {
                 <p><strong>Name:</strong> {selectedPhone.name}</p>
                 <p><strong>Price:</strong> {selectedPhone.price}</p>
                 <p><strong>Description:</strong> {selectedPhone.description}</p>
-                <Button onClick={() => handleAddToCart(selectedPhone)}>Add to Cart</Button>
               </div>
             )}
             <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
