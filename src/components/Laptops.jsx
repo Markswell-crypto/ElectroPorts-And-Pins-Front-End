@@ -134,7 +134,6 @@ function Laptops({ addToCart }) {
 
   return (
     <div>
-      <NavBar />
       <Search />
       <div className="container">
         <h1 className="text-center my-4">Laptops</h1>

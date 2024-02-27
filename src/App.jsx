@@ -16,6 +16,7 @@ import SoundDevices from "./components/SoundDevices"
 import About from "./components/About"
 import Account from "./components/Account"
 import Footer from "./components/Footer";
+import NavBar from './components/NavBar';
 // import Search from "./components/Search";
 
 
@@ -41,6 +42,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+      <NavBar />
         {/* <Search onSearch={handleSearch}/> */}
         <Routes>
           <Route path="/" element={<LandingPage />} />

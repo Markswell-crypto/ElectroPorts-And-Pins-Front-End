@@ -1,5 +1,3 @@
-import Navbar from './NavBar';
-import Search from './Search';
 import { Carousel} from 'react-bootstrap';
 import Accessories from './Accessories';
 import Phones from './Phones';
@@ -54,8 +52,6 @@ function HomePage() {
   
   return (
     <div>
-      <Navbar />
-      <Search />
       <Carousel>
         {carouselItems.map((item, index) => (
           <Carousel.Item key={index}>

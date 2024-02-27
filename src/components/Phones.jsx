@@ -130,7 +130,6 @@ function Phones({ addToCart }) {
   const handleAddToCart = (phone) => {
     addToCart(phone);
     setShowDetailsModal(false);
-    setCartMessage(`Item '${phone.name}' added to cart successfully!`);
   };
 
   return (
@@ -154,6 +153,7 @@ function Phones({ addToCart }) {
                   <Button className='update-button' onClick={() => handleEditPhone(phone)}>Update</Button>
                   <br />
                   <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
+                  <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={() => handleAddToCart(phone)}>Add to Cart</Button>
                 </Card.Body>
               </Card>
             </Col>
@@ -220,7 +220,6 @@ function Phones({ addToCart }) {
             <Modal.Title>Phone Details</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          {/* {cartMessage && <p className="text-success">{cartMessage}</p>} */}
             {selectedPhone && (
               <div>
                 <Card.Img variant="top" src={selectedPhone.image_url} alt={selectedPhone.name} className="details-image" />

@@ -1,4 +1,3 @@
-import Menu from './Menu';
 import { useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -51,7 +50,6 @@ const Login = () => {
 
   return (
     <div>
-      <Menu />
     <div
       className="d-flex justify-content-center align-items-center vh-100"
       style={{

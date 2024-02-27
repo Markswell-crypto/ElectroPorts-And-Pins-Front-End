@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Container, Row, Col, Form, Button, Card, Alert } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa'; // Import the search icon
 
@@ -7,6 +7,7 @@ function Search({ onSearch }) {
     const [searchResults, setSearchResults] = useState([]);
     const [error, setError] = useState(null);
     const [showResults, setShowResults] = useState(false); // State to control showing search results
+    const [searchType, setSearchType] = useState('phones'); // Default search type
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -15,11 +16,10 @@ function Search({ onSearch }) {
     const handleSearchSubmit = async (event) => {
         event.preventDefault();
         if (!searchTerm.trim()) {
-            // If search term is empty or contains only whitespace, do nothing
             return;
         }
         try {
-            const response = await fetch(`https://electroports-db.onrender.com/phones?term=${searchTerm}`);
+            const response = await fetch(`https://electroports-db.onrender.com/${searchType}?term=${searchTerm}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch search results');
             }
@@ -31,8 +31,12 @@ function Search({ onSearch }) {
         } catch (error) {
             console.error('Error searching:', error);
             setSearchResults([]);
-            setError('Failed to fetch search results. Please try again.');
+            // setError('Failed to fetch search results. Please try again.');
         }
+    };
+
+    const handleSearchTypeChange = (event) => {
+        setSearchType(event.target.value);
     };
 
     return (
@@ -50,6 +54,14 @@ function Search({ onSearch }) {
                             <Button variant="primary" type="submit" className="ml-3">
                                 <FaSearch /> 
                             </Button>
+                        </Form.Group>
+                        <Form.Group controlId="searchTypeForm" className="d-flex align-items-center">
+                            <Form.Control as="select" value={searchType} onChange={handleSearchTypeChange}>
+                                <option value="phones">Phones</option>
+                                <option value="laptops">Laptops</option>
+                                <option value="accessories">Accessories</option>
+                                <option value="sounddevices">Sound Devices</option>
+                            </Form.Control>
                         </Form.Group>
                     </Form>
                 </Col>
