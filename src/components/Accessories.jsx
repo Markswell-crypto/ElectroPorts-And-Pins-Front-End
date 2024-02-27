@@ -3,7 +3,6 @@ import { Card, Col, Row, Button, Modal, Form } from 'react-bootstrap';
 import './Accessories.css';
 import Review from './Review';
 import Stars from './Stars';
-import NavBar from './NavBar';
 import Search from './Search';
 
 function Accessories({ addToCart }) {
@@ -125,7 +124,6 @@ function Accessories({ addToCart }) {
 
   return (
     <div>
-      <NavBar />
       <Search />
     <div className="container">
       <h1 className="text-center my-4">Accessories</h1>

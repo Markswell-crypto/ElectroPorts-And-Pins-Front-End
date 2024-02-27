@@ -3,7 +3,6 @@ import { Card, Col, Row, Button, Modal, Form } from 'react-bootstrap';
 import './SoundDevices.css';
 import Review from './Review';
 import Stars from './Stars';
-import NavBar from './NavBar';
 import Search from './Search';
 
 function SoundDevices({ addToCart }) {
@@ -126,7 +125,6 @@ function SoundDevices({ addToCart }) {
 
   return (
     <div>
-      <NavBar />
       <Search />
     <div className="container">
       <h1 className="text-center my-4">Sound Devices</h1>

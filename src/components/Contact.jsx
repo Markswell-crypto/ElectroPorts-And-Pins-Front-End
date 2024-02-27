@@ -6,8 +6,6 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { useEffect, useState } from 'react';
 import emailjs from 'emailjs-com';
 import '../contact.css'; 
-import NavBar from './NavBar';
-import Search from './Search';
 
 library.add(faMapMarkerAlt, faPhone, faEnvelope, faFacebook, faTwitter, faInstagram);
 
@@ -38,8 +36,6 @@ const Contact = () => {
 
     return (
         <div>
-            <NavBar />
-            <Search />
         <div className="contact mt-4">
             <Container>
                 <Row>
