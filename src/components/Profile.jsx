@@ -1,109 +1,73 @@
 import { useState, useEffect } from 'react';
+import { FaUser, FaEnvelope, FaInfo } from 'react-icons/fa';
 
-const Profile = () => {
+const AccountDetails = () => {
   const [user, setUser] = useState(null);
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [image, setImage] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchUserInfo();
-  }, []);
-
-  const fetchUserInfo = () => {
-    fetch('https://electroports-db.onrender.com/profile', {
-      method: 'GET',
+    const accessToken = localStorage.getItem('access_token'); 
+    fetch('https://electroports-db.onrender.com/user', {
       headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        'Authorization': `Bearer ${accessToken}` 
       }
     })
       .then(response => {
         if (!response.ok) {
-          throw new Error('Failed to fetch user information');
+          throw new Error('Network response was not ok');
         }
         return response.json();
       })
       .then(data => {
         setUser(data);
-        setUsername(data.username);
-        setEmail(data.email);
-        setPreviewImage(data.image_url ? `https://electroports-db.onrender.com/images/${data.image_url}` : null);
       })
       .catch(error => {
-        setError(error.message);
+        console.error('Error fetching user details:', error);
       });
-  };
+  }, []);
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handleImageChange = (event) => {
-    const selectedImage = event.target.files[0];
-    if (selectedImage) {
-      setImage(selectedImage);
-      setPreviewImage(URL.createObjectURL(selectedImage));
-    }
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const formData = new FormData();
-    formData.append('username', username);
-    formData.append('email', email);
-    if (image) {
-      formData.append('image', image);
-    }
-
-    fetch('https://electroports-db.onrender.com/profile', {
-      method: 'PUT',
-      headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-      },
-      body: formData
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to update profile information');
-        }
-        return response.json();
-      })
-      .then(data => {
-        setUser(data);
-        setPreviewImage(data.image_url ? `https://electroports-db.onrender.com/images/${data.image_url}` : null);
-        setError(null);
-      })
-      .catch(error => {
-        setError(error.message);
-      });
-  };
+  if (!user) {
+    return <div>Loading...</div>; 
+  }
 
   return (
-    <div className="container mt-5">
-      <h1 className="text-center mb-4">User Profile</h1>
-      {user && (
-        <form onSubmit={handleSubmit}>
-          <div className="card mb-4">
-            <div className="card-body text-center">
-              <img src={previewImage} alt="User" className="img-thumbnail rounded-circle mb-3" style={{ width: '150px' }} />
-              <input type="file" accept="image/*" onChange={handleImageChange} className="form-control mb-3" />
-              <input type="text" value={username} onChange={handleUsernameChange} className="form-control mb-3" />
-              <input type="email" value={email} onChange={handleEmailChange} className="form-control mb-3" />
-              <button type="submit" className="btn btn-primary">Save Changes</button>
-              {error && <p className="text-danger mt-3">{error}</p>}
-            </div>
+    <div className='bg-white overflow-hidden shadow-sm rounded-md border w-72 mx-auto mt-8'>
+      <div className='px-4 py-5 sm:px-6 flex items-center justify-between bg-cyan-100 rounded-t-md'>
+        <h3 className='text-lg leading-6 font-medium text-gray-900'>
+          Account Details
+        </h3>
+      </div>
+      <div className='border-t border-gray-200 px-4 py-5 sm:p-0'>
+        <dl className='sm:divide-y sm:divide-gray-200'>
+          <div className='py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
+            <dt className='text-sm font-medium text-gray-500'>
+              <FaUser className="mr-2" />
+            </dt>
+            <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
+              {user.username}
+            </dd>
           </div>
-        </form>
-      )}
+          <div className='py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
+            <dt className='text-sm font-medium text-gray-500'>
+              <FaEnvelope className="mr-2" />
+            </dt>
+            <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
+              {user.email}
+            </dd>
+          </div>
+          <div className='py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
+            <dt className='text-sm font-medium text-gray-500'>
+              <FaInfo className="mr-2" />
+            </dt>
+            <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
+              {user.role}
+            </dd>
+          </div>
+        </dl>
+      </div>
+      <div className='border-t border-gray-200 px-4 py-4 sm:px-6 bg-cyan-100 rounded-b-md'>
+      </div>
     </div>
   );
 };
 
-export default Profile;
+export default AccountDetails;
