@@ -142,7 +142,7 @@ function Laptops({ addToCart }) {
 
   return (
     <div>
-      <Search />
+      <Search onSearch={handleSearch}/>
       {showNotFoundAlert && (
         <div className="container alert alert-danger" role="alert">
           Product not found.
