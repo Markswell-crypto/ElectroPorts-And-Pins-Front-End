@@ -21,7 +21,7 @@ function SoundDevices({ addToCart }) {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedDeviceToUpdate, setSelectedDeviceToUpdate] = useState(null);
-  const [updatingDevice, setUpdatingDevice] = useState(null); // New state to track the device being updated
+  const [updatingDevice, setUpdatingDevice] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredSoundDevices, setFilteredSoundDevices] = useState([]);
   const [showNotFoundAlert, setShowNotFoundAlert] = useState(false);

@@ -4,7 +4,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../LandingPage.css";
-import Search from './Search';
+// import Search from './Search';
 
 const BestSellers = ({ handleDispatch }) => {
    let data = [
@@ -293,7 +293,7 @@ const CarouselDiv = () => {
 const LandingPage = () => {
    return (
     <div className="flex" style={{ backgroundColor: 'black' }}>
-      <Search />
+      {/* <Search /> */}
     <CarouselDiv />
     <div className="flex">
        <BestSellers />
