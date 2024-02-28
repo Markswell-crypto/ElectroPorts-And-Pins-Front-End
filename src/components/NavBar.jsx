@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import "./Navbar.css";
 
+// Import statements remain the same
+
 function NavBar() {
   const [showCategories, setShowCategories] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
@@ -11,7 +13,6 @@ function NavBar() {
   const [userRole, setUserRole] = useState('');
   const navigate = useNavigate();
 
-  // Function to update login status and user role based on localStorage
   const updateLoginStatus = () => {
     const storedAccessToken = localStorage.getItem('accessToken');
     const storedRefreshToken = localStorage.getItem('refreshToken');
@@ -21,12 +22,10 @@ function NavBar() {
     setUserRole(storedRole || '');
   };
 
-  // Initial check for login status and user role
   useEffect(() => {
     updateLoginStatus();
   }, []);
 
-  // Listen for changes to localStorage to update login status and user role
   useEffect(() => {
     const handleStorageChange = (event) => {
       if (event.key === 'accessToken' || event.key === 'refreshToken' || event.key === 'userRole') {
@@ -36,29 +35,19 @@ function NavBar() {
 
     window.addEventListener('storage', handleStorageChange);
 
-    // Cleanup function to remove the event listener
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, []);
 
-  // Listen for changes to accessToken and refreshToken in localStorage
-  useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    const refreshToken = localStorage.getItem('refreshToken');
-    const role = localStorage.getItem('userRole');
-
-    setIsLoggedIn(!!accessToken && !!refreshToken && !!role);
-  }, [localStorage.getItem('accessToken'), localStorage.getItem('refreshToken'), localStorage.getItem('userRole')]);
-
   const handleLogout = () => {
-    // Clear localStorage and navigate to login page
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('userRole');
     navigate('/home');
-    updateLoginStatus(); // Update login status after logout
-    alert('User Logged out successfully');
+    updateLoginStatus();
+    // You might want to redirect to a different page instead of just alerting
+    alert('User logged out successfully');
   };
 
   const toggleCategories = () => {
@@ -110,8 +99,8 @@ function NavBar() {
                 <li><Link to="/profile">My Profile</Link></li>
               ) : (
                 <>
-                  <li><Link to="/login">LogIn</Link></li>
-                  <li><Link to="/signup">SignUp</Link></li>
+                  <li><Link to="/login">Log In</Link></li>
+                  <li><Link to="/signup">Sign Up</Link></li>
                 </>
               )}
             </ul>
