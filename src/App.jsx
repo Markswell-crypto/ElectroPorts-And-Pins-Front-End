@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NavBar from './components/NavBar';
 import LandingPage from "./components/LandingPage";
 import Contact from "./components/Contact";
 import HomePage from "./components/HomePage";
@@ -16,7 +17,6 @@ import SoundDevices from "./components/SoundDevices";
 import About from "./components/About";
 import Account from "./components/Account";
 import Footer from "./components/Footer";
-import Search from "./components/Search";
 import UserPhones from './components/UserAccess/UserPhones';
 import UserLaptops from './components/UserAccess/UserLaptops';
 import UserAccessories from './components/UserAccess/UserAccessories';
@@ -35,11 +35,6 @@ function App() {
     const updatedCartItems = cartItems.filter((_, i) => i !== index);
     setCartItems(updatedCartItems);
   };
-
-  // const handleSearch = (searchTerm) => {
-  //   // Implement your search logic here
-  //   console.log("Search term:", searchTerm);
-  // };
 
   return (
     <>

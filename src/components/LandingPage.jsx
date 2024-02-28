@@ -180,9 +180,6 @@ const BestSellers = ({ handleDispatch }) => {
                   {item.Rating} ({item.Reviews} reviews)
                 </p>
                 <hr className="linedivide"/>
-                <div className="KshDiv flex">
-                  {/* Add your Ksh code here */}
-                </div>
                 <div>
                   <button
                     onClick={() => handleAddToCart(item)} // Call handleAddToCart instead of handleDispatch
