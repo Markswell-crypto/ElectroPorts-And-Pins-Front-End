@@ -21,6 +21,7 @@ function Laptop({ addToCart }) {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedLaptopToUpdate, setSelectedLaptopToUpdate] = useState(null);
+  const [updatingLaptop, setUpdatingLaptop] = useState(null); // Define updatingLaptop state variable
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredLaptops, setFilteredLaptops] = useState([]);
   const [showNotFoundAlert, setShowNotFoundAlert] = useState(false);
