@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import "./Navbar.css";
+import Logout from './Logout';
 
 function NavBar() {
   const [showCategories, setShowCategories] = useState(false);
@@ -37,15 +38,18 @@ function NavBar() {
     alert('User Logged out successfully');
   };
 
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+    navigate('/profile');
+  };
+
   return (
     <nav>
       <h3><Link to="/">ElectroPorts&<span>Pins</span></Link></h3>
       <ul>
         <li><Link to="/home">Home</Link></li>
         <li onMouseEnter={toggleCategories} onMouseLeave={toggleCategories}>
-
           <Link>Categories</Link>
-
           {showCategories && (
             <ul className="dropdown">
               <li><Link to="/phones">Phones</Link></li>
@@ -58,6 +62,7 @@ function NavBar() {
         <li><Link to="/aboutus">About Us</Link></li>
         <li><Link to="/contactus">Contact Us</Link></li>
         <li onMouseEnter={toggleAccount} onMouseLeave={toggleAccount}>
+<<<<<<< HEAD:src/components/NavBar.jsx
 
           {isLoggedIn ? (
             <Link><FontAwesomeIcon icon={faUserCircle} /></Link>
@@ -65,10 +70,17 @@ function NavBar() {
             <Link>Account</Link>
           )}
 
+=======
+          <Link><FontAwesomeIcon icon={faUserCircle} /></Link>
+>>>>>>> 8e13d93 (Logout component):src/components/Navbar.jsx
           {showAccount && (
             <ul className="dropdown">
               {isLoggedIn ? (
+<<<<<<< HEAD:src/components/NavBar.jsx
                 <li><Link to="/profile">My Profile</Link></li>
+=======
+                <li><Logout /></li>
+>>>>>>> 8e13d93 (Logout component):src/components/Navbar.jsx
               ) : (
                 <>
                   <li><Link to="/login">LogIn</Link></li>
@@ -79,11 +91,14 @@ function NavBar() {
           )}
         </li>
         <li><Link to="/cart"><FontAwesomeIcon icon={faShoppingCart} /></Link></li>
+<<<<<<< HEAD:src/components/NavBar.jsx
         {isLoggedIn ? (
           <li><Link onClick={handleLogout}>Logout</Link></li>
         ) : (
           <li><Link to="/login">Login</Link></li>
         )}
+=======
+>>>>>>> 8e13d93 (Logout component):src/components/Navbar.jsx
       </ul>
     </nav>
   );

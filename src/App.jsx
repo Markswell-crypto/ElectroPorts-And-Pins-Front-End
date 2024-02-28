@@ -16,9 +16,14 @@ import SoundDevices from "./components/SoundDevices"
 import About from "./components/About"
 import Account from "./components/Account"
 import Footer from "./components/Footer";
+<<<<<<< HEAD
 import NavBar from './components/NavBar';
 // import Search from "./components/Search";
 
+=======
+import Search from "./components/Search";
+import Logout from './components/Logout';
+>>>>>>> 8e13d93 (Logout component)
 
 
 function App() {
@@ -64,7 +69,12 @@ function App() {
           <Route path="/search/laptops" element={<Search name="laptops" />} />
           <Route path="/search/accessories" element={<Search name="accessories" />} />
           <Route path="/search/sounddevices" element={<Search name="sounddevices" />} />
+<<<<<<< HEAD
           <Route path="/search/brands" element={<Search name="brands" />} /> */}
+=======
+          <Route path="/search/brands" element={<Search name="brands" />} />
+          <Route path="/logout" element={<Logout />} />
+>>>>>>> 8e13d93 (Logout component)
         </Routes>
         <Footer />
       </BrowserRouter>
