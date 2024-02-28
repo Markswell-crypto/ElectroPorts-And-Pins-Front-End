@@ -1,25 +1,23 @@
-/* Phones.css */
 .phones-container {
-    background-color: blue;
-    min-height: 100vh;
-    padding: 20px;
-    color: blue;
-  }
-  
-  .border {
-    border: 2px solid blue;
-  }
-  
-  .img-fluid {
-    border: 2px solid blue;
-  }
-  
-  .mb-2 {
-    color: blue;
-  }
-  
-  .Button {
-    background-color: blue;
-    color: white;
-  }
-  
+  background-color: blue;
+  min-height: 100vh;
+  padding: 20px;
+  color: blue;
+}
+
+.border {
+  border: 2px solid blue;
+}
+
+.img-fluid {
+  border: 2px solid blue;
+}
+
+.mb-2 {
+  color: blue;
+}
+
+.Button {
+  background-color: blue;
+  color: white;
+}

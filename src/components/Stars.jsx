@@ -17,7 +17,7 @@ const Stars = ({ initialRating, deviceId }) => {
     };
 
     return (
-        <div>
+        <div className='container mb-2'>
             {[...Array(5)].map((_, i) => {
                 const ratingValue = i + 1;
                 return (
@@ -32,7 +32,6 @@ const Stars = ({ initialRating, deviceId }) => {
                     />
                 );
             })}
-            <p>I rate this Device {rating === 0 ? 'Not rated' : `${rating} stars`}</p>
         </div>
     );
 };

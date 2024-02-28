@@ -1,11 +1,10 @@
-import React from "react";
 import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import "../LandingPage.css";
+import Search from './Search';
 
 const BestSellers = ({ handleDispatch }) => {
    let data = [
@@ -160,47 +159,45 @@ const BestSellers = ({ handleDispatch }) => {
 
    const navigate = useNavigate(); // Initialize the useNavigate hook
 
-   const handleAddToCart = (e) => {
+   const handleAddToCart = () => {
       // Redirect to the login page when "ADD TO CART" is clicked
       navigate('/login');
    };
 
-    return (
+   return (
       <div className="bestSellerDiv ">
-         <h1 className="headingText d-flex justify-content-center" style={{color:'blue', fontWeight:'bold', fontSize:'xxx-Large'}}> OFFER/ SAVE UPTO 80% </h1>
-         <div className="cardsDiv d-flex flex-wrap">
-
-            {data.map((e) => (
-               <div key={e.id} className="card col-md-4">
-                  <div className="imageDiv">
-                  <img src={e.imgURL} alt="" style={{ width: '80%', height: 'auto' }} />
-                  </div>
-                  <div className="dataDiv">
-                  <p className="title" style={{ fontWeight: 'bold', fontSize: '20px' }}>{e.productName}</p> 
-                     <p className="reviewsDiv">
-                        <AiFillStar color="red" />
-                        {e.Rating} ({e.Reviews} reviews)
-                     </p>
-                     <hr className="linedivide"/>
-                     <div className="KshDiv flex">
-                        
-                     </div>
-                     
-                     <div>
-                        <button
-                           onClick={() => handleAddToCart(e)} // Call handleAddToCart instead of handleDispatch
-                           className="cardBtn" style={{color:'white', fontWeight:'bold', fontSize:'x-Large', backgroundColor: 'red'}}
-                        >
-                           ADD TO CART
-                        </button>
-                     </div>
-                  </div>
-               </div>
-            ))}
-         </div>
+        <h1 className="headingText d-flex justify-content-center" style={{color:'blue', fontWeight:'bold', fontSize:'xxx-Large'}}> OFFER/ SAVE UPTO 80% </h1>
+        <div className="cardsDiv d-flex flex-wrap">
+          {data.map((item) => (
+            <div key={item.id} className="card col-md-4">
+              <div className="imageDiv">
+                <img src={item.imgURL} alt={item.productName} style={{ width: '80%', height: 'auto' }} />
+              </div>
+              <div className="dataDiv">
+                <p className="title" style={{ fontWeight: 'bold', fontSize: '20px' }}>{item.productName}</p> 
+                <p className="reviewsDiv">
+                  <AiFillStar color="red" />
+                  {item.Rating} ({item.Reviews} reviews)
+                </p>
+                <hr className="linedivide"/>
+                <div className="KshDiv flex">
+                  {/* Add your Ksh code here */}
+                </div>
+                <div>
+                  <button
+                    onClick={() => handleAddToCart(item)} // Call handleAddToCart instead of handleDispatch
+                    className="cardBtn" style={{color:'white', fontWeight:'bold', fontSize:'x-Large', backgroundColor: 'red'}}
+                  >
+                    ADD TO CART
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-   );
-};
+    );
+          }
 
 const BoatBlogs = () => {
   return (
@@ -296,6 +293,7 @@ const CarouselDiv = () => {
 const LandingPage = () => {
    return (
     <div className="flex" style={{ backgroundColor: 'black' }}>
+      <Search />
     <CarouselDiv />
     <div className="flex">
        <BestSellers />

@@ -1,4 +1,4 @@
-import { Carousel } from 'react-bootstrap';
+import { Carousel} from 'react-bootstrap';
 import Accessories from './Accessories';
 import Phones from './Phones';
 import SoundDevices from './SoundDevices';

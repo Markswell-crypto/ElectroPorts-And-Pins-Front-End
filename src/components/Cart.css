@@ -1,0 +1,36 @@
+/* Cart.css */
+.cart-container {
+    background-color: blueviolet; /* Change the color code to your desired background color */
+    padding: 10px; /* Adding some padding for spacing */
+    border-radius: 5px; /* Adding border-radius for rounded corners */
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    border: 1px solid blueviolet;
+    padding: 2px;
+    margin-bottom: 10px;
+}
+
+.cart-item img {
+    max-width: 100px;
+    margin-right: 20px;
+}
+
+.cart-item-info {
+    flex-grow: 1;
+}
+
+.cart-item-price {
+    font-weight: bold;
+}
+
+.total-price {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.order-button {
+    margin-top: 20px;
+}
