@@ -35,6 +35,7 @@ const Contact = () => {
     };
 
     return (
+        <div>
         <div className="contact mt-4">
             <Container>
                 <Row>
@@ -101,6 +102,7 @@ const Contact = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
+        </div>
         </div>
     );
 }

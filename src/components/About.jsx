@@ -6,6 +6,7 @@ import image4 from '../assets/Sony-soundsystem.jpg';
 
 const About = () => {
   return (
+    <div>
     <div className='container mt-5'>
     <div className="about-container mt-2">
       <div className="container">
@@ -41,6 +42,7 @@ const About = () => {
         </div>
         <img src={image4} alt="Electronics" className="image" />
       </div>
+    </div>
     </div>
     </div>
   );

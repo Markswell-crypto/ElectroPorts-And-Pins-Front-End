@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button, Form, ListGroup, Spinner, Alert } from 'react-bootstrap';
 import axios from 'axios';
 
-function Review({ itemId }) { // Pass the ID of the item as a prop
+function CommentSection() {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [editingCommentId, setEditingCommentId] = useState(null);
@@ -12,8 +12,7 @@ function Review({ itemId }) { // Pass the ID of the item as a prop
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        // Fetch comments for the specific item based on its ID
-        const response = await axios.get(`https://electroports-db.onrender.com/reviews?itemId=${itemId}`);
+        const response = await axios.get('https://electroports-db.onrender.com/reviews');
         setComments(response.data.reviews);
         setLoading(false);
       } catch (error) {
@@ -23,19 +22,13 @@ function Review({ itemId }) { // Pass the ID of the item as a prop
     };
 
     fetchComments();
-  }, [itemId]); // Fetch comments whenever the itemId changes
+  }, []);
 
   const handleAddComment = async () => {
     try {
-      // Assuming the user ID, component type, and component ID are provided
       const response = await axios.post('https://electroports-db.onrender.com/reviews', {
-        user_id: 1,
-        component_type: 'phone',
-        component_id: itemId, // Use the provided itemId
-        rating: 0, // Assuming a default value for rating
-        comment: newComment,
+        comment: newComment
       });
-
       setComments([...comments, response.data.review]);
       setNewComment('');
     } catch (error) {
@@ -103,21 +96,40 @@ function Review({ itemId }) { // Pass the ID of the item as a prop
             {comments.map((comment) => (
               <ListGroup.Item key={comment.id} className="d-flex justify-content-between">
                 <div>
-                  {comment.comment}
-                  <Button
-                    variant="info"
-                    className="ms-2"
-                    onClick={() => handleEditComment(comment.id)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="danger"
-                    className="ms-2"
-                    onClick={() => handleDeleteComment(comment.id)}
-                  >
-                    Delete
-                  </Button>
+                  {editingCommentId === comment.id ? (
+                    <>
+                      <input
+                        type="text"
+                        value={comment.comment}
+                        onChange={(e) => handleSaveComment(comment.id, e.target.value)}
+                      />
+                      <Button
+                        variant="warning"
+                        className="ms-2"
+                        onClick={() => handleSaveComment(comment.id, comment.comment)}
+                      >
+                        Save
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      {comment.comment}
+                      <Button
+                        variant="info"
+                        className="ms-2"
+                        onClick={() => handleEditComment(comment.id)}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="danger"
+                        className="ms-2"
+                        onClick={() => handleDeleteComment(comment.id)}
+                      >
+                        Delete
+                      </Button>
+                    </>
+                  )}
                 </div>
               </ListGroup.Item>
             ))}
@@ -128,4 +140,4 @@ function Review({ itemId }) { // Pass the ID of the item as a prop
   );
 }
 
-export default Review;
+export default CommentSection;
