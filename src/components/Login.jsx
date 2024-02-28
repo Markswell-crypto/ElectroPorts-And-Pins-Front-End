@@ -32,9 +32,10 @@ const Login = () => {
         password, 
       });
   
-      const { access_token, refresh_token } = response.data;
+      const { access_token, refresh_token, role } = response.data;
       localStorage.setItem('accessToken', access_token);
       localStorage.setItem('refreshToken', refresh_token);
+      localStorage.setItem('userRole', role);
       setShowAlert(true); // Show the alert after successful login
       navigate('/home');
     } catch (error) {
@@ -49,29 +50,20 @@ const Login = () => {
   };
 
   return (
-    <div>
-    <div
-      className="d-flex justify-content-center align-items-center vh-100"
-      style={{
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }}
-    >
-      <div>
-        <h2>Login</h2>
-        {loginError && <p className="text-danger">{loginError}</p>}
-        {showAlert && ( // Show the alert if showAlert is true
+    <div className="vh-100 d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', width: '100vw', height: '100vh', }}>
+      <div className="bg-white p-4 rounded shadow" style={{ maxWidth: '400px', width: '100%' }}>
+        <h2 className="text-center mb-4">Login</h2>
+        {loginError && <p className="text-danger text-center">{loginError}</p>}
+        {showAlert && (
           <div className="alert alert-success" role="alert">
             User logged in successfully.
           </div>
         )}
         <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">Email</label>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
             <input
-              type="text"
+              type="email"
               className="form-control"
               id="email"
               name="email"
@@ -80,8 +72,8 @@ const Login = () => {
               required
             />
           </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
+          <div className="form-group">
+            <label htmlFor="password">
               Password
               <div className="input-group">
                 <input
@@ -93,17 +85,19 @@ const Login = () => {
                   onChange={handleChange}
                   required
                 />
-                <button
-                  className="btn btn-outline-secondary"
-                  type="button"
-                  onClick={togglePasswordVisibility}
-                >
-                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-                </button>
+                <div className="input-group-append">
+                  <button
+                    className="btn btn-outline-secondary"
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                  >
+                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                  </button>
+                </div>
               </div>
             </label>
           </div>
-          <div className="mb-3 form-check">
+          <div className="form-group form-check">
             <input
               type="checkbox"
               className="form-check-input"
@@ -114,11 +108,10 @@ const Login = () => {
             />
             <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
           </div>
-          <button type="submit" className="btn btn-primary">Login</button>
-          <p className="mt-3">Dont have an account? <Link to="/signup">Signup</Link>.</p>
+          <button type="submit" className="btn btn-primary btn-block mt-4">Login</button>
+          <p className="text-center mt-3">Don't have an account? <Link to="/signup">Sign up</Link>.</p>
         </form>
       </div>
-    </div>
     </div>
   );
 };

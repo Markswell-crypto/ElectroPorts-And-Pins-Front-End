@@ -20,11 +20,29 @@ function Phones({ addToCart }) {
     description: '',
     image: ''
   });
-  const [editPhone, setEditPhone] = useState(null); 
+  const [editPhone, setEditPhone] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredPhones, setFilteredPhones] = useState([]);
+  const [showNotFoundAlert, setShowNotFoundAlert] = useState(false);
 
+  const handleSearch = (searchTerm) => {
+    setSearchTerm(searchTerm);
+  };
   useEffect(() => {
     fetchPhones();
   }, []);
+
+  useEffect(() => {
+    const newFilteredPhones = phones.filter(accessory =>
+      accessory.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredPhones(newFilteredPhones);
+    if (newFilteredPhones.length === 0) {
+      setShowNotFoundAlert(true);
+    } else {
+      setShowNotFoundAlert(false);
+    }
+  }, [searchTerm, phones]);
 
   const fetchPhones = () => {
     fetch('https://electroports-db.onrender.com/phones')
@@ -124,13 +142,17 @@ function Phones({ addToCart }) {
 
   return (
     <div>
-      <NavBar />
-      <Search />
+      <Search onSearch={handleSearch}/>
+      {showNotFoundAlert && (
+        <div className="container alert alert-danger" role="alert">
+          Product not found.
+        </div>
+      )}
       <div className="container">
         <h1 className="text-center my-4">Phones</h1>
         <Button onClick={handleShowAddModal} className="mb-3">Add New Phone</Button>
         <Row xs={1} md={2} lg={4} className="g-4">
-          {phones.map(phone => (
+          {filteredPhones.map(phone => (
             <Col key={phone.id}>
               <Card className="h-100 custom-card">
                 <Card.Img variant="top" src={phone.image_url} alt={phone.name} className="custom-img" />

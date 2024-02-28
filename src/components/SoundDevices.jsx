@@ -22,6 +22,13 @@ function SoundDevices({ addToCart }) {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedDeviceToUpdate, setSelectedDeviceToUpdate] = useState(null);
   const [updatingDevice, setUpdatingDevice] = useState(null); // New state to track the device being updated
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredSoundDevices, setFilteredSoundDevices] = useState([]);
+  const [showNotFoundAlert, setShowNotFoundAlert] = useState(false);
+
+  const handleSearch = (searchTerm) => {
+    setSearchTerm(searchTerm);
+  };
 
   useEffect(() => {
     fetchSoundDevices();
@@ -33,6 +40,18 @@ function SoundDevices({ addToCart }) {
       .then(data => setSoundDevices(data.sound_devices))
       .catch(error => console.error('Error fetching sound devices:', error));
   };
+
+  useEffect(() => {
+    const newFilteredSoundDevices = soundDevices.filter(device =>
+      device.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredSoundDevices(newFilteredSoundDevices);
+    if (newFilteredSoundDevices.length === 0) {
+      setShowNotFoundAlert(true);
+    } else {
+      setShowNotFoundAlert(false);
+    }
+  }, [searchTerm, soundDevices]);
 
   const handleShowDetails = (device) => {
     setSelectedDevice(device);
@@ -125,12 +144,17 @@ function SoundDevices({ addToCart }) {
 
   return (
     <div>
-      <Search />
+      <Search onSearch={handleSearch}/>
+      {showNotFoundAlert && (
+        <div className="container alert alert-danger" role="alert">
+          Product not found.
+        </div>
+      )}
     <div className="container">
       <h1 className="text-center my-4">Sound Devices</h1>
       <Button onClick={handleShowAddModal} className="mb-3">Add New Device</Button>
       <Row xs={1} md={2} lg={4} className="g-4">
-        {soundDevices.map(device => (
+        {filteredSoundDevices.map(device => (
           <Col key={device.id}>
             <Card className="h-100 custom-card">
               <Card.Img variant="top" src={device.image} alt={device.name} className="custom-img" />

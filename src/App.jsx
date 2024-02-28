@@ -16,15 +16,11 @@ import SoundDevices from "./components/SoundDevices"
 import About from "./components/About"
 import Account from "./components/Account"
 import Footer from "./components/Footer";
-<<<<<<< HEAD
-import NavBar from './components/NavBar';
-// import Search from "./components/Search";
-
-=======
 import Search from "./components/Search";
-import Logout from './components/Logout';
->>>>>>> 8e13d93 (Logout component)
-
+import UserPhones from './components/UserAccess/UserPhones';
+import UserLaptops from './components/UserAccess/UserLaptops';
+import UserAccessories from './components/UserAccess/UserAccessories';
+import UserSound from './components/UserAccess/UserSound';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -65,16 +61,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/audio" element={<SoundDevices addToCart={addToCart} />} />
           <Route path="/account" element={<Account />} />
-          {/* <Route path="/search/phones" element={<Search name="phones" />} />
-          <Route path="/search/laptops" element={<Search name="laptops" />} />
-          <Route path="/search/accessories" element={<Search name="accessories" />} />
-          <Route path="/search/sounddevices" element={<Search name="sounddevices" />} />
-<<<<<<< HEAD
-          <Route path="/search/brands" element={<Search name="brands" />} /> */}
-=======
-          <Route path="/search/brands" element={<Search name="brands" />} />
-          <Route path="/logout" element={<Logout />} />
->>>>>>> 8e13d93 (Logout component)
+          <Route path="/user/phones" element={<UserPhones />} />
+          <Route path="/user/laptops" element={<UserLaptops />} />
+          <Route path="/user/accessories" element={<UserAccessories />} />
+          <Route path="/user/audio" element={<UserSound />} />
+
         </Routes>
         <Footer />
       </BrowserRouter>

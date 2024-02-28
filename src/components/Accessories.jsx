@@ -20,18 +20,40 @@ function Accessories({ addToCart }) {
     image: ''
   });
   const [editAccessory, setEditAccessory] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredAccessories, setFilteredAccessories] = useState([]);
+  const [showNotFoundAlert, setShowNotFoundAlert] = useState(false);
+
+  const handleSearch = (searchTerm) => {
+    setSearchTerm(searchTerm);
+  };
 
   useEffect(() => {
     fetchAccessories();
   }, []);
 
-  const fetchAccessories = () => {
+    const fetchAccessories = () => {
     fetch('https://electroports-db.onrender.com/accessories')
       .then(response => response.json())
-      .then(data => setAccessories(data.accessories))
+      .then(data => {
+        setAccessories(data.accessories);
+        setFilteredAccessories(data.accessories);
+      })
       .catch(error => console.error('Error fetching accessories:', error));
   };
 
+  useEffect(() => {
+    const newFilteredAccessories = accessories.filter(accessory =>
+      accessory.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredAccessories(newFilteredAccessories);
+    if (newFilteredAccessories.length === 0) {
+      setShowNotFoundAlert(true);
+    } else {
+      setShowNotFoundAlert(false);
+    }
+  }, [searchTerm, accessories]);
+  
   const handleShowDetails = (accessory) => {
     setSelectedAccessory(accessory);
     setShowDetailsModal(true);
@@ -124,12 +146,17 @@ function Accessories({ addToCart }) {
 
   return (
     <div>
-      <Search />
+      <Search onSearch={handleSearch}/>
+      {showNotFoundAlert && (
+        <div className="container alert alert-danger" role="alert">
+          Product not found.
+        </div>
+      )}
     <div className="container">
       <h1 className="text-center my-4">Accessories</h1>
       <Button onClick={handleShowAddModal} className="mb-3">Add New Accessory</Button>
       <Row xs={1} md={2} lg={4} className="g-4">
-        {accessories.map(accessory => (
+        {filteredAccessories.map(accessory => (
           <Col key={accessory.id}>
             <Card className="h-100 custom-card">
               <Card.Img variant="top" src={accessory.image} alt={accessory.name} className="custom-img" />

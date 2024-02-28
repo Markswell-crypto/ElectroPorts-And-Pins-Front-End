@@ -1,9 +1,9 @@
 import { Carousel} from 'react-bootstrap';
-import Accessories from './Accessories';
-import Phones from './Phones';
-import SoundDevices from './SoundDevices';
-import Laptop from './Laptops'
 import "../HomePage.css"
+import UserPhones from './UserAccess/UserPhones';
+import UserLaptops from './UserAccess/UserLaptops';
+import UserSound from './UserAccess/UserSound';
+import UserAccessories from './UserAccess/UserAccessories';
 
 function HomePage() {
   const carouselItems = [
@@ -66,8 +66,8 @@ function HomePage() {
           </Carousel.Item>
         ))}
       </Carousel>
-      <Phones />
-      < Laptop />
+          <UserPhones />
+          <UserLaptops />
       <Carousel>
         {slideImages1.map((slide, index) => (
           <Carousel.Item key={slide.id}>
@@ -79,8 +79,8 @@ function HomePage() {
           </Carousel.Item>
         ))}
       </Carousel>
-      <SoundDevices />
-      <Accessories />
+          <UserSound />
+          <UserAccessories />
     </div>
   );
 }

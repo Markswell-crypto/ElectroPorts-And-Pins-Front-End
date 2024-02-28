@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import backgroundImage from '../assets/skyblue-background.jpg';
-import { Modal } from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const SignUp = () => {
@@ -72,99 +72,80 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-    <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-      <div>
-        <h2>Sign Up</h2>
+    <div className="vh-100 d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <div className="bg-white p-4 rounded shadow" style={{ maxWidth: '400px', width: '100%' }}>
+        <h2 className="text-center mb-4">Sign Up</h2>
         <Modal show={registered} onHide={() => setRegistered(false)}>
           <Modal.Header closeButton>
             <Modal.Title>Registration Successful</Modal.Title>
           </Modal.Header>
           <Modal.Body>User registered successfully</Modal.Body>
         </Modal>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="username" className="form-label">Username</label>
-            <input
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="username">
+            <Form.Label>Username</Form.Label>
+            <Form.Control
               type="text"
-              className="form-control"
-              id="username"
               name="username"
               value={formData.username}
               onChange={handleChange}
               required
             />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">Email address</label>
-            <input
+          </Form.Group>
+          <Form.Group controlId="email">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
               type="email"
-              className="form-control"
-              id="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               required
             />
-          </div>
+          </Form.Group>
           {/* Password fields */}
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Password
-              <div className="input-group">
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  className="form-control"
-                  id="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-                <button
-                  className="btn btn-outline-secondary"
-                  type="button"
-                  onClick={togglePasswordVisibility}
-                >
-                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-                </button>
-              </div>
-              <small className={`text-muted ${getPasswordStrengthColor(formData.password)}`}>
-                {getPasswordStrength(formData.password)}
-              </small>
-            </label>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="confirmPassword" className="form-label">
-              Confirm Password
-              <div className="input-group">
-                <input
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  className="form-control"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  required
-                />
-                <button
-                  className="btn btn-outline-secondary"
-                  type="button"
-                  onClick={toggleConfirmPasswordVisibility}
-                >
-                  <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} />
-                </button>
-              </div>
-              <small className={`text-muted ${getPasswordStrengthColor(formData.confirmPassword)}`}>
-                {getPasswordStrength(formData.confirmPassword)}
-              </small>
-            </label>
-          </div>
-          <button type="submit" className="btn btn-primary">Sign Up</button>
-          <p className="mt-3">Already have an account? <Link to="/login">Login</Link>.</p> 
-        </form>
+          <Form.Group controlId="password">
+            <Form.Label>Password</Form.Label>
+            <div className="input-group">
+              <Form.Control
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <Button
+                variant="outline-secondary"
+                onClick={togglePasswordVisibility}
+              >
+                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+              </Button>
+            </div>
+            <Form.Text className={`text-muted ${getPasswordStrengthColor(formData.password)}`}>
+              {getPasswordStrength(formData.password)}
+            </Form.Text>
+          </Form.Group>
+          <Form.Group controlId="confirmPassword">
+            <Form.Label>Confirm Password</Form.Label>
+            <div className="input-group">
+              <Form.Control
+                type={showConfirmPassword ? 'text' : 'password'}
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+              />
+              <Button
+                variant="outline-secondary"
+                onClick={toggleConfirmPasswordVisibility}
+              >
+                <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} />
+              </Button>
+            </div>
+          </Form.Group>
+          <Button variant="primary" type="submit" className="w-100 mt-3">Sign Up</Button>
+        </Form>
+        <p className="text-center mt-3">Already have an account? <Link to="/login">Login</Link>.</p>
       </div>
-    </div>
     </div>
   );
 };

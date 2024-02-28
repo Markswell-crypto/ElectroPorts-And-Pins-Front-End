@@ -1,6 +1,5 @@
-import NavBar from './NavBar';
 import { useEffect, useState } from 'react';
-import { Card, Col, Row, Button, Modal, Form, Navbar } from 'react-bootstrap';
+import { Card, Col, Row, Button, Modal, Form } from 'react-bootstrap';
 import './Laptops.css';
 import Review from './Review';
 import Stars from './Stars';
@@ -21,6 +20,13 @@ function Laptops({ addToCart }) {
     image: ''
   });
   const [editLaptop, setEditLaptop] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredLaptops, setFilteredLaptops] = useState([]);
+  const [showNotFoundAlert, setShowNotFoundAlert] = useState(false);
+
+  const handleSearch = (searchTerm) => {
+    setSearchTerm(searchTerm);
+  };
 
   useEffect(() => {
     fetchLaptops();
@@ -32,6 +38,18 @@ function Laptops({ addToCart }) {
       .then(data => setLaptops(data.laptops))
       .catch(error => console.error('Error fetching laptops:', error));
   };
+
+  useEffect(() => {
+    const newFilteredLaptops = laptops.filter(accessory =>
+      accessory.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredLaptops(newFilteredLaptops);
+    if (newFilteredLaptops.length === 0) {
+      setShowNotFoundAlert(true);
+    } else {
+      setShowNotFoundAlert(false);
+    }
+  }, [searchTerm, laptops]);
 
   const handleShowDetails = (laptop) => {
     setSelectedLaptop(laptop);
@@ -124,13 +142,17 @@ function Laptops({ addToCart }) {
 
   return (
     <div>
-      <NavBar />
-      <Search />
+      <Search onSearch={handleSearch}/>
+      {showNotFoundAlert && (
+        <div className="container alert alert-danger" role="alert">
+          Product not found.
+        </div>
+      )}
       <div className="container">
         <h1 className="text-center my-4">Laptops</h1>
         <Button onClick={handleShowAddModal} className="mb-3">Add New Laptop</Button>
         <Row xs={1} md={2} lg={4} className="g-4">
-          {laptops.map(laptop => (
+          {filteredLaptops.map(laptop => (
             <Col key={laptop.id}>
               <Card className="h-100 custom-card">
                 <Card.Img variant="top" src={laptop.image} alt={laptop.name} className="custom-img" />
