@@ -16,7 +16,7 @@ import SoundDevices from "./components/SoundDevices"
 import About from "./components/About"
 import Account from "./components/Account"
 import Footer from "./components/Footer";
-import NavBar from './components/NavBar';
+import Search from "./components/Search";
 import UserPhones from './components/UserAccess/UserPhones';
 import UserLaptops from './components/UserAccess/UserLaptops';
 import UserAccessories from './components/UserAccess/UserAccessories';
@@ -65,6 +65,7 @@ function App() {
           <Route path="/user/laptops" element={<UserLaptops />} />
           <Route path="/user/accessories" element={<UserAccessories />} />
           <Route path="/user/audio" element={<UserSound />} />
+
         </Routes>
         <Footer />
       </BrowserRouter>
