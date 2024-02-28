@@ -21,7 +21,11 @@ function Laptop({ addToCart }) {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedLaptopToUpdate, setSelectedLaptopToUpdate] = useState(null);
+<<<<<<< HEAD
+  const [updatingLaptop, setUpdatingLaptop] = useState(null); // New state to track the laptop being updated
+=======
   const [updatingLaptop, setUpdatingLaptop] = useState(null); 
+>>>>>>> 35ca41b (POST working)
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredLaptops, setFilteredLaptops] = useState([]);
   const [showNotFoundAlert, setShowNotFoundAlert] = useState(false);
