@@ -21,6 +21,8 @@ import NavBar from './components/NavBar';
 
 
 
+import NavBar from './components/NavBar';
+
 function App() {
   const [cartItems, setCartItems] = useState([]);
 
