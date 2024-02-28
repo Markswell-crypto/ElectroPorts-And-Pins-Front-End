@@ -22,9 +22,6 @@ import UserLaptops from './components/UserAccess/UserLaptops';
 import UserAccessories from './components/UserAccess/UserAccessories';
 import UserSound from './components/UserAccess/UserSound';
 
-
-import NavBar from './components/NavBar';
-
 function App() {
   const [cartItems, setCartItems] = useState([]);
 
