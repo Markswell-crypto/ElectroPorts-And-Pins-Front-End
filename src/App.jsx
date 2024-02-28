@@ -17,8 +17,10 @@ import About from "./components/About"
 import Account from "./components/Account"
 import Footer from "./components/Footer";
 import NavBar from './components/NavBar';
-// import Search from "./components/Search";
-
+import UserPhones from './components/UserAccess/UserPhones';
+import UserLaptops from './components/UserAccess/UserLaptops';
+import UserAccessories from './components/UserAccess/UserAccessories';
+import UserSound from './components/UserAccess/UserSound';
 
 
 import NavBar from './components/NavBar';
@@ -62,11 +64,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/audio" element={<SoundDevices addToCart={addToCart} />} />
           <Route path="/account" element={<Account />} />
-          {/* <Route path="/search/phones" element={<Search name="phones" />} />
-          <Route path="/search/laptops" element={<Search name="laptops" />} />
-          <Route path="/search/accessories" element={<Search name="accessories" />} />
-          <Route path="/search/sounddevices" element={<Search name="sounddevices" />} />
-          <Route path="/search/brands" element={<Search name="brands" />} /> */}
+          <Route path="/user/phones" element={<UserPhones />} />
+          <Route path="/user/laptops" element={<UserLaptops />} />
+          <Route path="/user/accessories" element={<UserAccessories />} />
+          <Route path="/user/audio" element={<UserSound />} />
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -1,19 +1,38 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Col, Row, Button, Modal } from 'react-bootstrap';
-import './Accessories.css';
-import Review from './Review';
-import NavBar from './NavBar';
-import Search from './Search';
+import '../Accessories.css';
+import Review from '../Review';
+import Search from '../Search';
+import Stars from '../Stars';
 
 function UserAccessories({ addToCart }) {
   const [accessories, setAccessories] = useState([]);
+  const [filteredAccessories, setFilteredAccessories] = useState([]);
   const [selectedAccessory, setSelectedAccessory] = useState(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const handleAddToCart = (accessory) => {
-    addToCart(accessory); 
-    alert(`Added ${accessory.name} to cart`);
+  useEffect(() => {
+    fetchAccessories();
+  }, []);
+
+  useEffect(() => {
+    setFilteredAccessories(
+      accessories.filter(accessory =>
+        accessory.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, accessories]);
+
+  const fetchAccessories = () => {
+    fetch('https://electroports-db.onrender.com/accessories')
+      .then(response => response.json())
+      .then(data => {
+        setAccessories(data.accessories);
+        setFilteredAccessories(data.accessories);
+      })
+      .catch(error => console.error('Error fetching accessories:', error));
   };
 
   const handleShowDetails = (accessory) => {
@@ -25,6 +44,13 @@ function UserAccessories({ addToCart }) {
     setShowDetailsModal(false);
   };
 
+  const handleSetStar = (rating) => {
+    setSelectedAccessory(prevAccessory => ({
+      ...prevAccessory,
+      rating: rating
+    }));
+  };
+
   const handleShowReviewModal = () => {
     setShowReviewModal(true);
   };
@@ -33,38 +59,37 @@ function UserAccessories({ addToCart }) {
     setShowReviewModal(false);
   };
 
-  const handleSetStar = (rating) => {
-    setSelectedAccessory(prevAccessory => ({
-      ...prevAccessory,
-      rating: rating
-    }));
+  const handleSearch = (searchTerm) => {
+    setSearchTerm(searchTerm);
   };
 
   return (
     <div>
-      <NavBar />
-      <Search />
+      <Search onSearch={handleSearch} />
       <div className="container">
         <h1 className="text-center my-4">Accessories</h1>
-        <Row xs={1} md={2} lg={4} className="g-4">
-          {accessories.map(accessory => (
-            <Col key={accessory.id}>
-              <Card className="h-100 custom-card">
-                <Card.Img variant="top" src={accessory.image} alt={accessory.name} className="custom-img" />
-                <Card.Body>
-                  <Card.Title>{accessory.name}</Card.Title>
-                  <Card.Text>Price: {accessory.price}</Card.Text>
-                  <Stars setStar={handleSetStar} deviceId={accessory.id} />
-                  <Button onClick={() => handleAddToCart(accessory)}>Add to Cart</Button>
-                  <Button onClick={() => handleShowDetails(accessory)} className="ms-2">Details</Button>
-                  <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-
-        <Modal show={showReviewModal} onHide={handleCloseReviewModal}>
+        {filteredAccessories.length === 0 ? (
+          <p className="text-center">No accessories found.</p>
+        ) : (
+          <Row xs={1} md={2} lg={4} className="g-4">
+            {filteredAccessories.map(accessory => (
+              <Col key={accessory.id}>
+                <Card className="h-100 custom-card">
+                  <Card.Img variant="top" src={accessory.image} alt={accessory.name} className="custom-img" />
+                  <Card.Body>
+                    <Card.Title>{accessory.name}</Card.Title>
+                    <Card.Text>Price: {accessory.price} Kshs</Card.Text>
+                    <Stars setStar={handleSetStar} deviceId={accessory.id} />
+                    <Button onClick={() => addToCart(accessory)}>Add to Cart</Button>
+                    <Button onClick={() => handleShowDetails(accessory)} className="ms-2">Details</Button>
+                    <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        )}
+<Modal show={showReviewModal} onHide={handleCloseReviewModal}>
           <Modal.Header closeButton>
             <Modal.Title>Reviews</Modal.Title>
           </Modal.Header>
@@ -94,8 +119,7 @@ function UserAccessories({ addToCart }) {
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseDetailsModal}>Close</Button>
           </Modal.Footer>
-        </Modal>
-      </div>
+        </Modal>      </div>
     </div>
   );
 }
