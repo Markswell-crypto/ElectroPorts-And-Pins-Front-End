@@ -21,11 +21,7 @@ function Phones({ addToCart }) {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedPhoneToUpdate, setSelectedPhoneToUpdate] = useState(null);
-<<<<<<< HEAD
   const [updatingPhone, setUpdatingPhone] = useState(null); // New state to track the phone being updated
-=======
-  const [updatingPhone, setUpdatingPhone] = useState(null); 
->>>>>>> 35ca41b (POST working)
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredPhones, setFilteredPhones] = useState([]);
   const [showNotFoundAlert, setShowNotFoundAlert] = useState(false);
