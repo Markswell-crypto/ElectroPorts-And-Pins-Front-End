@@ -162,10 +162,10 @@ function Accessories({ addToCart }) {
                   <Card.Text>Price:Kshs {accessory.price}</Card.Text>
                   <Stars setStar={handleSetStar} deviceId={accessory.id} className="card-rating"/>
                   <div className='accessory-buttons'>
-                    <Button onClick={() => addToCart(phone)}>Add to Cart</Button>
-                    <Button onClick={() => handleShowDetails(phone)} >Details</Button>
-                    <Button onClick={() => handleDeleteConfirmation(phone)} >Delete</Button>
-                    <Button onClick={() => handleShowUpdateModal(phone)}>Update</Button>
+                    <Button onClick={() => addToCart(accessory)}>Add to Cart</Button>
+                    <Button onClick={() => handleShowDetails(accessory)} >Details</Button>
+                    <Button onClick={() => handleDeleteConfirmation(accessory)} >Delete</Button>
+                    <Button onClick={() => handleShowUpdateModal(accessory)}>Update</Button>
                     <Button onClick={handleShowReviewModal}>Reviews</Button>
                   </div>                
                 </Card.Body>

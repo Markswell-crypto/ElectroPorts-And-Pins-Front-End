@@ -63,6 +63,10 @@ function UserLaptops({ addToCart }) {
     setSearchTerm(searchTerm);
   };
 
+  const handleAddToCart = (device) => {
+    addToCart(device);
+  };
+
   return (
     <div>
       <Search onSearch={handleSearch} />
@@ -80,7 +84,7 @@ function UserLaptops({ addToCart }) {
                     <Card.Text>Price: {laptop.price}</Card.Text>
                     <Stars setStar={handleSetStar} deviceId={laptop.id} />
                     <div className='laptop-buttons'>
-                      <Button onClick={() => addToCart(laptop)}>Add to Cart</Button>
+                      <Button onClick={() => handleAddToCart(laptop)}>Add to Cart</Button>
                       <Button onClick={() => handleShowDetails(laptop)}>Details</Button>
                       <Button onClick={handleShowReviewModal}>Reviews</Button>
                     </div>                
