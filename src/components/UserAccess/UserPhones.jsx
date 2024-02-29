@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Card, Col, Row, Button, Modal } from 'react-bootstrap';
+import './User.css'
 import Review from '../Review';
 import Stars from '../Stars';
 import Search from '../Search';
@@ -70,23 +71,23 @@ function UserPhones({ addToCart }) {
         {filteredPhones.length === 0 ? (
           <p className="text-center">No phones found.</p>
         ) : (
-          <Row xs={1} md={2} lg={4} className="g-4">
+          <div className='phones-container'>
             {filteredPhones.map(phone => (
-              <Col key={phone.id}>
-                <Card className="h-100 custom-card">
-                  <Card.Img variant="top" src={phone.image_url} alt={phone.name} className="custom-img" />
-                  <Card.Body>
-                    <Card.Title>{phone.name}</Card.Title>
-                    <Card.Text>Price: {phone.price} Kshs</Card.Text>
-                    <Stars setStar={handleSetStar} deviceId={phone.id} />
-                    <Button onClick={() => addToCart(phone)}>Add to Cart</Button>
-                    <Button onClick={() => handleShowDetails(phone)} className="ms-2">Details</Button>
-                    <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
-                  </Card.Body>
-                </Card>
-              </Col>
+                  <Card key={phone.id} className="phones-card">
+                    <Card.Img src={phone.image_url} alt={phone.name} className="phones-image" />
+                    <Card.Body className='phones-body'>
+                      <Card.Title className='phones-title'>{phone.name}</Card.Title>
+                      <Card.Text>Price:Kshs {phone.price}</Card.Text>
+                      <Stars setStar={handleSetStar} deviceId={phone.id} className="card-rating"/>
+                      <div className='phones-buttons'>
+                        <Button onClick={() => addToCart(phone)}>Add to Cart</Button>
+                        <Button onClick={() => handleShowDetails(phone)} >Details</Button>
+                        <Button onClick={handleShowReviewModal}>Reviews</Button>
+                      </div>                
+                    </Card.Body>
+                  </Card>
             ))}
-          </Row>
+        </div>
         )}
 {/* Review Modal */}
 <Modal show={showReviewModal} onHide={handleCloseReviewModal}>

@@ -1,0 +1,137 @@
+/* Phones-Component */
+.phones-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.phones-card{
+  width: 23%;
+  height: 250px;
+}
+
+.phones-image{
+  width: 55%;
+  height: 40%;
+  margin-left: 55px;
+  padding: 10px;
+}
+
+.phones-body{
+  background: lightblue;
+}
+.phones-buttons{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.phones-buttons button{
+  height: 40px;
+}
+.phones-title{
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* Laptops-Component */
+.laptops-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.laptops-card{
+  width: 23%;
+  height: 400px;
+}
+
+.laptops-image{
+  width: 100%;
+  height: 40%;
+  padding: 10px;
+}
+
+.laptops-body{
+  background: lightblue;
+}
+.laptop-buttons{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.laptop-buttons button{
+  height: 40px; 
+}
+
+/* Sound Devices - Component */
+.sound-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.sound-card{
+  width: 23%;
+  height: 400px;
+}
+
+.sound-image{
+  width: 55%;
+  height: 40%;
+  margin-left: 55px;
+  padding: 10px;
+}
+
+.sound-body{
+  background: lightblue;
+}
+.sound-buttons{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.sound-buttons button{
+  height: 40px;
+}
+
+/* Accessories Component */
+.accessory-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.accessory-card{
+  width: 23%;
+  height: 400px;
+}
+
+.accessory-image{
+  width: 55%;
+  height: 40%;
+  margin-left: 55px;
+  padding: 10px;
+}
+
+.accessory-body{
+  background: lightblue;
+}
+.accessory-buttons{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.accessory-buttons button{
+  height: 40px;
+}
+.accessory-title{
+   display: -webkit-box;
+   -webkit-line-clamp: 2;
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}

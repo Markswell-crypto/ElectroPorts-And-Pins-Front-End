@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Card, Col, Row, Button, Modal } from 'react-bootstrap';
-import '../SoundDevices.css';
+import './User.css';
 import Review from '../Review';
 import Stars from '../Stars';
 import Search from '../Search';
@@ -70,23 +70,24 @@ function UserSound({ addToCart }) {
         <h1 className="text-center my-4">Sound Devices</h1>
         {filteredDevices.length === 0 ? (
           <p className="text-center">No laptops found.</p>
-        ) : ( <Row xs={1} md={2} lg={4} className="g-4">
-          {filteredDevices.map(device => (
-            <Col key={device.id}>
-              <Card className="h-100 custom-card">
-                <Card.Img variant="top" src={device.image} alt={device.name} className="custom-img" />
-                <Card.Body>
-                  <Card.Title>{device.name}</Card.Title>
-                  <Card.Text>Price: {device.price} Kshs</Card.Text>
-                  <Stars setStar={handleSetStar} deviceId={device.id} />
-                  <Button onClick={() => addToCart(device)}>Add to Cart</Button>
-                  <Button onClick={() => handleShowDetails(device)} className="ms-2">Details</Button>
-                  <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+        ) : ( 
+          <div className='sound-container'>
+            {filteredDevices.map(device => (
+                <Card key={device.id} className="sound-card">
+                  <Card.Img src={device.image} alt={device.name} className="sound-image" />
+                  <Card.Body className='sound-body'>
+                    <Card.Title>{device.name}</Card.Title>
+                    <Card.Text>Price:Kshs {device.price}</Card.Text>
+                    <Stars setStar={handleSetStar} deviceId={device.id} className="card-rating"/>
+                    <div className='sound-buttons'>
+                      <Button onClick={() => addToCart(device)}>Add to Cart</Button>
+                      <Button onClick={() => handleShowDetails(device)} >Details</Button>
+                      <Button onClick={handleShowReviewModal}>Reviews</Button>
+                    </div>                
+                  </Card.Body>
+                </Card>
+            ))}
+          </div>
         )}
         <Modal show={showDetailsModal} onHide={handleCloseDetailsModal}>
           <Modal.Header closeButton>
