@@ -1,36 +1,94 @@
 /* Cart.css */
-.cart-container {
-    background-color: blueviolet; /* Change the color code to your desired background color */
-    padding: 10px; /* Adding some padding for spacing */
-    border-radius: 5px; /* Adding border-radius for rounded corners */
+
+.container {
+    margin: auto;
+    padding: 20px;
 }
 
-.cart-item {
+.d-flex-center {
     display: flex;
+    justify-content: center;
     align-items: center;
+    height: 300px; /* Set desired height */
+}
+
+.text-center {
+    text-align: center;
+}
+
+.my-4 {
+    margin-top: 4rem;
+}
+
+.card {
     border: 1px solid blueviolet;
-    padding: 2px;
-    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px blue(0, 0, 0, 0.1);
 }
 
-.cart-item img {
-    max-width: 100px;
-    margin-right: 20px;
+.card-title {
+    font-size: 1.25rem;
+    color: #333;
 }
 
-.cart-item-info {
-    flex-grow: 1;
-}
-
-.cart-item-price {
-    font-weight: bold;
+.card-text {
+    color: #555;
 }
 
 .total-price {
-    font-weight: bold;
     margin-top: 20px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #007bff; /* Blue color for total price */
 }
 
 .order-button {
     margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    background-color: #007bff; /* Blue color for order button */
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.order-button:hover {
+    background-color: #0056b3; /* Darker blue color on hover */
+}
+
+.btn-danger {
+    background-color: #dc3545; /* Red color for remove button */
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #c82333; /* Darker red color on hover */
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .col-md-3 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+/* Added styles for empty cart message */
+.empty-cart-container {
+    text-align: center;
+}
+
+.empty-cart-container img {
+    display: block; /* Ensures the image takes up the full width */
+    margin: 0 auto; /* Centers the image horizontally */
+}
+
+.empty-cart-container p {
+    margin-top: 10px; /* Adjust this value as needed to add space between the image and the text */
 }
