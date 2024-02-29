@@ -153,26 +153,25 @@ function Accessories({ addToCart }) {
     <div className="container">
       <h1 className="text-center my-4">Accessories</h1>
       <Button onClick={handleShowAddModal} className="mb-3">Add New Accessory</Button>
-      <Row xs={1} md={2} lg={4} className="g-4">
+      <div className='accessory-container'>
         {filteredAccessories.map(accessory => (
-          <Col key={accessory.id}>
-            <Card className="h-100 custom-card">
-              <Card.Img variant="top" src={accessory.image} alt={accessory.name} className="custom-img" />
-              <Card.Body>
-                <Card.Title>{accessory.name}</Card.Title>
-                <Card.Text>Price: {accessory.price}</Card.Text>
-                <Stars setStar={handleSetStar} deviceId={accessory.id} />
-                <Button onClick={() => addToCart(accessory)}>Add to Cart</Button>
-                <Button onClick={() => handleShowDetails(accessory)} className="ms-2">Details</Button>
-                <Button onClick={() => handleDeleteConfirmation(accessory)} className="ms-2">Delete</Button>
-                <Button className='update-button' onClick={() => handleShowUpdateModal(accessory)}>Update</Button>
-                <br />
-                <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+              <Card key={accessory.id} className="accessory-card">
+                <Card.Img src={accessory.image} alt={accessory.name} className="accessory-image" />
+                <Card.Body className='accessory-body'>
+                  <Card.Title className="accessory-title">{accessory.name}</Card.Title>
+                  <Card.Text>Price:Kshs {accessory.price}</Card.Text>
+                  <Stars setStar={handleSetStar} deviceId={accessory.id} className="card-rating"/>
+                  <div className='accessory-buttons'>
+                    <Button onClick={() => addToCart(phone)}>Add to Cart</Button>
+                    <Button onClick={() => handleShowDetails(phone)} >Details</Button>
+                    <Button onClick={() => handleDeleteConfirmation(phone)} >Delete</Button>
+                    <Button onClick={() => handleShowUpdateModal(phone)}>Update</Button>
+                    <Button onClick={handleShowReviewModal}>Reviews</Button>
+                  </div>                
+                </Card.Body>
+              </Card>
+          ))}
+      </div>
       <Modal show={showDetailsModal} onHide={handleCloseDetailsModal}>
         <Modal.Header closeButton>
           <Modal.Title>Accessory Details</Modal.Title>
