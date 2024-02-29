@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Card, Col, Row, Button, Modal } from 'react-bootstrap';
-import '../Laptops.css';
+import './User.css';
 import Review from '../Review';
 import Search from '../Search';
 import Stars from '../Stars';
@@ -70,23 +70,24 @@ function UserLaptops({ addToCart }) {
         <h1 className="text-center my-4">Laptops</h1>
         {filteredLaptops.length === 0 ? (
           <p className="text-center">No laptops found.</p>
-        ) : ( <Row xs={1} md={2} lg={4} className="g-4">
-          {filteredLaptops.map(laptop => (
-            <Col key={laptop.id}>
-              <Card className="h-100 custom-card">
-                <Card.Img variant="top" src={laptop.image} alt={laptop.name} className="custom-img" />
-                <Card.Body>
-                  <Card.Title>{laptop.name}</Card.Title>
-                  <Card.Text>Price: {laptop.price} Kshs</Card.Text>
-                  <Stars setStar={handleSetStar} deviceId={laptop.id} />
-                  <Button onClick={() => addToCart(laptop)}>Add to Cart</Button>
-                  <Button onClick={() => handleShowDetails(laptop)} className="ms-2">Details</Button>
-                  <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+        ) : ( 
+          <div className='laptops-container'>
+            {filteredLaptops.map(laptop => (
+                <Card key={laptop.id} className="laptops-card">
+                  <Card.Img src={laptop.image} alt={laptop.name} className="laptops-image" />
+                  <Card.Body className='laptops-body'>
+                    <Card.Title>{laptop.name}</Card.Title>
+                    <Card.Text>Price: {laptop.price}</Card.Text>
+                    <Stars setStar={handleSetStar} deviceId={laptop.id} />
+                    <div className='laptop-buttons'>
+                      <Button onClick={() => addToCart(laptop)}>Add to Cart</Button>
+                      <Button onClick={() => handleShowDetails(laptop)}>Details</Button>
+                      <Button onClick={handleShowReviewModal}>Reviews</Button>
+                    </div>                
+                  </Card.Body>
+                </Card>
+            ))}
+        </div>
         )}
         <Modal show={showReviewModal} onHide={handleCloseReviewModal}>
           <Modal.Header closeButton>
