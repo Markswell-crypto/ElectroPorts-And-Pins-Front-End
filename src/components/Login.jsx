@@ -32,9 +32,10 @@ const Login = () => {
         password, 
       });
   
-      const { access_token, refresh_token } = response.data;
+      const { access_token, refresh_token, role } = response.data;
       localStorage.setItem('accessToken', access_token);
       localStorage.setItem('refreshToken', refresh_token);
+      localStorage.setItem('userRole', role);
       setShowAlert(true); // Show the alert after successful login
       navigate('/home');
     } catch (error) {

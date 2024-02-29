@@ -21,7 +21,7 @@ function Account() {
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center vh-90" style={{ backgroundColor: '#f8f9fa' }}>
+    <Container className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundColor: '#f8f9fa' }}>
       <Form onSubmit={handleSubmit} className="p-4 bg-white rounded shadow" style={{ width: '100%', maxWidth: '400px' }}>
         <Form.Group controlId="formPhoneNumber">
           <Form.Label>Phone Number:</Form.Label>

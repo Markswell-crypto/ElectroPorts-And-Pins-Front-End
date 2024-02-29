@@ -8,11 +8,11 @@ function Cart({ cartItems, removeFromCart }) {
     removeFromCart(index);
   };
 
-  // Function to calculate total price
+  
   const calculateTotalPrice = () => {
     let totalPrice = 0;
     cartItems.forEach(item => {
-      totalPrice += parseFloat(item.price); // Assuming each item has a 'price' property
+      totalPrice += parseFloat(item.price); 
     });
     return totalPrice;
   };

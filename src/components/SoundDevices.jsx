@@ -21,7 +21,7 @@ function SoundDevices({ addToCart }) {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedDeviceToUpdate, setSelectedDeviceToUpdate] = useState(null);
-  const [updatingDevice, setUpdatingDevice] = useState(null); // New state to track the device being updated
+  const [updatingDevice, setUpdatingDevice] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredSoundDevices, setFilteredSoundDevices] = useState([]);
   const [showNotFoundAlert, setShowNotFoundAlert] = useState(false);
@@ -153,26 +153,25 @@ function SoundDevices({ addToCart }) {
     <div className="container">
       <h1 className="text-center my-4">Sound Devices</h1>
       <Button onClick={handleShowAddModal} className="mb-3">Add New Device</Button>
-      <Row xs={1} md={2} lg={4} className="g-4">
+      <div className='sound-container'>
         {filteredSoundDevices.map(device => (
-          <Col key={device.id}>
-            <Card className="h-100 custom-card">
-              <Card.Img variant="top" src={device.image} alt={device.name} className="custom-img" />
-              <Card.Body>
-                <Card.Title>{device.name}</Card.Title>
-                <Card.Text>Price: {device.price} Kshs</Card.Text>
-                <Stars setStar={handleSetStar} deviceId={device.id} />
-                <Button onClick={() => addToCart(device)}>Add to Cart</Button>
-                <Button onClick={() => handleShowDetails(device)} className="ms-2">Details</Button>
-                <Button onClick={() => handleDeleteConfirmation(device)} className="ms-2">Delete</Button>
-                <Button className='update-button' onClick={() => handleShowUpdateModal(device)}>Update</Button>
-                <br />
-                <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+              <Card key={device.id} className="sound-card">
+                <Card.Img src={device.image} alt={device.name} className="sound-image" />
+                <Card.Body className='sound-body'>
+                  <Card.Title>{device.name}</Card.Title>
+                  <Card.Text>Price:Kshs {device.price}</Card.Text>
+                  <Stars setStar={handleSetStar} deviceId={device.id} className="card-rating"/>
+                  <div className='sound-buttons'>
+                    <Button onClick={() => addToCart(device)}>Add to Cart</Button>
+                    <Button onClick={() => handleShowDetails(device)} >Details</Button>
+                    <Button onClick={() => handleDeleteConfirmation(device)} >Delete</Button>
+                    <Button onClick={() => handleShowUpdateModal(device)}>Update</Button>
+                    <Button onClick={handleShowReviewModal}>Reviews</Button>
+                  </div>                
+                </Card.Body>
+              </Card>
+          ))}
+      </div>
       <Modal show={showDetailsModal} onHide={handleCloseDetailsModal}>
         <Modal.Header closeButton>
           <Modal.Title>Device Details</Modal.Title>

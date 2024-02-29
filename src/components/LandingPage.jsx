@@ -4,7 +4,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../LandingPage.css";
-import Search from './Search';
+// import Search from './Search';
 
 const BestSellers = ({ handleDispatch }) => {
    let data = [
@@ -180,9 +180,6 @@ const BestSellers = ({ handleDispatch }) => {
                   {item.Rating} ({item.Reviews} reviews)
                 </p>
                 <hr className="linedivide"/>
-                <div className="KshDiv flex">
-                  {/* Add your Ksh code here */}
-                </div>
                 <div>
                   <button
                     onClick={() => handleAddToCart(item)} // Call handleAddToCart instead of handleDispatch
@@ -293,7 +290,7 @@ const CarouselDiv = () => {
 const LandingPage = () => {
    return (
     <div className="flex" style={{ backgroundColor: 'black' }}>
-      <Search />
+      {/* <Search /> */}
     <CarouselDiv />
     <div className="flex">
        <BestSellers />

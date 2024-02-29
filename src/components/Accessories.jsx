@@ -12,14 +12,16 @@ function Accessories({ addToCart }) {
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
   const [accessoryToDelete, setAccessoryToDelete] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [showReviewModal, setShowReviewModal] = useState(false);
   const [newAccessory, setNewAccessory] = useState({
     name: '',
     price: '',
     description: '',
     image: ''
   });
-  const [editAccessory, setEditAccessory] = useState(null);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedAccessoryToUpdate, setSelectedAccessoryToUpdate] = useState(null);
+  const [updatingAccessory, setUpdatingAccessory] = useState(null); // New state to track the accessory being updated
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredAccessories, setFilteredAccessories] = useState([]);
   const [showNotFoundAlert, setShowNotFoundAlert] = useState(false);
@@ -32,13 +34,10 @@ function Accessories({ addToCart }) {
     fetchAccessories();
   }, []);
 
-    const fetchAccessories = () => {
+  const fetchAccessories = () => {
     fetch('https://electroports-db.onrender.com/accessories')
       .then(response => response.json())
-      .then(data => {
-        setAccessories(data.accessories);
-        setFilteredAccessories(data.accessories);
-      })
+      .then(data => setAccessories(data.accessories))
       .catch(error => console.error('Error fetching accessories:', error));
   };
 
@@ -53,7 +52,7 @@ function Accessories({ addToCart }) {
       setShowNotFoundAlert(false);
     }
   }, [searchTerm, accessories]);
-  
+
   const handleShowDetails = (accessory) => {
     setSelectedAccessory(accessory);
     setShowDetailsModal(true);
@@ -68,19 +67,10 @@ function Accessories({ addToCart }) {
     setShowDeleteConfirmationModal(true);
   };
 
-  const handleDeleteAccessory = (id) => {
-    fetch(`https://electroports-db.onrender.com/accessories/${id}`, {
-      method: 'DELETE',
-    })
-      .then(response => {
-        if (response.ok) {
-          fetchAccessories();
-          setShowDeleteConfirmationModal(false);
-        } else {
-          console.error('Failed to delete accessory:', response.status);
-        }
-      })
-      .catch(error => console.error('Error deleting accessory:', error));
+  const handleDeleteAccessory = () => {
+    const updatedAccessories = accessories.filter(accessory => accessory !== accessoryToDelete);
+    setAccessories(updatedAccessories);
+    setShowDeleteConfirmationModal(false);
   };
 
   const handleShowAddModal = () => {
@@ -89,37 +79,32 @@ function Accessories({ addToCart }) {
 
   const handleCloseAddModal = () => {
     setShowAddModal(false);
-    setEditAccessory(null); 
   };
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setNewAccessory(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (selectedAccessoryToUpdate) {
+      setUpdatingAccessory({
+        ...updatingAccessory,
+        [name]: value
+      });
+    } else {
+      setNewAccessory({
+        ...newAccessory,
+        [name]: value
+      });
+    }
   };
 
   const handleAddAccessory = () => {
-    fetch('https://electroports-db.onrender.com/accessories', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newAccessory)
-    })
-      .then(response => response.json())
-      .then(data => {
-        fetchAccessories();
-        setShowAddModal(false);
-        setNewAccessory({
-          name: '',
-          price: '',
-          description: '',
-          image: ''
-        });
-      })
-      .catch(error => console.error('Error adding accessory:', error));
+    setAccessories([...accessories, newAccessory]);
+    setShowAddModal(false);
+    setNewAccessory({
+      name: '',
+      price: '',
+      description: '',
+      image: ''
+    });
   };
 
   const handleSetStar = (rating) => {
@@ -137,11 +122,24 @@ function Accessories({ addToCart }) {
     setShowReviewModal(false);
   };
 
-  
-  const handleEditAccessory = (accessory) => {
-    setEditAccessory(accessory);
-    setNewAccessory(accessory); 
-    setShowAddModal(true); 
+  const handleShowUpdateModal = (accessory) => {
+    setSelectedAccessoryToUpdate(accessory);
+    setUpdatingAccessory(accessory); 
+    setShowUpdateModal(true);
+  };
+
+  const handleCloseUpdateModal = () => {
+    setShowUpdateModal(false);
+    setUpdatingAccessory(null); 
+  };
+
+  const handleUpdateAccessory = () => {
+    const updatedAccessories = accessories.map(accessory =>
+      accessory === selectedAccessoryToUpdate ? updatingAccessory : accessory
+    );
+    setAccessories(updatedAccessories);
+    setShowUpdateModal(false);
+    setUpdatingAccessory(null); 
   };
 
   return (
@@ -155,42 +153,59 @@ function Accessories({ addToCart }) {
     <div className="container">
       <h1 className="text-center my-4">Accessories</h1>
       <Button onClick={handleShowAddModal} className="mb-3">Add New Accessory</Button>
-      <Row xs={1} md={2} lg={4} className="g-4">
+      <div className='accessory-container'>
         {filteredAccessories.map(accessory => (
-          <Col key={accessory.id}>
-            <Card className="h-100 custom-card">
-              <Card.Img variant="top" src={accessory.image} alt={accessory.name} className="custom-img" />
-              <Card.Body>
-                <Card.Title>{accessory.name}</Card.Title>
-                <Card.Text>Price: {accessory.price}</Card.Text>
-                <Stars setStar={handleSetStar} deviceId={accessory.id} />
-                <Button onClick={() => addToCart(accessory)}>Add to Cart</Button>
-                <Button onClick={() => handleShowDetails(accessory)} className="ms-2">Details</Button>
-                <Button onClick={() => handleDeleteConfirmation(accessory)} className="ms-2">Delete</Button>
-                <Button className='update-button' onClick={() => handleEditAccessory(accessory)}>Update</Button>
-                <br />
-                <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-      
-      <Modal show={showReviewModal} onHide={handleCloseReviewModal}>
+              <Card key={accessory.id} className="accessory-card">
+                <Card.Img src={accessory.image} alt={accessory.name} className="accessory-image" />
+                <Card.Body className='accessory-body'>
+                  <Card.Title className="accessory-title">{accessory.name}</Card.Title>
+                  <Card.Text>Price:Kshs {accessory.price}</Card.Text>
+                  <Stars setStar={handleSetStar} deviceId={accessory.id} className="card-rating"/>
+                  <div className='accessory-buttons'>
+                    <Button onClick={() => addToCart(phone)}>Add to Cart</Button>
+                    <Button onClick={() => handleShowDetails(phone)} >Details</Button>
+                    <Button onClick={() => handleDeleteConfirmation(phone)} >Delete</Button>
+                    <Button onClick={() => handleShowUpdateModal(phone)}>Update</Button>
+                    <Button onClick={handleShowReviewModal}>Reviews</Button>
+                  </div>                
+                </Card.Body>
+              </Card>
+          ))}
+      </div>
+      <Modal show={showDetailsModal} onHide={handleCloseDetailsModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Reviews</Modal.Title>
+          <Modal.Title>Accessory Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Review />
+          {selectedAccessory && (
+            <div>
+              <Card.Img variant="top" src={selectedAccessory.image} alt={selectedAccessory.name} className="details-image" />
+              <p><strong>Name:</strong> {selectedAccessory.name}</p>
+              <p><strong>Price:</strong> {selectedAccessory.price}</p>
+              <p><strong>Description:</strong> {selectedAccessory.description}</p>
+            </div>
+          )}
+          <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseReviewModal}>Close</Button>
+          <Button variant="secondary" onClick={handleCloseDetailsModal}>Close</Button>
         </Modal.Footer>
       </Modal>
-      
+      <Modal show={showDeleteConfirmationModal} onHide={() => setShowDeleteConfirmationModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Are you sure you want to delete this accessory?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteConfirmationModal(false)}>Cancel</Button>
+          <Button variant="danger" onClick={handleDeleteAccessory}>Delete</Button>
+        </Modal.Footer>
+      </Modal>
       <Modal show={showAddModal} onHide={handleCloseAddModal}>
         <Modal.Header closeButton>
-          <Modal.Title>{editAccessory ? 'Update Accessory' : 'Add New Accessory'}</Modal.Title>
+          <Modal.Title>Add New Accessory</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -214,40 +229,47 @@ function Accessories({ addToCart }) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseAddModal}>Cancel</Button>
-          <Button variant="primary" onClick={handleAddAccessory}>{editAccessory ? 'Update' : 'Add'}</Button>
+          <Button variant="primary" onClick={handleAddAccessory}>Add</Button>
         </Modal.Footer>
       </Modal>
-      
-      <Modal show={showDeleteConfirmationModal} onHide={() => setShowDeleteConfirmationModal(false)}>
+      <Modal show={showReviewModal} onHide={handleCloseReviewModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Delete Confirmation</Modal.Title>
+          <Modal.Title>Reviews</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Are you sure you want to delete this accessory?</p>
+          <Review />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowDeleteConfirmationModal(false)}>Cancel</Button>
-          <Button variant="danger" onClick={() => handleDeleteAccessory(accessoryToDelete.id)}>Delete</Button>
+          <Button variant="secondary" onClick={handleCloseReviewModal}>Close</Button>
         </Modal.Footer>
       </Modal>
-      
-      <Modal show={showDetailsModal} onHide={handleCloseDetailsModal}>
+      <Modal show={showUpdateModal} onHide={handleCloseUpdateModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Accessory Details</Modal.Title>
+          <Modal.Title>Update Accessory</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {selectedAccessory && (
-            <div>
-              <Card.Img variant="top" src={selectedAccessory.image} alt={selectedAccessory.name} className="details-image" />
-              <p><strong>Name:</strong> {selectedAccessory.name}</p>
-              <p><strong>Price:</strong> {selectedAccessory.price}</p>
-              <p><strong>Description:</strong> {selectedAccessory.description}</p>
-            </div>
-          )}
-          <Button className='btn-center mt-2 ml-5 bg-transparent text-primary' onClick={handleShowReviewModal}>Reviews</Button>
+          <Form>
+            <Form.Group className="mb-3" controlId="accessoryName">
+              <Form.Label>Name</Form.Label>
+              <Form.Control type="text" placeholder="Enter accessory name" name="name" value={updatingAccessory ? updatingAccessory.name : ''} onChange={handleInputChange} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="accessoryPrice">
+              <Form.Label>Price</Form.Label>
+              <Form.Control type="number" placeholder="Enter accessory price" name="price" value={updatingAccessory ? updatingAccessory.price : ''} onChange={handleInputChange} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="accessoryDescription">
+              <Form.Label>Description</Form.Label>
+              <Form.Control as="textarea" rows={3} placeholder="Enter accessory description" name="description" value={updatingAccessory ? updatingAccessory.description : ''} onChange={handleInputChange} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="accessoryImage">
+              <Form.Label>Image URL</Form.Label>
+              <Form.Control type="text" placeholder="Enter image URL" name="image" value={updatingAccessory ? updatingAccessory.image : ''} onChange={handleInputChange} />
+            </Form.Group>
+          </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseDetailsModal}>Close</Button>
+          <Button variant="secondary" onClick={handleCloseUpdateModal}>Cancel</Button>
+          <Button variant="primary" onClick={handleUpdateAccessory}>Update</Button>
         </Modal.Footer>
       </Modal>
     </div>

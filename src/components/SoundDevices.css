@@ -1,16 +1,29 @@
-.custom-card {
-    background-color: lightblue; 
-  }
-  
-  .custom-img {
-    max-height: 150px;
-  }
-  
-.details-image {
-  max-width: 100%;
-  height: auto;
+.sound-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
-.update-button {
-  margin-top: 10px;
-  margin-bottom: 10px; 
+
+.sound-card{
+  width: 23%;
+  height: 500px;
+}
+
+.sound-image{
+  width: 55%;
+  height: 40%;
+  margin-left: 55px;
+  padding: 10px;
+}
+
+.sound-body{
+  background: lightblue;
+}
+.sound-buttons{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.sound-buttons button{
+  height: 40px;
 }
