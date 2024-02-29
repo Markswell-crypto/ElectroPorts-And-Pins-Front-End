@@ -63,6 +63,9 @@ function UserAccessories({ addToCart }) {
     setSearchTerm(searchTerm);
   };
 
+  const handleAddToCart = (device) => {
+    addToCart(device);
+  };
   return (
     <div>
       <Search onSearch={handleSearch} />
@@ -80,8 +83,8 @@ function UserAccessories({ addToCart }) {
                     <Card.Text>Price:Kshs {accessory.price}</Card.Text>
                     <Stars setStar={handleSetStar} deviceId={accessory.id} className="card-rating"/>
                     <div className='accessory-buttons'>
-                      <Button onClick={() => addToCart(phone)}>Add to Cart</Button>
-                      <Button onClick={() => handleShowDetails(phone)} >Details</Button>
+                      <Button onClick={() => handleAddToCart(accessory)}>Add to Cart</Button>
+                      <Button onClick={() => handleShowDetails(accessory)} >Details</Button>
                       <Button onClick={handleShowReviewModal}>Reviews</Button>
                     </div>                
                   </Card.Body>

@@ -57,10 +57,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/audio" element={<SoundDevices addToCart={addToCart} />} />
           <Route path="/account" element={<Account />} />
-          <Route path="/user/phones" element={<UserPhones />} />
-          <Route path="/user/laptops" element={<UserLaptops />} />
-          <Route path="/user/accessories" element={<UserAccessories />} />
-          <Route path="/user/audio" element={<UserSound />} />
+          <Route path="/user/phones" element={<UserPhones addToCart={addToCart}/>} />
+          <Route path="/user/laptops" element={<UserLaptops addToCart={addToCart}/>} />
+          <Route path="/user/accessories" element={<UserAccessories addToCart={addToCart}/>} />
+          <Route path="/user/audio" element={<UserSound addToCart={addToCart}/>} />
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Carousel} from 'react-bootstrap';
 import "../HomePage.css"
 import UserPhones from './UserAccess/UserPhones';
@@ -6,6 +7,7 @@ import UserSound from './UserAccess/UserSound';
 import UserAccessories from './UserAccess/UserAccessories';
 
 function HomePage() {
+  const [cartItems, setCartItems] = useState([]);
   const carouselItems = [
     {
       img: "https://www.reliancedigital.in/medias/Smartwatch-Carnival-Carousel-Banner-D.jpg?context=bWFzdGVyfGltYWdlc3w5MTMyMnxpbWFnZS9qcGVnfGltYWdlcy9oYmYvaGFmLzk5Mjk4MzI1NjI3MTguanBnfDBkOTJjZDk5YTI1MTU3NWU5MDc1NGQ0ZDg2YjFlOWRhOGRhN2FiMzgxMDY3YWI5Y2M1NDk0MjNjZjU1MzNjYjY",
@@ -49,6 +51,10 @@ function HomePage() {
     },
   ];
 
+  const addToCart = (item) => {
+    setCartItems([...cartItems, item]);
+    alert("🛒 Success! Your item has been added to the cart. Happy shopping!");
+  };
   
   return (
     <div>
@@ -66,8 +72,8 @@ function HomePage() {
           </Carousel.Item>
         ))}
       </Carousel>
-          <UserPhones />
-          <UserLaptops />
+          <UserPhones addToCart={addToCart}/>
+          <UserLaptops addToCart={addToCart}/>
       <Carousel>
         {slideImages1.map((slide, index) => (
           <Carousel.Item key={slide.id}>
@@ -79,8 +85,8 @@ function HomePage() {
           </Carousel.Item>
         ))}
       </Carousel>
-          <UserSound />
-          <UserAccessories />
+          <UserSound addToCart={addToCart}/>
+          <UserAccessories addToCart={addToCart}/>
     </div>
   );
 }

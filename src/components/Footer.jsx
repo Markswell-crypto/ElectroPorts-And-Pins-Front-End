@@ -74,10 +74,10 @@ function Footer() {
               <li><Link to="/contactus">Contact Us</Link></li>           
             </ul>
           </div>
-          <div className='payment-option'>
+          {/* <div className='payment-option'>
             <h3>PAYMENT OPTIONS</h3>
             <p>To be Updated soon</p>
-          </div>
+          </div> */}
         </div>
       </footer>
     </>

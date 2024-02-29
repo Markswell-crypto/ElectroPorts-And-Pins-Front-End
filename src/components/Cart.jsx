@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link
 import "./Cart.css"
-
+import cartImage from "../assets/cart.jpg"; // Import the cart image
 
 function Cart({ cartItems, removeFromCart }) {
   const handleRemove = (index) => {
@@ -21,26 +21,39 @@ function Cart({ cartItems, removeFromCart }) {
     <div className="container">
       <h1 className="text-center my-4">Cart</h1>
       {cartItems.length === 0 ? (
-        <p>Your cart is empty</p>
+        <div className="d-flex- center">
+          <div className="empty-cart-container">
+            <img src={cartImage} alt="Cart" className="cart-image" />
+            <p>Your cart is empty</p> {/* Moved this line below the image */}
+          </div>
+        </div>
       ) : (
-        <div>
+        <div className="container">
           {cartItems.map((item, index) => (
-            <div key={index} className="border p-3 my-3">
-              {item.image_url && <img src={item.image_url} alt={item.name} style={{ maxWidth: '100px' }} />}
-              {item.image && <img src={item.image} alt={item.name} style={{ maxWidth: '100px' }} />}git 
-              <div>{item.name}</div>
-              <div>Ksh{item.price}</div>
-              {item.quantity > 1 ? (
-                <div>Quantity: {item.quantity}</div>
-              ) : (
-                <div>Quantity: 1</div>
-              )}
-              <button onClick={() => handleRemove(index)}>Remove</button>
+            <div key={index} className="row">
+              <div className="col-md-3">
+                {item.image_url && <img src={item.image_url} alt={item.name} className="img-fluid" />}
+                {item.image && <img src={item.image} alt={item.name} className="img-fluid" />}
+              </div>
+              <div className="col-md-9">
+                <div className="card mb-3">
+                  <div className="card-body">
+                    <h5 className="card-title">{item.name}</h5>
+                    {item.quantity > 1 ? (
+                      <p className="card-text">Quantity: {item.quantity}</p>
+                    ) : (
+                      <p className="card-text">Quantity: 1</p>
+                    )}
+                    <p className="card-text">Ksh{item.price}</p>
+                    <button onClick={() => handleRemove(index)} className="btn btn-danger">Remove</button>
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
           <div className="total-price">Total Price: Ksh{calculateTotalPrice()}</div>
           <Link to="/account">
-            <button className="order-button">Order</button>
+            <button className="order-button btn btn-primary">Order</button>
           </Link>
         </div>
       )}

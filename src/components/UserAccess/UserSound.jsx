@@ -63,6 +63,10 @@ function UserSound({ addToCart }) {
     setSearchTerm(searchTerm);
   };
 
+  const handleAddToCart = (device) => {
+    addToCart(device);
+  };
+  
   return (
     <div>
       <Search onSearch={handleSearch} />
@@ -80,7 +84,7 @@ function UserSound({ addToCart }) {
                     <Card.Text>Price:Kshs {device.price}</Card.Text>
                     <Stars setStar={handleSetStar} deviceId={device.id} className="card-rating"/>
                     <div className='sound-buttons'>
-                      <Button onClick={() => addToCart(device)}>Add to Cart</Button>
+                      <Button onClick={() => handleAddToCart(device)}>Add to Cart</Button>
                       <Button onClick={() => handleShowDetails(device)} >Details</Button>
                       <Button onClick={handleShowReviewModal}>Reviews</Button>
                     </div>                
