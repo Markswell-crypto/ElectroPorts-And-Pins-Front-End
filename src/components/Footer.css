@@ -2,13 +2,15 @@ footer{
     display: flexbox;
     background: #232531;
     color: hsl(220, 11%, 48%);
-    height: 60vh;
+    height: 80vh;
     margin-top: 20px;
 }
 .footer{
     display: flex;
-    margin:20px 20px;
-    gap: 270px;
+    align-items: center;
+    justify-content: space-around;
+    margin:20px 60px;
+    gap: 27px;
 }
 
 .our-products, 
@@ -21,7 +23,7 @@ footer{
 .about-us h3,
 .need-help h3,
 .payment-option h3{
-    font-size: 30px;
+    font-size: 15px;
 }
 .our-products ul li,
 .about-us ul li,
@@ -127,8 +129,3 @@ footer{
     line-height: 0;
     margin-top: 14px;
 }
-
-
-
-
-
