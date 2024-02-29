@@ -21,7 +21,6 @@ import UserPhones from './components/UserAccess/UserPhones';
 import UserLaptops from './components/UserAccess/UserLaptops';
 import UserAccessories from './components/UserAccess/UserAccessories';
 import UserSound from './components/UserAccess/UserSound';
-import NavBar from "./components/NavBar"; // Import the NavBar component
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
