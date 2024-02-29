@@ -1,23 +1,29 @@
 .phones-container {
-  background-color: blue;
-  min-height: 100vh;
-  padding: 20px;
-  color: blue;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-.border {
-  border: 2px solid blue;
+.phones-card{
+  width: 23%;
+  height: 500px;
 }
 
-.img-fluid {
-  border: 2px solid blue;
+.phones-image{
+  width: 55%;
+  height: 40%;
+  margin-left: 55px;
+  padding: 10px;
 }
 
-.mb-2 {
-  color: blue;
+.phones-body{
+  background: lightblue;
 }
-
-.Button {
-  background-color: blue;
-  color: white;
+.phones-buttons{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.phones-buttons button{
+  height: 40px;
 }
