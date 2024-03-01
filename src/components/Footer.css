@@ -1,8 +1,9 @@
+/* Css Footer */
 footer{
     display: flexbox;
     background: #232531;
     color: hwb(220 43% 47%);
-    height: 50vh;
+    height: 70vh;
     margin-top: 20px;
 }
 .footer{
