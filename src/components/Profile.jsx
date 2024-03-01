@@ -5,17 +5,16 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
 const Profile = () => {
- const [user, setUser] = useState(null);
- const [formData, setFormData] = useState({
+  const [user, setUser] = useState(null);
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
     role: "",
     imageUrl: ""
- });
- const [isEditing, setIsEditing] = useState(false);
- const [showModal, setShowModal] = useState(false); // State to control modal visibility
+  });
+  const [showModal, setShowModal] = useState(false); // State to control modal visibility
 
- useEffect(() => {
+  useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     fetch("https://electroports-db.onrender.com/user", {
       headers: {
@@ -40,60 +39,17 @@ const Profile = () => {
       .catch((error) => {
         console.error("Error fetching user details:", error);
       });
- }, []);
+  }, []);
 
- const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
- };
-
- const handleEdit = () => {
-    setIsEditing(true);
- };
-
- const handleSave = () => {
-    const accessToken = localStorage.getItem("access_token");
-    fetch("https://electroports-db.onrender.com/user", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(formData);
-        setUser(data);
-        setIsEditing(false);
-        alert("Details Updated Successfully");
-      })
-      .catch((error) => {
-        console.error("Error updating user details:", error);
-      });
- };
-
- const handlePaymentMethod = (method) => {
+  const handlePaymentMethod = (method) => {
     console.log(`Payment method selected: ${method}`);
- };
+  };
 
- const handleProceedToPay = () => {
-    console.log("Proceeding to pay...");
-    setShowModal(true); // Show the modal when proceeding to pay
- };
 
- const handleCloseModal = () => setShowModal(false); // Function to close the modal
+  const handleCloseModal = () => setShowModal(false); // Function to close the modal
 
- return (
-    <div className="container">
+  return (
+    <div className="container d-flex flex-column justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
       <div className="text-center mb-4" style={{
         backgroundImage: 'url(https://source.unsplash.com/random)',
         backgroundSize: 'cover',
@@ -113,9 +69,12 @@ const Profile = () => {
       </div>
       <div className="row justify-content-center mt-4">
         <div className="col-md-4">
-          <input type="text" name="name" placeholder="Enter name" className="form-control mb-2" value={formData.name} onChange={handleChange} />
-          <input type="text" name="email" placeholder="Enter email" className="form-control mb-2" value={formData.email} onChange={handleChange} />
-          <input type="text" name="role" placeholder="Enter role" className="form-control mb-2" value={formData.role} onChange={handleChange} />
+          <label>Name:</label>
+          <p>{formData.name}</p>
+          <label>Email:</label>
+          <p>{formData.email}</p>
+          <label>Role:</label>
+          <p>{formData.role}</p>
         </div>
       </div>
       <div className="row justify-content-center mt-4">
@@ -135,12 +94,7 @@ const Profile = () => {
           </button>
         </div>
       </div>
-      <div className="mt-4 text-center">
-        <button className="btn btn-warning btn-lg btn-block" onClick={handleProceedToPay}>
-          Proceed to Pay
-        </button>
-      </div>
-
+      
       {/* Modal component */}
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
@@ -154,7 +108,7 @@ const Profile = () => {
         </Modal.Footer>
       </Modal>
     </div>
- );
+  );
 };
 
 export default Profile;

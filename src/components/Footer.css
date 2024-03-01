@@ -1,8 +1,8 @@
 footer{
     display: flexbox;
     background: #232531;
-    color: hsl(220, 11%, 48%);
-    height: 80vh;
+    color: hwb(220 43% 47%);
+    height: 50vh;
     margin-top: 20px;
 }
 .footer{
