@@ -1,3 +1,7 @@
+[This is the ElectroPorts & Pins Backend GitHub Link](https://github.com/Markswell-crypto/Electroports---Pins-Backend)
+
+[Deployed Backend Link](https://electroports-db.onrender.com)
+
 # Electroports & Pins - Front End
 Welcome to the Electroports & Pins front end repository! This repository contains the client-side code for the Electroports & Pins web application.
 
